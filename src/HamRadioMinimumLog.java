@@ -68,7 +68,7 @@ public class HamRadioMinimumLog extends JFrame {
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        setSize(450, 350);
+        setSize(1000, 500);
         setVisible(true);
     }
     public static void main(String[] args) {
