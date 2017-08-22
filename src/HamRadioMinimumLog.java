@@ -7,6 +7,9 @@ import java.util.ArrayList;
 
 public class HamRadioMinimumLog extends JFrame {
     private ArrayList<QSO> log = new ArrayList<>();
+    private JTable table;
+    private String[] columns = { "Call sign", "Time start", "Time end", "Frequency", "Band", "Mode", "Power", "Location", "RST sent", "RST received", "My call sign", "My location", "Comments"};
+
 
     private HamRadioMinimumLog(){
         super("Ham Radio Minimum Log");
@@ -29,21 +32,6 @@ public class HamRadioMinimumLog extends JFrame {
         menuBar.add(fileMenu);
         setJMenuBar(menuBar);
 
-        String[] columns = {
-                "Call sign",
-                "Time start",
-                "Time end",
-                "Frequency",
-                "Band",
-                "Mode",
-                "Power",
-                "Location",
-                "RST sent",
-                "RST received",
-                "My call sign",
-                "My location",
-                "Comments"
-        };
 
         Object[][] sampleData = {
                 {"AA0AAA", "2017-08-22 16:05", "2017-08-22 16:10", "14.076", "20M", "JT65", "5W", "AA11", "-04", "-06", "ZZ0ZZZ", "ZZ99", "Comment #1"},
@@ -51,12 +39,35 @@ public class HamRadioMinimumLog extends JFrame {
                 {"CC0CCC", "2017-08-22 16:25", "2017-08-22 16:30", "14.076", "20M", "JT65", "5W", "CC11", "-02", "-04", "ZZ0ZZZ", "ZZ99", "Comment #3"}
         };
 
-        JTable table = new JTable(sampleData, columns);
+        table = new JTable(getDataForTable(), columns);
         JScrollPane scrollPane = new JScrollPane(table);
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         add(scrollPane);
+        updateTable();
 
-        DefaultTableModel tableModel = new DefaultTableModel(sampleData, columns) {
+        JPanel southPanel = new JPanel(new FlowLayout());
+        JButton addButton = new JButton("Add");
+        JButton modifyButton = new JButton("Modify");
+        JButton deleteButton = new JButton("Delete");
+        JButton exportButton = new JButton("Export");
+
+        addButton.addActionListener(new AddButtonActionListener());
+
+        southPanel.add(addButton);
+        southPanel.add(modifyButton);
+        southPanel.add(deleteButton);
+        southPanel.add(exportButton);
+
+        add(southPanel, BorderLayout.SOUTH);
+
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setSize(1000, 500);
+        setVisible(true);
+    }
+
+    public void updateTable(){
+        DefaultTableModel tableModel = new DefaultTableModel(getDataForTable(), columns) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
@@ -78,22 +89,25 @@ public class HamRadioMinimumLog extends JFrame {
         table.getColumnModel().getColumn(11).setPreferredWidth(80);
         table.getColumnModel().getColumn(12).setPreferredWidth(200);
 
-        JPanel southPanel = new JPanel(new FlowLayout());
-        JButton addButton = new JButton("Add");
-        JButton modifyButton = new JButton("Modify");
-        JButton deleteButton = new JButton("Delete");
-        JButton exportButton = new JButton("Export");
-        southPanel.add(addButton);
-        southPanel.add(modifyButton);
-        southPanel.add(deleteButton);
-        southPanel.add(exportButton);
+    }
 
-        add(southPanel, BorderLayout.SOUTH);
+    Object[][] getDataForTable(){
+        Object[][] dataObject = new Object[log.size()][1];
+        int i = 0;
+        for(QSO qso : log){
+            dataObject[i++][0] = qso.getCallSign();
+        }
+        return dataObject;
+    }
 
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-        setSize(1000, 500);
-        setVisible(true);
+    private class AddButtonActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent actionEvent){
+            QSO qso = new QSO();
+            qso.setCallSign("AA0AAA");
+            log.add(qso);
+            updateTable();
+        }
     }
 
     private class LoadLog implements ActionListener {
@@ -103,6 +117,8 @@ public class HamRadioMinimumLog extends JFrame {
                 ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("test.dat"));
                 log = (ArrayList<QSO>)objectInputStream.readObject();
                 objectInputStream.close();
+                updateTable();
+
             }catch(IOException|ClassNotFoundException e){
                 JOptionPane.showMessageDialog(HamRadioMinimumLog.this, "Something went wrong. Error message: " + e.getMessage());
             }
