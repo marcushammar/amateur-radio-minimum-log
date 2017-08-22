@@ -7,6 +7,20 @@ public class HamRadioMinimumLog extends JFrame {
     private HamRadioMinimumLog(){
         super("Ham Radio Minimum Log");
 
+        JMenuBar menuBar = new JMenuBar();
+        JMenu fileMenu = new JMenu("File");
+
+        JMenuItem newMapMenuItem = new JMenuItem("Load log");
+        JMenuItem loadPlacesMenuItem = new JMenuItem("Save log");
+        JMenuItem exitMenuItem = new JMenuItem("Exit");
+
+        fileMenu.add(newMapMenuItem);
+        fileMenu.add(loadPlacesMenuItem);
+        fileMenu.add(exitMenuItem);
+
+        menuBar.add(fileMenu);
+        setJMenuBar(menuBar);
+
         String[] columns = {
                 "Call sign",
                 "Time start",
