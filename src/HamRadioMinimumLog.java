@@ -45,6 +45,7 @@ public class HamRadioMinimumLog extends JFrame {
         JButton exportButton = new JButton("Export");
 
         addButton.addActionListener(new AddButtonActionListener());
+        deleteButton.addActionListener(new DeleteButtonActionListener());
 
         southPanel.add(addButton);
         southPanel.add(modifyButton);
@@ -125,6 +126,18 @@ public class HamRadioMinimumLog extends JFrame {
             qso.setComments("Comments #1");
             log.add(qso);
             updateTable();
+        }
+    }
+
+    private class DeleteButtonActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent actionEvent){
+            int[] selectedRows = table.getSelectedRows();
+
+            if (selectedRows.length == 1){
+                log.remove(selectedRows[0]);
+                updateTable();
+            }
         }
     }
 
