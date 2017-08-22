@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
 public class HamRadioMinimumLog extends JFrame {
@@ -31,6 +32,14 @@ public class HamRadioMinimumLog extends JFrame {
         JTable table = new JTable(sampleData, columns);
         JScrollPane scrollPane = new JScrollPane(table);
         add(scrollPane);
+
+        DefaultTableModel tableModel = new DefaultTableModel(sampleData, columns) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        table.setModel(tableModel);
 
         JPanel southPanel = new JPanel(new FlowLayout());
         JButton addButton = new JButton("Add");
