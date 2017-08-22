@@ -60,7 +60,7 @@ public class HamRadioMinimumLog extends JFrame {
         setVisible(true);
     }
 
-    public void updateTable(){
+    private void updateTable(){
         DefaultTableModel tableModel = new DefaultTableModel(getDataForTable(), columns) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -85,7 +85,7 @@ public class HamRadioMinimumLog extends JFrame {
 
     }
 
-    Object[][] getDataForTable(){
+    private Object[][] getDataForTable(){
         Object[][] dataObject = new Object[log.size()][13];
         int i = 0;
         for(QSO qso : log){
