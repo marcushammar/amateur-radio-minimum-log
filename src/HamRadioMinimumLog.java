@@ -3,6 +3,7 @@ import javax.swing.*;
 public class HamRadioMinimumLog extends JFrame {
 
     private HamRadioMinimumLog(){
+        super("Ham Radio Minimum Log");
 
         String[] columns = {
                 "Call sign",
