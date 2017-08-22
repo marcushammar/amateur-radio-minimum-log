@@ -1,8 +1,12 @@
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.*;
+import java.io.*;
+import java.util.ArrayList;
 
 public class HamRadioMinimumLog extends JFrame {
+    private ArrayList<QSO> log = new ArrayList<>();
 
     private HamRadioMinimumLog(){
         super("Ham Radio Minimum Log");
@@ -10,12 +14,15 @@ public class HamRadioMinimumLog extends JFrame {
         JMenuBar menuBar = new JMenuBar();
         JMenu fileMenu = new JMenu("File");
 
-        JMenuItem newMapMenuItem = new JMenuItem("Load log");
-        JMenuItem loadPlacesMenuItem = new JMenuItem("Save log");
+        JMenuItem loadLogMenuItem = new JMenuItem("Load log");
+        JMenuItem saveLogMenuItem = new JMenuItem("Save log");
         JMenuItem exitMenuItem = new JMenuItem("Exit");
 
-        fileMenu.add(newMapMenuItem);
-        fileMenu.add(loadPlacesMenuItem);
+        loadLogMenuItem.addActionListener(new LoadLog());
+        saveLogMenuItem.addActionListener(new SaveLog());
+
+        fileMenu.add(loadLogMenuItem);
+        fileMenu.add(saveLogMenuItem);
         fileMenu.add(exitMenuItem);
 
         menuBar.add(fileMenu);
@@ -87,6 +94,36 @@ public class HamRadioMinimumLog extends JFrame {
         setSize(1000, 500);
         setVisible(true);
     }
+
+    private class LoadLog implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent actionEvent){
+            try{
+                ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("test.dat"));
+                log = (ArrayList<QSO>)objectInputStream.readObject();
+                objectInputStream.close();
+            }catch(IOException ioe){
+                JOptionPane.showMessageDialog(HamRadioMinimumLog.this, "Something went wrong. Error message: " + ioe.getMessage());
+            }catch(ClassNotFoundException cnfe){
+                JOptionPane.showMessageDialog(HamRadioMinimumLog.this, "Something went wrong. Error message: " + cnfe.getMessage());
+            }
+        }
+    }
+
+
+    private class SaveLog implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent actionEvent){
+            try{
+                ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream("test.dat"));
+                objectOutputStream.writeObject(log);
+                objectOutputStream.close();
+            }catch(IOException ioe){
+                JOptionPane.showMessageDialog(HamRadioMinimumLog.this, "Something went wrong. Error message: " + ioe.getMessage());
+            }
+        }
+    }
+
     public static void main(String[] args) {
         new HamRadioMinimumLog();
     }
