@@ -97,8 +97,8 @@ public class HamRadioMinimumLog extends JFrame {
             dataObject[i][5] = qso.getMode();
             dataObject[i][6] = qso.getPower();
             dataObject[i][7] = qso.getLocation();
-            dataObject[i][8] = qso.getRstRecevied();
-            dataObject[i][9] = qso.getRstSent();
+            dataObject[i][8] = qso.getRstSent();
+            dataObject[i][9] = qso.getRstRecevied();
             dataObject[i][10] = qso.getMyCallSign();
             dataObject[i][11] = qso.getMyLocation();
             dataObject[i][12] = qso.getComments();
@@ -111,23 +111,23 @@ public class HamRadioMinimumLog extends JFrame {
         @Override
         public void actionPerformed(ActionEvent actionEvent){
             QSOForm form = new QSOForm();
-            int responseFromDialog = JOptionPane.showConfirmDialog(HamRadioMinimumLog.this, form, "Add QSO", JOptionPane.OK_CANCEL_OPTION);
+            int responseFromDialog = JOptionPane.showConfirmDialog(HamRadioMinimumLog.this, form, "Add", JOptionPane.OK_CANCEL_OPTION);
 
             if (responseFromDialog == JOptionPane.YES_OPTION){
                 QSO qso = new QSO();
                 qso.setCallSign(form.getCallSign());
                 qso.setTimeStart(form.getTimeStart());
-                qso.setTimeEnd("2017-08-22 16:05");
-                qso.setFrequency("14.076");
-                qso.setBand("20M");
-                qso.setMode("JT65");
-                qso.setPower("5W");
-                qso.setLocation("AA11");
-                qso.setRstRecevied("-04");
-                qso.setRstSent("-06");
-                qso.setMyCallSign("ZZ0ZZZ");
-                qso.setMyLocation("ZZ99");
-                qso.setComments("Comments #1");
+                qso.setTimeEnd(form.getTimeEnd());
+                qso.setFrequency(form.getFrequency());
+                qso.setBand(form.getBand());
+                qso.setMode(form.getMode());
+                qso.setPower(form.getPower());
+                qso.setLocation(form.getLocationText());
+                qso.setRstRecevied(form.getRstReceived());
+                qso.setRstSent(form.getRstSent());
+                qso.setMyCallSign(form.getMyCallSign());
+                qso.setMyLocation(form.getMyLocation());
+                qso.setComments(form.getComments());
                 log.add(qso);
                 updateTable();
             }
