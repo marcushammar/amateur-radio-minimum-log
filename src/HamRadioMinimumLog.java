@@ -20,6 +20,7 @@ public class HamRadioMinimumLog extends JFrame {
 
         loadLogMenuItem.addActionListener(new LoadLog());
         saveLogMenuItem.addActionListener(new SaveLog());
+        exitMenuItem.addActionListener(new Exit());
 
         fileMenu.add(loadLogMenuItem);
         fileMenu.add(saveLogMenuItem);
@@ -119,6 +120,13 @@ public class HamRadioMinimumLog extends JFrame {
             }catch(IOException ioe){
                 JOptionPane.showMessageDialog(HamRadioMinimumLog.this, "Something went wrong. Error message: " + ioe.getMessage());
             }
+        }
+    }
+
+    private class Exit implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent actionEvent){
+            System.exit(0);
         }
     }
 
