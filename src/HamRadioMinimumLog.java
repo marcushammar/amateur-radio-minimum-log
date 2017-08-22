@@ -32,13 +32,6 @@ public class HamRadioMinimumLog extends JFrame {
         menuBar.add(fileMenu);
         setJMenuBar(menuBar);
 
-
-        Object[][] sampleData = {
-                {"AA0AAA", "2017-08-22 16:05", "2017-08-22 16:10", "14.076", "20M", "JT65", "5W", "AA11", "-04", "-06", "ZZ0ZZZ", "ZZ99", "Comment #1"},
-                {"BB0BBB", "2017-08-22 16:15", "2017-08-22 16:20", "14.076", "20M", "JT65", "5W", "BB11", "-03", "-05", "ZZ0ZZZ", "ZZ99", "Comment #2"},
-                {"CC0CCC", "2017-08-22 16:25", "2017-08-22 16:30", "14.076", "20M", "JT65", "5W", "CC11", "-02", "-04", "ZZ0ZZZ", "ZZ99", "Comment #3"}
-        };
-
         table = new JTable(getDataForTable(), columns);
         JScrollPane scrollPane = new JScrollPane(table);
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
