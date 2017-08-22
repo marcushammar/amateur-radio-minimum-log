@@ -74,9 +74,11 @@ public class HamRadioMinimumLog extends JFrame {
         JButton addButton = new JButton("Add");
         JButton modifyButton = new JButton("Modify");
         JButton deleteButton = new JButton("Delete");
+        JButton exportButton = new JButton("Export");
         southPanel.add(addButton);
         southPanel.add(modifyButton);
         southPanel.add(deleteButton);
+        southPanel.add(exportButton);
 
         add(southPanel, BorderLayout.SOUTH);
 
