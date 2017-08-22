@@ -110,22 +110,27 @@ public class HamRadioMinimumLog extends JFrame {
     private class AddButtonActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent actionEvent){
-            QSO qso = new QSO();
-            qso.setCallSign("AA0AAA");
-            qso.setTimeStart("2017-08-22 16:00");
-            qso.setTimeEnd("2017-08-22 16:05");
-            qso.setFrequency("14.076");
-            qso.setBand("20M");
-            qso.setMode("JT65");
-            qso.setPower("5W");
-            qso.setLocation("AA11");
-            qso.setRstRecevied("-04");
-            qso.setRstSent("-06");
-            qso.setMyCallSign("ZZ0ZZZ");
-            qso.setMyLocation("ZZ99");
-            qso.setComments("Comments #1");
-            log.add(qso);
-            updateTable();
+            QSOForm form = new QSOForm();
+            int responseFromDialog = JOptionPane.showConfirmDialog(HamRadioMinimumLog.this, form, "Add QSO", JOptionPane.OK_CANCEL_OPTION);
+
+            if (responseFromDialog == JOptionPane.YES_OPTION){
+                QSO qso = new QSO();
+                qso.setCallSign(form.getCallSign());
+                qso.setTimeStart(form.getTimeStart());
+                qso.setTimeEnd("2017-08-22 16:05");
+                qso.setFrequency("14.076");
+                qso.setBand("20M");
+                qso.setMode("JT65");
+                qso.setPower("5W");
+                qso.setLocation("AA11");
+                qso.setRstRecevied("-04");
+                qso.setRstSent("-06");
+                qso.setMyCallSign("ZZ0ZZZ");
+                qso.setMyLocation("ZZ99");
+                qso.setComments("Comments #1");
+                log.add(qso);
+                updateTable();
+            }
         }
     }
 
