@@ -31,6 +31,7 @@ public class HamRadioMinimumLog extends JFrame {
 
         JTable table = new JTable(sampleData, columns);
         JScrollPane scrollPane = new JScrollPane(table);
+        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         add(scrollPane);
 
         DefaultTableModel tableModel = new DefaultTableModel(sampleData, columns) {
@@ -40,6 +41,20 @@ public class HamRadioMinimumLog extends JFrame {
             }
         };
         table.setModel(tableModel);
+
+        table.getColumnModel().getColumn(0).setPreferredWidth(70);
+        table.getColumnModel().getColumn(1).setPreferredWidth(140);
+        table.getColumnModel().getColumn(2).setPreferredWidth(140);
+        table.getColumnModel().getColumn(3).setPreferredWidth(80);
+        table.getColumnModel().getColumn(4).setPreferredWidth(60);
+        table.getColumnModel().getColumn(5).setPreferredWidth(60);
+        table.getColumnModel().getColumn(6).setPreferredWidth(60);
+        table.getColumnModel().getColumn(7).setPreferredWidth(70);
+        table.getColumnModel().getColumn(8).setPreferredWidth(70);
+        table.getColumnModel().getColumn(9).setPreferredWidth(90);
+        table.getColumnModel().getColumn(10).setPreferredWidth(80);
+        table.getColumnModel().getColumn(11).setPreferredWidth(80);
+        table.getColumnModel().getColumn(12).setPreferredWidth(200);
 
         JPanel southPanel = new JPanel(new FlowLayout());
         JButton addButton = new JButton("Add");
