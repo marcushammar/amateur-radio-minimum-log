@@ -102,10 +102,8 @@ public class HamRadioMinimumLog extends JFrame {
                 ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("test.dat"));
                 log = (ArrayList<QSO>)objectInputStream.readObject();
                 objectInputStream.close();
-            }catch(IOException ioe){
-                JOptionPane.showMessageDialog(HamRadioMinimumLog.this, "Something went wrong. Error message: " + ioe.getMessage());
-            }catch(ClassNotFoundException cnfe){
-                JOptionPane.showMessageDialog(HamRadioMinimumLog.this, "Something went wrong. Error message: " + cnfe.getMessage());
+            }catch(IOException|ClassNotFoundException e){
+                JOptionPane.showMessageDialog(HamRadioMinimumLog.this, "Something went wrong. Error message: " + e.getMessage());
             }
         }
     }
