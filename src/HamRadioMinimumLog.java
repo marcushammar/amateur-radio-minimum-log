@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 
 public class HamRadioMinimumLog extends JFrame {
 
@@ -30,6 +31,16 @@ public class HamRadioMinimumLog extends JFrame {
         JTable table = new JTable(sampleData, columns);
         JScrollPane scrollPane = new JScrollPane(table);
         add(scrollPane);
+
+        JPanel southPanel = new JPanel(new FlowLayout());
+        JButton addButton = new JButton("Add");
+        JButton modifyButton = new JButton("Modify");
+        JButton deleteButton = new JButton("Delete");
+        southPanel.add(addButton);
+        southPanel.add(modifyButton);
+        southPanel.add(deleteButton);
+
+        add(southPanel, BorderLayout.SOUTH);
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
