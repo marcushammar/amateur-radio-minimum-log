@@ -13,6 +13,7 @@ public class QSO implements Serializable {
     private String rstReceived;
     private String myCallSign;
     private String myLocation;
+    private String comments;
 
     public QSO(){
     }
@@ -112,5 +113,14 @@ public class QSO implements Serializable {
     public void setMyLocation(String myLocation) {
         this.myLocation = myLocation;
     }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
+
 
 }

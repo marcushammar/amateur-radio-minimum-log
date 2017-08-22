@@ -92,10 +92,23 @@ public class HamRadioMinimumLog extends JFrame {
     }
 
     Object[][] getDataForTable(){
-        Object[][] dataObject = new Object[log.size()][1];
+        Object[][] dataObject = new Object[log.size()][13];
         int i = 0;
         for(QSO qso : log){
-            dataObject[i++][0] = qso.getCallSign();
+            dataObject[i][0] = qso.getCallSign();
+            dataObject[i][1] = qso.getTimeStart();
+            dataObject[i][2] = qso.getTimeEnd();
+            dataObject[i][3] = qso.getFrequency();
+            dataObject[i][4] = qso.getBand();
+            dataObject[i][5] = qso.getMode();
+            dataObject[i][6] = qso.getPower();
+            dataObject[i][7] = qso.getLocation();
+            dataObject[i][8] = qso.getRstRecevied();
+            dataObject[i][9] = qso.getRstSent();
+            dataObject[i][10] = qso.getMyCallSign();
+            dataObject[i][11] = qso.getMyLocation();
+            dataObject[i][12] = qso.getComments();
+            i++;
         }
         return dataObject;
     }
@@ -105,6 +118,18 @@ public class HamRadioMinimumLog extends JFrame {
         public void actionPerformed(ActionEvent actionEvent){
             QSO qso = new QSO();
             qso.setCallSign("AA0AAA");
+            qso.setTimeStart("2017-08-22 16:00");
+            qso.setTimeEnd("2017-08-22 16:05");
+            qso.setFrequency("14.076");
+            qso.setBand("20M");
+            qso.setMode("JT65");
+            qso.setPower("5W");
+            qso.setLocation("AA11");
+            qso.setRstRecevied("-04");
+            qso.setRstSent("-06");
+            qso.setMyCallSign("ZZ0ZZZ");
+            qso.setMyLocation("ZZ99");
+            qso.setComments("Comments #1");
             log.add(qso);
             updateTable();
         }
