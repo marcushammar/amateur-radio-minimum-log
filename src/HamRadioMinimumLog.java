@@ -45,7 +45,10 @@ public class HamRadioMinimumLog extends JFrame {
         JButton exportButton = new JButton("Export");
 
         addButton.addActionListener(new AddButtonActionListener());
+        modifyButton.addActionListener(new ModifyButtonActionListener());
         deleteButton.addActionListener(new DeleteButtonActionListener());
+
+        modifyButton.setMnemonic(KeyEvent.VK_M);
 
         southPanel.add(addButton);
         southPanel.add(modifyButton);
@@ -133,6 +136,54 @@ public class HamRadioMinimumLog extends JFrame {
             }
         }
     }
+
+    private class ModifyButtonActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent actionEvent){
+            int[] selectedRows = table.getSelectedRows();
+
+            if (selectedRows.length != 1){
+                return;
+            }
+
+            QSO qso = log.get(selectedRows[0]);
+
+            QSOForm qsoForm = new QSOForm();
+            qsoForm.setCallSign(qso.getCallSign());
+            qsoForm.setTimeStart(qso.getTimeStart());
+            qsoForm.setTimeEnd(qso.getTimeEnd());
+            qsoForm.setFrequency(qso.getFrequency());
+            qsoForm.setBand(qso.getBand());
+            qsoForm.setMode(qso.getMode());
+            qsoForm.setPower(qso.getPower());
+            qsoForm.setLocationText(qso.getLocation());
+            qsoForm.setRstReceived(qso.getRstRecevied());
+            qsoForm.setRstSent(qso.getRstSent());
+            qsoForm.setMyCallSign(qso.getMyCallSign());
+            qsoForm.setMyLocation(qso.getMyLocation());
+            qsoForm.setComments(qso.getComments());
+
+            int responseFromDialog = JOptionPane.showConfirmDialog(HamRadioMinimumLog.this, qsoForm, "Modify", JOptionPane.OK_CANCEL_OPTION);
+
+            if (responseFromDialog == JOptionPane.YES_OPTION){
+                qso.setCallSign(qsoForm.getCallSign());
+                qso.setTimeStart(qsoForm.getTimeStart());
+                qso.setTimeEnd(qsoForm.getTimeEnd());
+                qso.setFrequency(qsoForm.getFrequency());
+                qso.setBand(qsoForm.getBand());
+                qso.setMode(qsoForm.getMode());
+                qso.setPower(qsoForm.getPower());
+                qso.setLocation(qsoForm.getLocationText());
+                qso.setRstRecevied(qsoForm.getRstReceived());
+                qso.setRstSent(qsoForm.getRstSent());
+                qso.setMyCallSign(qsoForm.getMyCallSign());
+                qso.setMyLocation(qsoForm.getMyLocation());
+                qso.setComments(qsoForm.getComments());
+                updateTable();
+            }
+        }
+    }
+
 
     private class DeleteButtonActionListener implements ActionListener {
         @Override
