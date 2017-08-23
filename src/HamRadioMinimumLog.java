@@ -54,7 +54,10 @@ public class HamRadioMinimumLog extends JFrame {
         modifyButton.addActionListener(new ModifyButtonActionListener());
         deleteButton.addActionListener(new DeleteButtonActionListener());
 
+        addButton.setMnemonic(KeyEvent.VK_A);
         modifyButton.setMnemonic(KeyEvent.VK_M);
+        deleteButton.setMnemonic(KeyEvent.VK_D);
+        exportButton.setMnemonic(KeyEvent.VK_E);
 
         southPanel.add(addButton);
         southPanel.add(modifyButton);
