@@ -53,6 +53,7 @@ public class HamRadioMinimumLog extends JFrame {
         addButton.addActionListener(new AddButtonActionListener());
         modifyButton.addActionListener(new ModifyButtonActionListener());
         deleteButton.addActionListener(new DeleteButtonActionListener());
+        exportButton.addActionListener(new ExportButtonActionListener());
 
         addButton.setMnemonic(KeyEvent.VK_A);
         modifyButton.setMnemonic(KeyEvent.VK_M);
@@ -210,6 +211,25 @@ public class HamRadioMinimumLog extends JFrame {
             }
         }
     }
+
+    private class ExportButtonActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent actionEvent){
+            try{
+                FileWriter fw = new FileWriter("export.adi");
+                PrintWriter pw = new PrintWriter(fw);
+
+                for (int i: table.getSelectedRows()){
+                    pw.println(log.get(i).getAdifRow());
+                }
+
+                fw.close();
+            }catch(IOException e){
+                JOptionPane.showMessageDialog(HamRadioMinimumLog.this, "Something went wrong. Error message: " + e.getMessage());
+            }
+        }
+    }
+
 
     private class LoadLog implements ActionListener {
         @Override

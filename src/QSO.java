@@ -122,5 +122,31 @@ public class QSO implements Serializable {
         this.comments = comments;
     }
 
+    public String getAdifRow(){
+        String row =
+                getAdifField("CALL", callSign) +
+                getAdifField("QSO_DATE", timeStart.substring(0, 10)) +
+                getAdifField("QSO_DATE_OFF", timeEnd.substring(0, 10)) +
+                getAdifField("TIME_ON", timeStart.substring(11)) +
+                getAdifField("TIME_OFF", timeEnd.substring(11)) +
+                getAdifField("FREQ_RX", frequency) +
+                getAdifField("FREQ", frequency) +
+                getAdifField("BAND", band) +
+                getAdifField("BAND_RX", band) +
+                getAdifField("MODE", mode) +
+                getAdifField("TX_PWR", power) +
+                getAdifField("RST_SENT", rstSent) +
+                getAdifField("RST_RCVD", rstReceived) +
+                getAdifField("GRIDSQUARE", location) +
+                getAdifField("MY_GRIDSQUARE", myLocation) +
+                getAdifField("OPERATOR", myCallSign) +
+                getAdifField("COMMENT", comments) +
+                "<EOR>"
+                ;
+        return row;
+    }
 
+    private String getAdifField(String field, String data){
+        return "<" + field + ":" + data.length() + ">" + data;
+    }
 }
