@@ -45,10 +45,10 @@ public class HamRadioMinimumLog extends JFrame {
         updateTable();
 
         JPanel southPanel = new JPanel(new FlowLayout());
-        addButton = new JButton("Add");
-        modifyButton = new JButton("Modify");
-        deleteButton = new JButton("Delete");
-        exportButton = new JButton("Export");
+        addButton = new JButton("Add row");
+        modifyButton = new JButton("Modify row");
+        deleteButton = new JButton("Delete row");
+        exportButton = new JButton("Export selected rows");
 
         addButton.addActionListener(new AddButtonActionListener());
         modifyButton.addActionListener(new ModifyButtonActionListener());
