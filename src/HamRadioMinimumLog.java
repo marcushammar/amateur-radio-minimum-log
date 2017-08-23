@@ -63,6 +63,7 @@ public class HamRadioMinimumLog extends JFrame {
 
         add(southPanel, BorderLayout.SOUTH);
 
+        addButton.setEnabled(true);
         modifyButton.setEnabled(false);
         deleteButton.setEnabled(false);
         exportButton.setEnabled(false);
@@ -250,16 +251,19 @@ public class HamRadioMinimumLog extends JFrame {
 
             switch (selectedRows.length) {
                 case 0:
+                    addButton.setEnabled(true);
                     modifyButton.setEnabled(false);
                     deleteButton.setEnabled(false);
                     exportButton.setEnabled(false);
                     break;
                 case 1:
+                    addButton.setEnabled(true);
                     modifyButton.setEnabled(true);
                     deleteButton.setEnabled(true);
                     exportButton.setEnabled(true);
                     break;
                 default:
+                    addButton.setEnabled(true);
                     modifyButton.setEnabled(false);
                     deleteButton.setEnabled(false);
                     exportButton.setEnabled(true);
