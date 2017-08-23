@@ -127,8 +127,8 @@ public class QSO implements Serializable {
                 getAdifField("CALL", callSign) +
                 getAdifField("QSO_DATE", timeStart.substring(0, 10).replace("-","")) +
                 getAdifField("QSO_DATE_OFF", timeEnd.substring(0, 10).replace("-","")) +
-                getAdifField("TIME_ON", timeStart.substring(11)) +
-                getAdifField("TIME_OFF", timeEnd.substring(11)) +
+                getAdifField("TIME_ON", timeStart.substring(11).replace(":","")) +
+                getAdifField("TIME_OFF", timeEnd.substring(11).replace(":","")) +
                 getAdifField("FREQ", frequency) +
                 getAdifField("BAND", band) +
                 getAdifField("MODE", mode) +
