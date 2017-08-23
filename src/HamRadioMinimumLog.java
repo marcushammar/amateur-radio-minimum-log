@@ -1,4 +1,6 @@
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
@@ -9,7 +11,10 @@ public class HamRadioMinimumLog extends JFrame {
     private ArrayList<QSO> log = new ArrayList<>();
     private JTable table;
     private String[] columns = { "Call sign", "Time start", "Time end", "Frequency", "Band", "Mode", "Power", "Location", "RST sent", "RST received", "My call sign", "My location", "Comments"};
-
+    private JButton addButton;
+    private JButton modifyButton;
+    private JButton deleteButton;
+    private JButton exportButton;
 
     private HamRadioMinimumLog(){
         super("Ham Radio Minimum Log");
@@ -35,14 +40,15 @@ public class HamRadioMinimumLog extends JFrame {
         table = new JTable(getDataForTable(), columns);
         JScrollPane scrollPane = new JScrollPane(table);
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        table.getSelectionModel().addListSelectionListener(new TableSelectionListener());
         add(scrollPane);
         updateTable();
 
         JPanel southPanel = new JPanel(new FlowLayout());
-        JButton addButton = new JButton("Add");
-        JButton modifyButton = new JButton("Modify");
-        JButton deleteButton = new JButton("Delete");
-        JButton exportButton = new JButton("Export");
+        addButton = new JButton("Add");
+        modifyButton = new JButton("Modify");
+        deleteButton = new JButton("Delete");
+        exportButton = new JButton("Export");
 
         addButton.addActionListener(new AddButtonActionListener());
         modifyButton.addActionListener(new ModifyButtonActionListener());
@@ -56,6 +62,10 @@ public class HamRadioMinimumLog extends JFrame {
         southPanel.add(exportButton);
 
         add(southPanel, BorderLayout.SOUTH);
+
+        modifyButton.setEnabled(false);
+        deleteButton.setEnabled(false);
+        exportButton.setEnabled(false);
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -230,6 +240,31 @@ public class HamRadioMinimumLog extends JFrame {
         @Override
         public void actionPerformed(ActionEvent actionEvent){
             System.exit(0);
+        }
+    }
+
+    private class TableSelectionListener implements ListSelectionListener {
+        @Override
+        public void valueChanged(ListSelectionEvent listSelectionEvent){
+            int[] selectedRows = table.getSelectedRows();
+
+            switch (selectedRows.length) {
+                case 0:
+                    modifyButton.setEnabled(false);
+                    deleteButton.setEnabled(false);
+                    exportButton.setEnabled(false);
+                    break;
+                case 1:
+                    modifyButton.setEnabled(true);
+                    deleteButton.setEnabled(true);
+                    exportButton.setEnabled(true);
+                    break;
+                default:
+                    modifyButton.setEnabled(false);
+                    deleteButton.setEnabled(false);
+                    exportButton.setEnabled(true);
+                    break;
+            }
         }
     }
 
