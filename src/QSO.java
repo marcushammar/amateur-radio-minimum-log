@@ -129,10 +129,8 @@ public class QSO implements Serializable {
                 getAdifField("QSO_DATE_OFF", timeEnd.substring(0, 10)) +
                 getAdifField("TIME_ON", timeStart.substring(11)) +
                 getAdifField("TIME_OFF", timeEnd.substring(11)) +
-                getAdifField("FREQ_RX", frequency) +
                 getAdifField("FREQ", frequency) +
                 getAdifField("BAND", band) +
-                getAdifField("BAND_RX", band) +
                 getAdifField("MODE", mode) +
                 getAdifField("TX_PWR", power) +
                 getAdifField("RST_SENT", rstSent) +
