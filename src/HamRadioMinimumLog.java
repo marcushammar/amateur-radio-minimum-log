@@ -16,6 +16,7 @@ public class HamRadioMinimumLog extends JFrame {
     private JButton modifyButton;
     private JButton deleteButton;
     private JButton exportButton;
+    private JLabel countLabel;
 
     private HamRadioMinimumLog(){
         super("Ham Radio Minimum Log");
@@ -43,7 +44,6 @@ public class HamRadioMinimumLog extends JFrame {
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         table.getSelectionModel().addListSelectionListener(new TableSelectionListener());
         add(scrollPane);
-        updateTable();
 
         JPanel southPanel = new JPanel(new FlowLayout());
         addButton = new JButton("Add row");
@@ -70,6 +70,9 @@ public class HamRadioMinimumLog extends JFrame {
         southPanel.add(deleteButton);
         southPanel.add(exportButton);
 
+        countLabel = new JLabel("Count: 0");
+        southPanel.add(countLabel);
+
         add(southPanel, BorderLayout.SOUTH);
 
         addButton.setEnabled(true);
@@ -77,6 +80,8 @@ public class HamRadioMinimumLog extends JFrame {
         modifyButton.setEnabled(false);
         deleteButton.setEnabled(false);
         exportButton.setEnabled(false);
+
+        updateTable();
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -107,6 +112,7 @@ public class HamRadioMinimumLog extends JFrame {
         table.getColumnModel().getColumn(11).setPreferredWidth(80);
         table.getColumnModel().getColumn(12).setPreferredWidth(200);
 
+        countLabel.setText("Count: " + log.size());
     }
 
     private Object[][] getDataForTable(){
