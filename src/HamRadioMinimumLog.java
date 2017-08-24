@@ -12,6 +12,7 @@ public class HamRadioMinimumLog extends JFrame {
     private JTable table;
     private String[] columns = { "Call sign", "Time start", "Time end", "Frequency", "Band", "Mode", "Power", "Location", "RST sent", "RST received", "My call sign", "My location", "Comments"};
     private JButton addButton;
+    private JButton copyButton;
     private JButton modifyButton;
     private JButton deleteButton;
     private JButton exportButton;
@@ -46,21 +47,25 @@ public class HamRadioMinimumLog extends JFrame {
 
         JPanel southPanel = new JPanel(new FlowLayout());
         addButton = new JButton("Add row");
+        copyButton = new JButton("Copy row");
         modifyButton = new JButton("Modify row");
         deleteButton = new JButton("Delete row");
         exportButton = new JButton("Export selected rows");
 
         addButton.addActionListener(new AddButtonActionListener());
+        copyButton.addActionListener(new CopyButtonActionListener());
         modifyButton.addActionListener(new ModifyButtonActionListener());
         deleteButton.addActionListener(new DeleteButtonActionListener());
         exportButton.addActionListener(new ExportButtonActionListener());
 
         addButton.setMnemonic(KeyEvent.VK_A);
+        copyButton.setMnemonic(KeyEvent.VK_C);
         modifyButton.setMnemonic(KeyEvent.VK_M);
         deleteButton.setMnemonic(KeyEvent.VK_D);
         exportButton.setMnemonic(KeyEvent.VK_E);
 
         southPanel.add(addButton);
+        southPanel.add(copyButton);
         southPanel.add(modifyButton);
         southPanel.add(deleteButton);
         southPanel.add(exportButton);
@@ -68,6 +73,7 @@ public class HamRadioMinimumLog extends JFrame {
         add(southPanel, BorderLayout.SOUTH);
 
         addButton.setEnabled(true);
+        copyButton.setEnabled(false);
         modifyButton.setEnabled(false);
         deleteButton.setEnabled(false);
         exportButton.setEnabled(false);
@@ -147,6 +153,55 @@ public class HamRadioMinimumLog extends JFrame {
                 qso.setMyLocation(form.getMyLocation());
                 qso.setComments(form.getComments());
                 log.add(qso);
+                updateTable();
+            }
+        }
+    }
+
+    private class CopyButtonActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent actionEvent){
+            int[] selectedRows = table.getSelectedRows();
+
+            if (selectedRows.length != 1){
+                return;
+            }
+
+            QSO qsoExisting = log.get(selectedRows[0]);
+
+            QSOForm qsoForm = new QSOForm();
+            qsoForm.setCallSign(qsoExisting.getCallSign());
+            qsoForm.setTimeStart(qsoExisting.getTimeStart());
+            qsoForm.setTimeEnd(qsoExisting.getTimeEnd());
+            qsoForm.setFrequency(qsoExisting.getFrequency());
+            qsoForm.setBand(qsoExisting.getBand());
+            qsoForm.setMode(qsoExisting.getMode());
+            qsoForm.setPower(qsoExisting.getPower());
+            qsoForm.setLocationText(qsoExisting.getLocation());
+            qsoForm.setRstReceived(qsoExisting.getRstRecevied());
+            qsoForm.setRstSent(qsoExisting.getRstSent());
+            qsoForm.setMyCallSign(qsoExisting.getMyCallSign());
+            qsoForm.setMyLocation(qsoExisting.getMyLocation());
+            qsoForm.setComments(qsoExisting.getComments());
+
+            int responseFromDialog = JOptionPane.showConfirmDialog(HamRadioMinimumLog.this, qsoForm, "Copy", JOptionPane.OK_CANCEL_OPTION);
+
+            if (responseFromDialog == JOptionPane.YES_OPTION){
+                QSO qsoNew = new QSO();
+                qsoNew.setCallSign(qsoForm.getCallSign());
+                qsoNew.setTimeStart(qsoForm.getTimeStart());
+                qsoNew.setTimeEnd(qsoForm.getTimeEnd());
+                qsoNew.setFrequency(qsoForm.getFrequency());
+                qsoNew.setBand(qsoForm.getBand());
+                qsoNew.setMode(qsoForm.getMode());
+                qsoNew.setPower(qsoForm.getPower());
+                qsoNew.setLocation(qsoForm.getLocationText());
+                qsoNew.setRstRecevied(qsoForm.getRstReceived());
+                qsoNew.setRstSent(qsoForm.getRstSent());
+                qsoNew.setMyCallSign(qsoForm.getMyCallSign());
+                qsoNew.setMyLocation(qsoForm.getMyLocation());
+                qsoNew.setComments(qsoForm.getComments());
+                log.add(qsoNew);
                 updateTable();
             }
         }
@@ -281,18 +336,21 @@ public class HamRadioMinimumLog extends JFrame {
             switch (selectedRows.length) {
                 case 0:
                     addButton.setEnabled(true);
+                    copyButton.setEnabled(false);
                     modifyButton.setEnabled(false);
                     deleteButton.setEnabled(false);
                     exportButton.setEnabled(false);
                     break;
                 case 1:
                     addButton.setEnabled(true);
+                    copyButton.setEnabled(true);
                     modifyButton.setEnabled(true);
                     deleteButton.setEnabled(true);
                     exportButton.setEnabled(true);
                     break;
                 default:
                     addButton.setEnabled(true);
+                    copyButton.setEnabled(false);
                     modifyButton.setEnabled(false);
                     deleteButton.setEnabled(false);
                     exportButton.setEnabled(true);
