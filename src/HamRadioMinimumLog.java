@@ -5,7 +5,10 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.TimeZone;
 
 public class HamRadioMinimumLog extends JFrame {
     private ArrayList<QSO> log = new ArrayList<>();
@@ -281,6 +284,9 @@ public class HamRadioMinimumLog extends JFrame {
                 PrintWriter pw = new PrintWriter(fw);
 
                 pw.println("<ADIF_VER:5>3.0.6");
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd HHmmss");
+                sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+                pw.println("<CREATED_TIMESTAMP:15>" + sdf.format(new Date()));
                 pw.println("<PROGRAMID:18>HamRadioMinimumLog");
                 pw.println("<PROGRAMVERSION:3>0.0");
                 pw.println("<EOH>");
