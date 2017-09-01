@@ -280,7 +280,7 @@ public class HamRadioMinimumLog extends JFrame {
                 FileWriter fw = new FileWriter("export.adi");
                 PrintWriter pw = new PrintWriter(fw);
 
-                pw.println("<ADIF_VER:5>3.0.4");
+                pw.println("<ADIF_VER:5>3.0.6");
                 pw.println("<PROGRAMID:18>HamRadioMinimumLog");
                 pw.println("<PROGRAMVERSION:3>0.0");
                 pw.println("<EOH>");
