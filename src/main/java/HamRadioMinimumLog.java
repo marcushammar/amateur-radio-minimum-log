@@ -312,6 +312,7 @@ public class HamRadioMinimumLog extends JFrame {
             try{
                 FileReader fr = new FileReader("qsodata.log");
                 BufferedReader br = new BufferedReader(fr);
+                log.clear();
                 Gson gson = new Gson();
 
                 String line;
