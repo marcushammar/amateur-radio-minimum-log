@@ -310,7 +310,7 @@ public class HamRadioMinimumLog extends JFrame {
         @Override
         public void actionPerformed(ActionEvent actionEvent){
             try{
-                FileReader fr = new FileReader("save.json");
+                FileReader fr = new FileReader("qsodata.log");
                 BufferedReader br = new BufferedReader(fr);
                 Gson gson = new Gson();
 
@@ -333,7 +333,7 @@ public class HamRadioMinimumLog extends JFrame {
         @Override
         public void actionPerformed(ActionEvent actionEvent){
             try{
-                FileWriter fw = new FileWriter("save.json");
+                FileWriter fw = new FileWriter("qsodata.log");
                 PrintWriter pw = new PrintWriter(fw);
                 Gson gson = new Gson();
                 for (QSO qso : log){
