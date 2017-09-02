@@ -1,6 +1,4 @@
-import java.io.Serializable;
-
-public class QSO implements Serializable {
+public class QSO {
     private String callSign;
     private String timeStart;
     private String timeEnd;

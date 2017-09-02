@@ -310,9 +310,6 @@ public class HamRadioMinimumLog extends JFrame {
         @Override
         public void actionPerformed(ActionEvent actionEvent){
             try{
-                ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("test.dat"));
-                log = (ArrayList<QSO>)objectInputStream.readObject();
-
                 FileReader fr = new FileReader("save.json");
                 BufferedReader br = new BufferedReader(fr);
                 Gson gson = new Gson();
@@ -323,12 +320,9 @@ public class HamRadioMinimumLog extends JFrame {
                 }
 
                 fr.close();
-                objectInputStream.close();
                 updateTable();
 
             }catch(IOException e){
-                JOptionPane.showMessageDialog(HamRadioMinimumLog.this, "Something went wrong. Error message: " + e.getMessage());
-            }catch(ClassNotFoundException e){
                 JOptionPane.showMessageDialog(HamRadioMinimumLog.this, "Something went wrong. Error message: " + e.getMessage());
             }
         }
@@ -339,10 +333,6 @@ public class HamRadioMinimumLog extends JFrame {
         @Override
         public void actionPerformed(ActionEvent actionEvent){
             try{
-                ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream("test.dat"));
-                objectOutputStream.writeObject(log);
-                objectOutputStream.close();
-
                 FileWriter fw = new FileWriter("save.json");
                 PrintWriter pw = new PrintWriter(fw);
                 Gson gson = new Gson();
