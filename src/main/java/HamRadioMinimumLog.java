@@ -38,7 +38,9 @@ public class HamRadioMinimumLog extends JFrame {
         exitMenuItem.addActionListener(new Exit());
 
         fileMenu.add(loadLogMenuItem);
+        fileMenu.addSeparator();
         fileMenu.add(saveLogMenuItem);
+        fileMenu.addSeparator();
         fileMenu.add(exitMenuItem);
 
         menuBar.add(fileMenu);
