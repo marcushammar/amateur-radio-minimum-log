@@ -14,6 +14,7 @@ import java.util.TimeZone;
 
 public class HamRadioMinimumLog extends JFrame {
     private ArrayList<QSO> log = new ArrayList<>();
+    private boolean unsavedChanges = false;
     private JTable table;
     private String[] columns = { "Call sign", "Time start", "Time end", "Frequency", "Band", "Mode", "Power", "Location", "RST sent", "RST received", "My call sign", "My location", "Comments"};
     private JButton addButton;
@@ -170,6 +171,7 @@ public class HamRadioMinimumLog extends JFrame {
                 qso.setComments(form.getComments());
                 log.add(qso);
                 updateTable();
+                unsavedChanges = true;
             }
         }
     }
@@ -219,6 +221,7 @@ public class HamRadioMinimumLog extends JFrame {
                 qsoNew.setComments(qsoForm.getComments());
                 log.add(qsoNew);
                 updateTable();
+                unsavedChanges = true;
             }
         }
     }
@@ -266,6 +269,7 @@ public class HamRadioMinimumLog extends JFrame {
                 qso.setMyLocation(qsoForm.getMyLocation());
                 qso.setComments(qsoForm.getComments());
                 updateTable();
+                unsavedChanges = true;
             }
         }
     }
@@ -279,6 +283,7 @@ public class HamRadioMinimumLog extends JFrame {
             if (selectedRows.length == 1){
                 log.remove(selectedRows[0]);
                 updateTable();
+                unsavedChanges = true;
             }
         }
     }
@@ -313,14 +318,27 @@ public class HamRadioMinimumLog extends JFrame {
     private class NewLog implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent actionEvent){
+            if (unsavedChanges){
+                int responseFromDialog = JOptionPane.showConfirmDialog(HamRadioMinimumLog.this, "There are unsaved changes. Do you want create a new log and ignore any changes made before?", "New log", JOptionPane.YES_NO_OPTION);
+                if (responseFromDialog != JOptionPane.YES_OPTION){
+                    return;
+                }
+            }
             log.clear();
             updateTable();
+            unsavedChanges = false;
         }
     }
 
     private class LoadLog implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent actionEvent){
+            if (unsavedChanges){
+                int responseFromDialog = JOptionPane.showConfirmDialog(HamRadioMinimumLog.this, "There are unsaved changes. Do you want load a new log and ignore any changes made before?", "Load log", JOptionPane.YES_NO_OPTION);
+                if (responseFromDialog != JOptionPane.YES_OPTION){
+                    return;
+                }
+            }
             try{
                 FileReader fr = new FileReader("qsodata.log");
                 BufferedReader br = new BufferedReader(fr);
@@ -334,6 +352,7 @@ public class HamRadioMinimumLog extends JFrame {
 
                 fr.close();
                 updateTable();
+                unsavedChanges = false;
 
             }catch(IOException e){
                 JOptionPane.showMessageDialog(HamRadioMinimumLog.this, "Something went wrong. Error message: " + e.getMessage());
@@ -353,6 +372,7 @@ public class HamRadioMinimumLog extends JFrame {
                     pw.println(gson.toJson(qso));
                 }
                 fw.close();
+                unsavedChanges = false;
             }catch(IOException ioe){
                 JOptionPane.showMessageDialog(HamRadioMinimumLog.this, "Something went wrong. Error message: " + ioe.getMessage());
             }
@@ -362,6 +382,12 @@ public class HamRadioMinimumLog extends JFrame {
     private class Exit implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent actionEvent){
+            if (unsavedChanges){
+                int responseFromDialog = JOptionPane.showConfirmDialog(HamRadioMinimumLog.this, "There are unsaved changes. Do you want to proceed with closing the application?", "Exit", JOptionPane.YES_NO_OPTION);
+                if (responseFromDialog != JOptionPane.YES_OPTION){
+                    return;
+                }
+            }
             System.exit(0);
         }
     }
