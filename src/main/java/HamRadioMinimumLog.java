@@ -1,3 +1,5 @@
+import com.google.gson.Gson;
+
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -329,6 +331,12 @@ public class HamRadioMinimumLog extends JFrame {
                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream("test.dat"));
                 objectOutputStream.writeObject(log);
                 objectOutputStream.close();
+
+                FileWriter fw = new FileWriter("save.json");
+                PrintWriter pw = new PrintWriter(fw);
+                Gson gson = new Gson();
+                pw.print(gson.toJson(log));
+                fw.close();
             }catch(IOException ioe){
                 JOptionPane.showMessageDialog(HamRadioMinimumLog.this, "Something went wrong. Error message: " + ioe.getMessage());
             }
