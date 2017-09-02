@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.TimeZone;
 
 public class HamRadioMinimumLog extends JFrame {
-    private ArrayList<QSO> log = new ArrayList<QSO>();
+    private ArrayList<QSO> log = new ArrayList<>();
     private JTable table;
     private String[] columns = { "Call sign", "Time start", "Time end", "Frequency", "Band", "Mode", "Power", "Location", "RST sent", "RST received", "My call sign", "My location", "Comments"};
     private JButton addButton;
