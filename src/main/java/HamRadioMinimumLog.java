@@ -61,7 +61,7 @@ public class HamRadioMinimumLog extends JFrame {
         copyButton = new JButton("Copy row");
         modifyButton = new JButton("Modify row");
         deleteButton = new JButton("Delete row");
-        exportButton = new JButton("Export selected rows");
+        exportButton = new JButton("Export selected rows (ADIF format)");
 
         addButton.addActionListener(new AddButtonActionListener());
         copyButton.addActionListener(new CopyButtonActionListener());
