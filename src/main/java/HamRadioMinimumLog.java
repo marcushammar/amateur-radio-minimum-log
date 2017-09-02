@@ -11,7 +11,7 @@ import java.util.Date;
 import java.util.TimeZone;
 
 public class HamRadioMinimumLog extends JFrame {
-    private ArrayList<QSO> log = new ArrayList<>();
+    private ArrayList<QSO> log = new ArrayList<QSO>();
     private JTable table;
     private String[] columns = { "Call sign", "Time start", "Time end", "Frequency", "Band", "Mode", "Power", "Location", "RST sent", "RST received", "My call sign", "My location", "Comments"};
     private JButton addButton;
@@ -313,7 +313,9 @@ public class HamRadioMinimumLog extends JFrame {
                 objectInputStream.close();
                 updateTable();
 
-            }catch(IOException|ClassNotFoundException e){
+            }catch(IOException e){
+                JOptionPane.showMessageDialog(HamRadioMinimumLog.this, "Something went wrong. Error message: " + e.getMessage());
+            }catch(ClassNotFoundException e){
                 JOptionPane.showMessageDialog(HamRadioMinimumLog.this, "Something went wrong. Error message: " + e.getMessage());
             }
         }
