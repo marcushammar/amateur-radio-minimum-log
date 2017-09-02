@@ -278,6 +278,11 @@ public class HamRadioMinimumLog extends JFrame {
     private class DeleteButtonActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent actionEvent){
+            int responseFromDialog = JOptionPane.showConfirmDialog(HamRadioMinimumLog.this, "Are you sure you want to delete the row?", "Delete row", JOptionPane.YES_NO_OPTION);
+            if (responseFromDialog != JOptionPane.YES_OPTION){
+                return;
+            }
+
             int[] selectedRows = table.getSelectedRows();
 
             if (selectedRows.length == 1){
