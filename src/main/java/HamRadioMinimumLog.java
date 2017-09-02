@@ -312,6 +312,17 @@ public class HamRadioMinimumLog extends JFrame {
             try{
                 ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("test.dat"));
                 log = (ArrayList<QSO>)objectInputStream.readObject();
+
+                FileReader fr = new FileReader("save.json");
+                BufferedReader br = new BufferedReader(fr);
+                Gson gson = new Gson();
+
+                String line;
+                while ( (line = br.readLine()) != null) {
+                    log.add(gson.fromJson(line, QSO.class));
+                }
+
+                fr.close();
                 objectInputStream.close();
                 updateTable();
 
@@ -335,7 +346,9 @@ public class HamRadioMinimumLog extends JFrame {
                 FileWriter fw = new FileWriter("save.json");
                 PrintWriter pw = new PrintWriter(fw);
                 Gson gson = new Gson();
-                pw.print(gson.toJson(log));
+                for (QSO qso : log){
+                    pw.println(gson.toJson(qso));
+                }
                 fw.close();
             }catch(IOException ioe){
                 JOptionPane.showMessageDialog(HamRadioMinimumLog.this, "Something went wrong. Error message: " + ioe.getMessage());
