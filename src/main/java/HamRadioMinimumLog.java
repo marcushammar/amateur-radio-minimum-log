@@ -36,19 +36,19 @@ public class HamRadioMinimumLog extends JFrame {
         JMenu fileMenu = new JMenu("File");
 
         JMenuItem newLogMenuItem = new JMenuItem("New log");
-        JMenuItem loadLogMenuItem = new JMenuItem("Load log");
+        JMenuItem loadMenuItem = new JMenuItem("Load...");
         JMenuItem saveMenuItem = new JMenuItem("Save");
         JMenuItem saveAsMenuItem = new JMenuItem("Save as...");
         JMenuItem exitMenuItem = new JMenuItem("Exit");
 
         newLogMenuItem.addActionListener(new NewLog());
-        loadLogMenuItem.addActionListener(new LoadLog());
+        loadMenuItem.addActionListener(new Load());
         saveMenuItem.addActionListener(new Save());
         saveAsMenuItem.addActionListener(new SaveAs());
         exitMenuItem.addActionListener(new Exit());
 
         fileMenu.add(newLogMenuItem);
-        fileMenu.add(loadLogMenuItem);
+        fileMenu.add(loadMenuItem);
         fileMenu.addSeparator();
         fileMenu.add(saveMenuItem);
         fileMenu.add(saveAsMenuItem);
@@ -353,7 +353,7 @@ public class HamRadioMinimumLog extends JFrame {
         }
     }
 
-    private class LoadLog implements ActionListener {
+    private class Load implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent actionEvent){
             if (unsavedChanges){
