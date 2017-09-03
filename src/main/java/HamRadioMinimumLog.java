@@ -308,6 +308,13 @@ public class HamRadioMinimumLog extends JFrame {
     private class ExportButtonActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent actionEvent){
+            for (int i : table.getSelectedRows()) {
+                if (!log.get(i).validateAdif()){
+                    JOptionPane.showMessageDialog(HamRadioMinimumLog.this, "There is a problem with row " + (i + 1) + " (callsign " + log.get(i).getCallSign() + "). Please fix the problem and try again.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            }
+
             try{
                 int resultFromDialog = exportFileChooser.showSaveDialog(HamRadioMinimumLog.this);
                 if (resultFromDialog != JFileChooser.APPROVE_OPTION){

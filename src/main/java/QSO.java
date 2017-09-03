@@ -120,6 +120,13 @@ public class QSO {
         this.comments = comments;
     }
 
+    public boolean validateAdif(){
+        boolean validTimeStart = timeStart.matches("\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}");
+        boolean validTimeEnd = timeEnd.matches("\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}");
+
+        return validTimeStart && validTimeEnd;
+    }
+
     public String getAdifRow(){
         return  getAdifField("CALL", callSign) +
                 getAdifField("QSO_DATE", timeStart.substring(0, 10).replace("-","")) +
