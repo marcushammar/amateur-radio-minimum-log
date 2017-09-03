@@ -314,7 +314,16 @@ public class HamRadioMinimumLog extends JFrame {
                     return;
                 }
 
-                FileWriter fw = new FileWriter(exportFileChooser.getSelectedFile());
+                File exportFile = exportFileChooser.getSelectedFile();
+
+                if (exportFile.exists()) {
+                    int responseFromDialog = JOptionPane.showConfirmDialog(HamRadioMinimumLog.this, "There is already a file with that name. Do you want to overwrite the file?", "Export", JOptionPane.YES_NO_OPTION);
+                    if (responseFromDialog != JOptionPane.YES_OPTION) {
+                        return;
+                    }
+                }
+
+                FileWriter fw = new FileWriter(exportFile);
                 PrintWriter pw = new PrintWriter(fw);
 
                 pw.println("<ADIF_VER:5>3.0.6");
