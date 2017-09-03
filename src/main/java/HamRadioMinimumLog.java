@@ -4,6 +4,7 @@ import com.google.gson.reflect.TypeToken;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
@@ -16,6 +17,7 @@ import java.util.TimeZone;
 public class HamRadioMinimumLog extends JFrame {
     private ArrayList<QSO> log = new ArrayList<>();
     private boolean unsavedChanges = false;
+    private File currentFile;
     private JTable table;
     private String[] columns = { "Call sign", "Time start", "Time end", "Frequency", "Band", "Mode", "Power", "Location", "RST sent", "RST received", "My call sign", "My location", "Comments"};
     private JButton addButton;
@@ -23,6 +25,8 @@ public class HamRadioMinimumLog extends JFrame {
     private JButton modifyButton;
     private JButton deleteButton;
     private JButton exportButton;
+    private JFileChooser exportFileChooser = new JFileChooser();
+    private JFileChooser loadAndSaveFileChooser = new JFileChooser();
     private JLabel countLabel;
 
     private HamRadioMinimumLog(){
@@ -94,6 +98,10 @@ public class HamRadioMinimumLog extends JFrame {
         exportButton.setEnabled(false);
 
         updateTable();
+
+        exportFileChooser.setSelectedFile(new File("export.adi"));
+        exportFileChooser.setFileFilter(new FileNameExtensionFilter("ADIF format","adi"));
+        loadAndSaveFileChooser.setFileFilter(new FileNameExtensionFilter("Ham Radio Minimum Log format","json"));
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -298,7 +306,12 @@ public class HamRadioMinimumLog extends JFrame {
         @Override
         public void actionPerformed(ActionEvent actionEvent){
             try{
-                FileWriter fw = new FileWriter("export.adi");
+                int resultFromDialog = exportFileChooser.showSaveDialog(HamRadioMinimumLog.this);
+                if (resultFromDialog != JFileChooser.APPROVE_OPTION){
+                    return;
+                }
+
+                FileWriter fw = new FileWriter(exportFileChooser.getSelectedFile());
                 PrintWriter pw = new PrintWriter(fw);
 
                 pw.println("<ADIF_VER:5>3.0.6");
@@ -333,6 +346,7 @@ public class HamRadioMinimumLog extends JFrame {
             log.clear();
             updateTable();
             unsavedChanges = false;
+            currentFile = null;
         }
     }
 
@@ -346,7 +360,14 @@ public class HamRadioMinimumLog extends JFrame {
                 }
             }
             try{
-                BufferedReader br = new BufferedReader(new FileReader("qsodata.json"));
+                int resultFromDialog = loadAndSaveFileChooser.showOpenDialog(HamRadioMinimumLog.this);
+                if (resultFromDialog != JFileChooser.APPROVE_OPTION){
+                    return;
+                }
+
+                currentFile = loadAndSaveFileChooser.getSelectedFile();
+
+                BufferedReader br = new BufferedReader(new FileReader(currentFile));
                 Gson gson = new Gson();
                 log.clear();
                 log = gson.fromJson(br, new TypeToken<ArrayList<QSO>>(){}.getType());
@@ -366,8 +387,24 @@ public class HamRadioMinimumLog extends JFrame {
         @Override
         public void actionPerformed(ActionEvent actionEvent){
             try{
+                int resultFromDialog = loadAndSaveFileChooser.showSaveDialog(HamRadioMinimumLog.this);
+                if (resultFromDialog != JFileChooser.APPROVE_OPTION){
+                    return;
+                }
+
+                File newFile = loadAndSaveFileChooser.getSelectedFile();
+
+                if ((newFile.exists() && currentFile == null) || (newFile.exists() && currentFile != null && !newFile.equals(currentFile))){
+                    int responseFromDialog = JOptionPane.showConfirmDialog(HamRadioMinimumLog.this, "There is already a file with that name. Do you want to overwrite the file?", "Save log", JOptionPane.YES_NO_OPTION);
+                    if (responseFromDialog != JOptionPane.YES_OPTION){
+                        return;
+                    }
+                }
+
+                currentFile = newFile;
+
                 Gson gson = new Gson();
-                FileWriter fw = new FileWriter("qsodata.json");
+                FileWriter fw = new FileWriter(currentFile);
                 fw.write(gson.toJson(log));
                 fw.close();
 
