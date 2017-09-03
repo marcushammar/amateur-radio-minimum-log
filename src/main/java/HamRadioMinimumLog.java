@@ -37,18 +37,21 @@ public class HamRadioMinimumLog extends JFrame {
 
         JMenuItem newLogMenuItem = new JMenuItem("New log");
         JMenuItem loadLogMenuItem = new JMenuItem("Load log");
-        JMenuItem saveLogMenuItem = new JMenuItem("Save log");
+        JMenuItem saveMenuItem = new JMenuItem("Save");
+        JMenuItem saveAsMenuItem = new JMenuItem("Save as...");
         JMenuItem exitMenuItem = new JMenuItem("Exit");
 
         newLogMenuItem.addActionListener(new NewLog());
         loadLogMenuItem.addActionListener(new LoadLog());
-        saveLogMenuItem.addActionListener(new SaveLog());
+        saveMenuItem.addActionListener(new Save());
+        saveAsMenuItem.addActionListener(new SaveAs());
         exitMenuItem.addActionListener(new Exit());
 
         fileMenu.add(newLogMenuItem);
         fileMenu.add(loadLogMenuItem);
         fileMenu.addSeparator();
-        fileMenu.add(saveLogMenuItem);
+        fileMenu.add(saveMenuItem);
+        fileMenu.add(saveAsMenuItem);
         fileMenu.addSeparator();
         fileMenu.add(exitMenuItem);
 
@@ -382,8 +385,41 @@ public class HamRadioMinimumLog extends JFrame {
         }
     }
 
+    private class Save implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent actionEvent){
+            try{
+                if (currentFile == null) {
+                    int resultFromDialog = loadAndSaveFileChooser.showSaveDialog(HamRadioMinimumLog.this);
+                    if (resultFromDialog != JFileChooser.APPROVE_OPTION) {
+                        return;
+                    }
 
-    private class SaveLog implements ActionListener {
+                    File newFile = loadAndSaveFileChooser.getSelectedFile();
+
+                    if ((newFile.exists() && currentFile == null) || (newFile.exists() && currentFile != null && !newFile.equals(currentFile))) {
+                        int responseFromDialog = JOptionPane.showConfirmDialog(HamRadioMinimumLog.this, "There is already a file with that name. Do you want to overwrite the file?", "Save log", JOptionPane.YES_NO_OPTION);
+                        if (responseFromDialog != JOptionPane.YES_OPTION) {
+                            return;
+                        }
+                    }
+
+                    currentFile = newFile;
+                }
+
+                Gson gson = new Gson();
+                FileWriter fw = new FileWriter(currentFile);
+                fw.write(gson.toJson(log));
+                fw.close();
+
+                unsavedChanges = false;
+            }catch(IOException ioe){
+                JOptionPane.showMessageDialog(HamRadioMinimumLog.this, "Something went wrong. Error message: " + ioe.getMessage());
+            }
+        }
+    }
+
+    private class SaveAs implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent actionEvent){
             try{
