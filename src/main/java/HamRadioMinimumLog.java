@@ -1,4 +1,5 @@
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -345,17 +346,12 @@ public class HamRadioMinimumLog extends JFrame {
                 }
             }
             try{
-                FileReader fr = new FileReader("qsodata.log");
-                BufferedReader br = new BufferedReader(fr);
-                log.clear();
+                BufferedReader br = new BufferedReader(new FileReader("qsodata.json"));
                 Gson gson = new Gson();
+                log.clear();
+                log = gson.fromJson(br, new TypeToken<ArrayList<QSO>>(){}.getType());
+                br.close();
 
-                String line;
-                while ( (line = br.readLine()) != null) {
-                    log.add(gson.fromJson(line, QSO.class));
-                }
-
-                fr.close();
                 updateTable();
                 unsavedChanges = false;
 
@@ -370,13 +366,11 @@ public class HamRadioMinimumLog extends JFrame {
         @Override
         public void actionPerformed(ActionEvent actionEvent){
             try{
-                FileWriter fw = new FileWriter("qsodata.log");
-                PrintWriter pw = new PrintWriter(fw);
                 Gson gson = new Gson();
-                for (QSO qso : log){
-                    pw.println(gson.toJson(qso));
-                }
+                FileWriter fw = new FileWriter("qsodata.json");
+                fw.write(gson.toJson(log));
                 fw.close();
+
                 unsavedChanges = false;
             }catch(IOException ioe){
                 JOptionPane.showMessageDialog(HamRadioMinimumLog.this, "Something went wrong. Error message: " + ioe.getMessage());
