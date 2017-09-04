@@ -15,6 +15,8 @@ import java.util.Date;
 import java.util.TimeZone;
 
 public class HamRadioMinimumLog extends JFrame {
+    private final String APPLICATION_VERSION = "1.0.0";
+
     private ArrayList<QSO> log = new ArrayList<>();
     private boolean unsavedChanges = false;
     private File currentFile;
@@ -338,7 +340,7 @@ public class HamRadioMinimumLog extends JFrame {
                 sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
                 pw.println("<CREATED_TIMESTAMP:15>" + sdf.format(new Date()));
                 pw.println("<PROGRAMID:21>Ham Radio Minimum Log");
-                pw.println("<PROGRAMVERSION:5>0.1.0");
+                pw.println("<PROGRAMVERSION:" + APPLICATION_VERSION.length() + ">" + APPLICATION_VERSION);
                 pw.println("<EOH>");
                 pw.println();
 
