@@ -337,7 +337,7 @@ public class HamRadioMinimumLog extends JFrame {
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd HHmmss");
                 sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
                 pw.println("<CREATED_TIMESTAMP:15>" + sdf.format(new Date()));
-                pw.println("<PROGRAMID:18>HamRadioMinimumLog");
+                pw.println("<PROGRAMID:21>Ham Radio Minimum Log");
                 pw.println("<PROGRAMVERSION:5>0.1.0");
                 pw.println("<EOH>");
                 pw.println();
