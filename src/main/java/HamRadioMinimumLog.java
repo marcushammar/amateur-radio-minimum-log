@@ -36,18 +36,21 @@ public class HamRadioMinimumLog extends JFrame {
 
         JMenuBar menuBar = new JMenuBar();
         JMenu fileMenu = new JMenu("File");
+        JMenu helpMenu = new JMenu("Help");
 
         JMenuItem newLogMenuItem = new JMenuItem("New log");
         JMenuItem loadMenuItem = new JMenuItem("Load...");
         JMenuItem saveMenuItem = new JMenuItem("Save");
         JMenuItem saveAsMenuItem = new JMenuItem("Save as...");
         JMenuItem exitMenuItem = new JMenuItem("Exit");
+        JMenuItem aboutMenuItem = new JMenuItem("About");
 
         newLogMenuItem.addActionListener(new NewLog());
         loadMenuItem.addActionListener(new Load());
         saveMenuItem.addActionListener(new Save());
         saveAsMenuItem.addActionListener(new SaveAs());
         exitMenuItem.addActionListener(new Exit());
+        aboutMenuItem.addActionListener(new About());
 
         fileMenu.add(newLogMenuItem);
         fileMenu.add(loadMenuItem);
@@ -57,7 +60,10 @@ public class HamRadioMinimumLog extends JFrame {
         fileMenu.addSeparator();
         fileMenu.add(exitMenuItem);
 
+        helpMenu.add(aboutMenuItem);
+
         menuBar.add(fileMenu);
+        menuBar.add(helpMenu);
         setJMenuBar(menuBar);
 
         table = new JTable(getDataForTable(), columns);
@@ -481,6 +487,14 @@ public class HamRadioMinimumLog extends JFrame {
             System.exit(0);
         }
     }
+
+    private class About implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent actionEvent){
+            JOptionPane.showMessageDialog(HamRadioMinimumLog.this, "Ham Radio Minimum Log\nVersion " + APPLICATION_VERSION, "About", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
 
     private class TableSelectionListener implements ListSelectionListener {
         @Override
