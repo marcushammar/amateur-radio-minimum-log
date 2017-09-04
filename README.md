@@ -1,4 +1,5 @@
-# Ham Radio Minimum Log
+Ham Radio Minimum Log
+=====================
 A minimum ham radio logging application. It can export ADIF files that are compatible with for example LoTW, QRZ and eQSL.
 
 Installation
