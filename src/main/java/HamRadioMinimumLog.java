@@ -428,7 +428,12 @@ public class HamRadioMinimumLog extends JFrame {
                         }
                     }
 
-                    currentFile = newFile;
+                    String fileName = newFile.toString();
+                    if (!fileName.endsWith(".json")){
+                        fileName += ".json";
+                    }
+
+                    currentFile = new File(fileName);
                 }
 
                 Gson gson = new Gson();
@@ -461,7 +466,12 @@ public class HamRadioMinimumLog extends JFrame {
                     }
                 }
 
-                currentFile = newFile;
+                String fileName = newFile.toString();
+                if (!fileName.endsWith(".json")){
+                    fileName += ".json";
+                }
+
+                currentFile = new File(fileName);
 
                 Gson gson = new Gson();
                 FileWriter fw = new FileWriter(currentFile);
