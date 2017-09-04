@@ -107,8 +107,8 @@ public class HamRadioMinimumLog extends JFrame {
         loadAndSaveFileChooser.setFileFilter(new FileNameExtensionFilter("Ham Radio Minimum Log format","json"));
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setSize(600, 300);
         setLocationRelativeTo(null);
-        setSize(1000, 500);
         setVisible(true);
     }
 
