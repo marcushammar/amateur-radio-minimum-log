@@ -491,7 +491,7 @@ public class HamRadioMinimumLog extends JFrame {
     private class About implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent actionEvent){
-            JOptionPane.showMessageDialog(HamRadioMinimumLog.this, "Ham Radio Minimum Log\nVersion " + APPLICATION_VERSION, "About", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(HamRadioMinimumLog.this, "Ham Radio Minimum Log\nVersion " + APPLICATION_VERSION + "\n\nThis application uses GSON from Google. GSON is licensed under the Apache License 2.0.\nApache License 2.0 can be found at http://www.apache.org/licenses/LICENSE-2.0", "About", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
