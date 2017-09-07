@@ -1,4 +1,6 @@
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
 
 public class QSOForm extends JPanel{
@@ -16,13 +18,16 @@ public class QSOForm extends JPanel{
     private JTextField myLocationTextField = new JTextField(15);
     private JTextField commentsTextField = new JTextField(15);
 
+    private JLabel timeStartLabel = new JLabel("Time start");
+    private JLabel timeEndLabel = new JLabel("Time end");
+
     public QSOForm(){
         setLayout(new GridLayout(13,2));
         add(new JLabel("Call sign"));
         add(callSignTextField);
-        add(new JLabel("Time start"));
+        add(timeStartLabel);
         add(timeStartTextField);
-        add(new JLabel("Time end"));
+        add(timeEndLabel);
         add(timeEndTextField);
         add(new JLabel("Frequency"));
         add(frequencyTextField);
@@ -44,6 +49,9 @@ public class QSOForm extends JPanel{
         add(myLocationTextField);
         add(new JLabel("Comments"));
         add(commentsTextField);
+
+        timeStartTextField.getDocument().addDocumentListener(new TimeTextFieldDocumentListener());
+        timeEndTextField.getDocument().addDocumentListener(new TimeTextFieldDocumentListener());
     }
 
     public String getCallSign(){
@@ -148,5 +156,43 @@ public class QSOForm extends JPanel{
 
     public void setComments(String comments){
         commentsTextField.setText(comments);
+    }
+
+    private void validateTime(){
+        boolean validTimeStart = timeStartTextField.getText().matches("\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}");
+        boolean validTimeEnd = timeEndTextField.getText().matches("\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}");
+
+        if (validTimeStart){
+            timeStartLabel.setText("Time start (Valid)");
+        }else{
+            timeStartLabel.setText("Time start (Not valid)");
+        }
+
+        if (validTimeEnd){
+            timeEndLabel.setText("Time end (Valid)");
+        }else{
+            timeEndLabel.setText("Time end (Not valid)");
+        }
+    }
+
+    public void validate(){
+        validateTime();
+    }
+
+    private class TimeTextFieldDocumentListener implements DocumentListener {
+        @Override
+        public void changedUpdate(DocumentEvent e){
+            validateTime();
+        }
+
+        @Override
+        public void removeUpdate(DocumentEvent e){
+            validateTime();
+        }
+
+        @Override
+        public void insertUpdate(DocumentEvent e){
+            validateTime();
+        }
     }
 }

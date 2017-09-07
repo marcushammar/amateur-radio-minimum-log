@@ -172,6 +172,7 @@ public class HamRadioMinimumLog extends JFrame {
         @Override
         public void actionPerformed(ActionEvent actionEvent){
             QSOForm form = new QSOForm();
+            form.validate();
             int responseFromDialog = JOptionPane.showConfirmDialog(HamRadioMinimumLog.this, form, "Add", JOptionPane.OK_CANCEL_OPTION);
 
             if (responseFromDialog == JOptionPane.YES_OPTION){
@@ -222,6 +223,8 @@ public class HamRadioMinimumLog extends JFrame {
             qsoForm.setMyLocation(qsoExisting.getMyLocation());
             qsoForm.setComments(qsoExisting.getComments());
 
+            qsoForm.validate();
+
             int responseFromDialog = JOptionPane.showConfirmDialog(HamRadioMinimumLog.this, qsoForm, "Copy", JOptionPane.OK_CANCEL_OPTION);
 
             if (responseFromDialog == JOptionPane.YES_OPTION){
@@ -271,6 +274,8 @@ public class HamRadioMinimumLog extends JFrame {
             qsoForm.setMyCallSign(qso.getMyCallSign());
             qsoForm.setMyLocation(qso.getMyLocation());
             qsoForm.setComments(qso.getComments());
+
+            qsoForm.validate();
 
             int responseFromDialog = JOptionPane.showConfirmDialog(HamRadioMinimumLog.this, qsoForm, "Modify", JOptionPane.OK_CANCEL_OPTION);
 
