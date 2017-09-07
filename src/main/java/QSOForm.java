@@ -18,16 +18,13 @@ public class QSOForm extends JPanel{
     private JTextField myLocationTextField = new JTextField(15);
     private JTextField commentsTextField = new JTextField(15);
 
-    private JLabel timeStartLabel = new JLabel("Time start");
-    private JLabel timeEndLabel = new JLabel("Time end");
-
     public QSOForm(){
         setLayout(new GridLayout(13,2));
         add(new JLabel("Call sign"));
         add(callSignTextField);
-        add(timeStartLabel);
+        add(new JLabel("Time start"));
         add(timeStartTextField);
-        add(timeEndLabel);
+        add(new JLabel("Time end"));
         add(timeEndTextField);
         add(new JLabel("Frequency"));
         add(frequencyTextField);
@@ -179,15 +176,15 @@ public class QSOForm extends JPanel{
         boolean validTimeEnd = timeEndTextField.getText().matches("\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}");
 
         if (validTimeStart){
-            timeStartLabel.setText("Time start (Valid)");
+            timeStartTextField.setBackground(Color.decode("#cef9c5"));
         }else{
-            timeStartLabel.setText("Time start (Not valid)");
+            timeStartTextField.setBackground(Color.decode("#f9c5c5"));
         }
 
         if (validTimeEnd){
-            timeEndLabel.setText("Time end (Valid)");
+            timeEndTextField.setBackground(Color.decode("#cef9c5"));
         }else{
-            timeEndLabel.setText("Time end (Not valid)");
+            timeEndTextField.setBackground(Color.decode("#f9c5c5"));
         }
     }
 
