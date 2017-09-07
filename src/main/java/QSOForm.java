@@ -54,6 +54,7 @@ public class QSOForm extends JPanel{
 
         timeStartTextField.getDocument().addDocumentListener(new TextFieldDocumentListener());
         timeEndTextField.getDocument().addDocumentListener(new TextFieldDocumentListener());
+        frequencyTextField.getDocument().addDocumentListener(new TextFieldDocumentListener());
         bandTextField.getDocument().addDocumentListener(new TextFieldDocumentListener());
         powerTextField.getDocument().addDocumentListener(new TextFieldDocumentListener());
 
@@ -195,6 +196,18 @@ public class QSOForm extends JPanel{
         }
     }
 
+    private void validateFrequency(){
+        boolean validFrequency = frequencyTextField.getText().matches("[0-9]{1,6}|[0-9]{1,6}[.]{1}[0-9]{1,6}");
+
+        if (frequencyTextField.getText().equals("")) {
+            frequencyTextField.setBackground(Color.WHITE);
+        }else if(validFrequency){
+            frequencyTextField.setBackground(GREEN_COLOR);
+        }else{
+            frequencyTextField.setBackground(RED_COLOR);
+        }
+    }
+
     private void validateBand(){
         if (bandTextField.getText().equals("")){
             bandTextField.setBackground(Color.WHITE);
@@ -219,6 +232,7 @@ public class QSOForm extends JPanel{
 
     public void validate(){
         validateTime();
+        validateFrequency();
         validateBand();
         validatePower();
     }
