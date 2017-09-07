@@ -55,6 +55,7 @@ public class QSOForm extends JPanel{
         timeStartTextField.getDocument().addDocumentListener(new TextFieldDocumentListener());
         timeEndTextField.getDocument().addDocumentListener(new TextFieldDocumentListener());
         bandTextField.getDocument().addDocumentListener(new TextFieldDocumentListener());
+        powerTextField.getDocument().addDocumentListener(new TextFieldDocumentListener());
 
         ToolTipManager.sharedInstance().setDismissDelay(20000);
 
@@ -204,9 +205,22 @@ public class QSOForm extends JPanel{
         }
     }
 
+    private void validatePower(){
+        boolean validPower = powerTextField.getText().matches("[0-9]{1,4}");
+
+        if (powerTextField.getText().equals("")) {
+            powerTextField.setBackground(Color.WHITE);
+        }else if(validPower){
+            powerTextField.setBackground(GREEN_COLOR);
+        }else{
+            powerTextField.setBackground(RED_COLOR);
+        }
+    }
+
     public void validate(){
         validateTime();
         validateBand();
+        validatePower();
     }
 
     private class TextFieldDocumentListener implements DocumentListener {
