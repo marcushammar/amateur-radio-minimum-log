@@ -195,7 +195,9 @@ public class QSOForm extends JPanel{
     }
 
     private void validateBand(){
-        if (validBands.contains(bandTextField.getText())){
+        if (bandTextField.getText().equals("")){
+            bandTextField.setBackground(Color.WHITE);
+        }else if(validBands.contains(bandTextField.getText())){
             bandTextField.setBackground(GREEN_COLOR);
         }else{
             bandTextField.setBackground(RED_COLOR);
