@@ -2,8 +2,11 @@ import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
+import java.util.Arrays;
+import java.util.HashSet;
 
 public class QSOForm extends JPanel{
+    private HashSet<String> validBands = new HashSet<>(Arrays.asList("2190m", "630m", "560m", "160m", "80m", "60m", "40m", "30m", "20m", "17m", "15m", "12m", "10m", "6m", "4m", "2m", "1.25m", "70cm", "33cm", "23cm", "13cm", "9cm", "6cm", "3cm", "1.25cm", "6mm", "4mm", "2.5mm", "2mm", "1mm"));
     private JTextField callSignTextField = new JTextField(15);
     private JTextField timeStartTextField = new JTextField(15);
     private JTextField timeEndTextField = new JTextField(15);
@@ -47,8 +50,9 @@ public class QSOForm extends JPanel{
         add(new JLabel("Comments"));
         add(commentsTextField);
 
-        timeStartTextField.getDocument().addDocumentListener(new TimeTextFieldDocumentListener());
-        timeEndTextField.getDocument().addDocumentListener(new TimeTextFieldDocumentListener());
+        timeStartTextField.getDocument().addDocumentListener(new TextFieldDocumentListener());
+        timeEndTextField.getDocument().addDocumentListener(new TextFieldDocumentListener());
+        bandTextField.getDocument().addDocumentListener(new TextFieldDocumentListener());
 
         ToolTipManager.sharedInstance().setDismissDelay(20000);
 
@@ -188,24 +192,33 @@ public class QSOForm extends JPanel{
         }
     }
 
-    public void validate(){
-        validateTime();
+    private void validateBand(){
+        if (validBands.contains(bandTextField.getText())){
+            bandTextField.setBackground(Color.decode("#cef9c5"));
+        }else{
+            bandTextField.setBackground(Color.decode("#f9c5c5"));
+        }
     }
 
-    private class TimeTextFieldDocumentListener implements DocumentListener {
+    public void validate(){
+        validateTime();
+        validateBand();
+    }
+
+    private class TextFieldDocumentListener implements DocumentListener {
         @Override
         public void changedUpdate(DocumentEvent e){
-            validateTime();
+            validate();
         }
 
         @Override
         public void removeUpdate(DocumentEvent e){
-            validateTime();
+            validate();
         }
 
         @Override
         public void insertUpdate(DocumentEvent e){
-            validateTime();
+            validate();
         }
     }
 }
