@@ -6,6 +6,8 @@ import java.util.Arrays;
 import java.util.HashSet;
 
 public class QSOForm extends JPanel{
+    private final static Color GREEN_COLOR = Color.decode("#cef9c5");
+    private final static Color RED_COLOR = Color.decode("#f9c5c5");
     private HashSet<String> validBands = new HashSet<>(Arrays.asList("2190m", "630m", "560m", "160m", "80m", "60m", "40m", "30m", "20m", "17m", "15m", "12m", "10m", "6m", "4m", "2m", "1.25m", "70cm", "33cm", "23cm", "13cm", "9cm", "6cm", "3cm", "1.25cm", "6mm", "4mm", "2.5mm", "2mm", "1mm"));
     private JTextField callSignTextField = new JTextField(15);
     private JTextField timeStartTextField = new JTextField(15);
@@ -180,23 +182,23 @@ public class QSOForm extends JPanel{
         boolean validTimeEnd = timeEndTextField.getText().matches("\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}");
 
         if (validTimeStart){
-            timeStartTextField.setBackground(Color.decode("#cef9c5"));
+            timeStartTextField.setBackground(GREEN_COLOR);
         }else{
-            timeStartTextField.setBackground(Color.decode("#f9c5c5"));
+            timeStartTextField.setBackground(RED_COLOR);
         }
 
         if (validTimeEnd){
-            timeEndTextField.setBackground(Color.decode("#cef9c5"));
+            timeEndTextField.setBackground(GREEN_COLOR);
         }else{
-            timeEndTextField.setBackground(Color.decode("#f9c5c5"));
+            timeEndTextField.setBackground(RED_COLOR);
         }
     }
 
     private void validateBand(){
         if (validBands.contains(bandTextField.getText())){
-            bandTextField.setBackground(Color.decode("#cef9c5"));
+            bandTextField.setBackground(GREEN_COLOR);
         }else{
-            bandTextField.setBackground(Color.decode("#f9c5c5"));
+            bandTextField.setBackground(RED_COLOR);
         }
     }
 
