@@ -2,14 +2,10 @@ import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
-import java.util.Arrays;
-import java.util.HashSet;
 
 public class QSOForm extends JPanel{
     private final static Color GREEN_COLOR = Color.decode("#ebfce8");
     private final static Color RED_COLOR = Color.decode("#ffeaea");
-    private HashSet<String> validBands = new HashSet<>(Arrays.asList("2190m", "630m", "560m", "160m", "80m", "60m", "40m", "30m", "20m", "17m", "15m", "12m", "10m", "6m", "4m", "2m", "1.25m", "70cm", "33cm", "23cm", "13cm", "9cm", "6cm", "3cm", "1.25cm", "6mm", "4mm", "2.5mm", "2mm", "1mm"));
-    private HashSet<String> validModes = new HashSet<>(Arrays.asList("AM", "ARDOP", "ATV", "C4FM", "CHIP", "CLO", "CONTESTI", "CW", "DIGITALVOICE", "DOMINO", "DSTAR", "FAX", "FM", "FSK441", "FT8", "HELL", "ISCAT", "JT4", "JT6M", "JT9", "JT44", "JT65", "MFSK", "MSK144", "MT63", "OLIVIA", "OPERA", "PAC", "PAX", "PKT", "PSK", "PSK2K", "Q15", "QRA64", "ROS", "RTTY", "RTTYM", "SSB", "SSTV", "T10", "THOR", "THRB", "TOR", "V4", "VOI", "WINMOR", "WSPR"));
     private JTextField callSignTextField = new JTextField(15);
     private JTextField timeStartTextField = new JTextField(15);
     private JTextField timeEndTextField = new JTextField(15);
@@ -181,21 +177,20 @@ public class QSOForm extends JPanel{
         commentsTextField.setText(comments);
     }
 
-    private void validateTime(){
-        boolean validTimeStart = timeStartTextField.getText().matches("\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}");
-        boolean validTimeEnd = timeEndTextField.getText().matches("\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}");
-
+    private void validateTimeStart() {
         if (timeStartTextField.getText().equals("")) {
             timeStartTextField.setBackground(Color.WHITE);
-        }else if(validTimeStart){
+        }else if(QSO.validateTimeStart(timeStartTextField.getText())) {
             timeStartTextField.setBackground(GREEN_COLOR);
         }else{
             timeStartTextField.setBackground(RED_COLOR);
         }
+    }
 
+    private void validateTimeEnd() {
         if (timeEndTextField.getText().equals("")) {
             timeEndTextField.setBackground(Color.WHITE);
-        }else if(validTimeEnd){
+        }else if(QSO.validateTimeEnd(timeEndTextField.getText())){
             timeEndTextField.setBackground(GREEN_COLOR);
         }else{
             timeEndTextField.setBackground(RED_COLOR);
@@ -203,11 +198,9 @@ public class QSOForm extends JPanel{
     }
 
     private void validateFrequency(){
-        boolean validFrequency = frequencyTextField.getText().matches("[0-9]{1,6}|[0-9]{1,6}[.][0-9]{1,6}");
-
         if (frequencyTextField.getText().equals("")) {
             frequencyTextField.setBackground(Color.WHITE);
-        }else if(validFrequency){
+        }else if(QSO.validateFrequency(frequencyTextField.getText())){
             frequencyTextField.setBackground(GREEN_COLOR);
         }else{
             frequencyTextField.setBackground(RED_COLOR);
@@ -217,7 +210,7 @@ public class QSOForm extends JPanel{
     private void validateBand(){
         if (bandTextField.getText().equals("")){
             bandTextField.setBackground(Color.WHITE);
-        }else if(validBands.contains(bandTextField.getText())){
+        }else if(QSO.validateBand(bandTextField.getText())){
             bandTextField.setBackground(GREEN_COLOR);
         }else{
             bandTextField.setBackground(RED_COLOR);
@@ -227,7 +220,7 @@ public class QSOForm extends JPanel{
     private void validateMode(){
         if (modeTextField.getText().equals("")){
             modeTextField.setBackground(Color.WHITE);
-        }else if(validModes.contains(modeTextField.getText())){
+        }else if(QSO.validateMode(modeTextField.getText())){
             modeTextField.setBackground(GREEN_COLOR);
         }else{
             modeTextField.setBackground(RED_COLOR);
@@ -235,11 +228,9 @@ public class QSOForm extends JPanel{
     }
 
     private void validatePower(){
-        boolean validPower = powerTextField.getText().matches("[0-9]{1,4}");
-
         if (powerTextField.getText().equals("")) {
             powerTextField.setBackground(Color.WHITE);
-        }else if(validPower){
+        }else if(QSO.validatePower(powerTextField.getText())){
             powerTextField.setBackground(GREEN_COLOR);
         }else{
             powerTextField.setBackground(RED_COLOR);
@@ -247,7 +238,8 @@ public class QSOForm extends JPanel{
     }
 
     public void validate(){
-        validateTime();
+        validateTimeStart();
+        validateTimeEnd();
         validateFrequency();
         validateBand();
         validateMode();
