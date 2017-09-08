@@ -346,6 +346,8 @@ public class HamRadioMinimumLog extends JFrame {
                 FileWriter fw = new FileWriter(exportFile);
                 PrintWriter pw = new PrintWriter(fw);
 
+                pw.println("This ADIF file was extracted from Ham Radio Minimum Log");
+                pw.println();
                 pw.println("<ADIF_VER:5>3.0.6");
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd HHmmss");
                 sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
