@@ -203,7 +203,7 @@ public class QSOForm extends JPanel{
     }
 
     private void validateFrequency(){
-        boolean validFrequency = frequencyTextField.getText().matches("[0-9]{1,6}|[0-9]{1,6}[.]{1}[0-9]{1,6}");
+        boolean validFrequency = frequencyTextField.getText().matches("[0-9]{1,6}|[0-9]{1,6}[.][0-9]{1,6}");
 
         if (frequencyTextField.getText().equals("")) {
             frequencyTextField.setBackground(Color.WHITE);
