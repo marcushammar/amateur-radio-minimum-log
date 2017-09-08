@@ -200,6 +200,16 @@ public class QSO {
             adifRow += getAdifField("TX_PWR", power);
         }
 
+        if (!location.equals("")){
+            if (isGridSquare(location)){
+                adifRow += getAdifField("GRIDSQUARE", location);
+            }else if(isAdifString(location)){
+                adifRow += getAdifField("QTH", location);
+            }else if(isAdifIntlString(location)){
+                adifRow += getAdifField("QTH_INTL", location);
+            }
+        }
+
         if (!rstSent.equals("")){
             adifRow += getAdifField("RST_SENT", rstSent);
         }
@@ -208,12 +218,14 @@ public class QSO {
             adifRow += getAdifField("RST_RCVD", rstReceived);
         }
 
-        if (!location.equals("")){
-            adifRow += getAdifField("GRIDSQUARE", location);
-        }
-
         if (!myLocation.equals("")){
-            adifRow += getAdifField("MY_GRIDSQUARE", myLocation);
+            if (isGridSquare(myLocation)){
+                adifRow += getAdifField("MY_GRIDSQUARE", myLocation);
+            }else if(isAdifString(myLocation)){
+                adifRow += getAdifField("MY_CITY", myLocation);
+            }else if(isAdifIntlString(myLocation)){
+                adifRow += getAdifField("MY_CITY_INTL", myLocation);
+            }
         }
 
         if (!myCallSign.equals("")){
@@ -231,6 +243,37 @@ public class QSO {
 
     private String getAdifField(String field, String data){
         return "<" + field + ":" + data.length() + ">" + data;
+    }
+
+    private boolean isGridSquare(String value){
+        boolean gridSquareTwoCharacters = value.matches("[A-Z]{2}");
+        boolean gridSquareFourCharacters = value.matches("[A-Z]{2}[0-9]{2}");
+        boolean gridSquareSixCharacters = value.matches("[A-Z]{2}[0-9]{2}[a-z]{2}");
+        boolean gridSquareEightCharacters = value.matches("[A-Z]{2}[0-9]{2}[a-z]{2}[0-9]{2}");
+
+        return gridSquareTwoCharacters || gridSquareFourCharacters || gridSquareSixCharacters || gridSquareEightCharacters;
+    }
+
+    private boolean isAdifString(String value){
+        boolean valid = true;
+        for (int i = 0; i < value.length(); i++){
+            char c = value.charAt(i);
+            if (c < 32 || c > 126){
+                valid = false;
+            }
+        }
+        return valid;
+    }
+
+    private boolean isAdifIntlString(String value){
+        boolean valid = true;
+        for (int i = 0; i < value.length(); i++){
+            char c = value.charAt(i);
+            if (c == 13 || c == 10){
+                valid = false;
+            }
+        }
+        return valid;
     }
 
     public static boolean validateTimeStart(String value){
