@@ -55,6 +55,8 @@ public class QSOForm extends JPanel{
         bandTextField.getDocument().addDocumentListener(new TextFieldDocumentListener());
         modeTextField.getDocument().addDocumentListener(new TextFieldDocumentListener());
         powerTextField.getDocument().addDocumentListener(new TextFieldDocumentListener());
+        locationTextField.getDocument().addDocumentListener(new TextFieldDocumentListener());
+        myLocationTextField.getDocument().addDocumentListener(new TextFieldDocumentListener());
 
         ToolTipManager.sharedInstance().setDismissDelay(20000);
 
@@ -237,6 +239,26 @@ public class QSOForm extends JPanel{
         }
     }
 
+    private void validateLocation(){
+        if (locationTextField.getText().equals("")) {
+            locationTextField.setBackground(Color.WHITE);
+        }else if(QSO.validateLocation(locationTextField.getText())){
+            locationTextField.setBackground(GREEN_COLOR);
+        }else{
+            locationTextField.setBackground(RED_COLOR);
+        }
+    }
+
+    private void validateMyLocation(){
+        if (myLocationTextField.getText().equals("")) {
+            myLocationTextField.setBackground(Color.WHITE);
+        }else if(QSO.validateMyLocation(myLocationTextField.getText())){
+            myLocationTextField.setBackground(GREEN_COLOR);
+        }else{
+            myLocationTextField.setBackground(RED_COLOR);
+        }
+    }
+
     public void validate(){
         validateTimeStart();
         validateTimeEnd();
@@ -244,6 +266,8 @@ public class QSOForm extends JPanel{
         validateBand();
         validateMode();
         validatePower();
+        validateLocation();
+        validateMyLocation();
     }
 
     private class TextFieldDocumentListener implements DocumentListener {

@@ -245,7 +245,7 @@ public class QSO {
         return "<" + field + ":" + data.length() + ">" + data;
     }
 
-    private boolean isGridSquare(String value){
+    private static boolean isGridSquare(String value){
         boolean gridSquareTwoCharacters = value.matches("[A-Z]{2}");
         boolean gridSquareFourCharacters = value.matches("[A-Z]{2}[0-9]{2}");
         boolean gridSquareSixCharacters = value.matches("[A-Z]{2}[0-9]{2}[a-z]{2}");
@@ -254,7 +254,7 @@ public class QSO {
         return gridSquareTwoCharacters || gridSquareFourCharacters || gridSquareSixCharacters || gridSquareEightCharacters;
     }
 
-    private boolean isAdifString(String value){
+    private static boolean isAdifString(String value){
         boolean valid = true;
         for (int i = 0; i < value.length(); i++){
             char c = value.charAt(i);
@@ -265,7 +265,7 @@ public class QSO {
         return valid;
     }
 
-    private boolean isAdifIntlString(String value){
+    private static boolean isAdifIntlString(String value){
         boolean valid = true;
         for (int i = 0; i < value.length(); i++){
             char c = value.charAt(i);
@@ -298,5 +298,13 @@ public class QSO {
 
     public static boolean validatePower(String value){
         return value.matches("[0-9]{1,4}");
+    }
+
+    public static boolean validateLocation(String value){
+        return isGridSquare(value) || isAdifString(value) || isAdifIntlString(value);
+    }
+
+    public static boolean validateMyLocation(String value){
+        return isGridSquare(value) || isAdifString(value) || isAdifIntlString(value);
     }
 }
