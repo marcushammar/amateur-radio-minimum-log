@@ -59,8 +59,8 @@ public class QSOForm extends JPanel{
         ToolTipManager.sharedInstance().setDismissDelay(20000);
 
         callSignTextField.setToolTipText("The call sign of the other person");
-        timeStartTextField.setToolTipText("The start time in the format YYYY-MM-DD HH:MM:SS");
-        timeEndTextField.setToolTipText("The end time in the format YYYY-MM-DD HH:MM:SS");
+        timeStartTextField.setToolTipText("The start time in the format YYYY-MM-DD HH:MM or YYYY-MM-DD HH:MM:SS");
+        timeEndTextField.setToolTipText("The end time in the format YYYY-MM-DD HH:MM or YYYY-MM-DD HH:MM:SS");
         frequencyTextField.setToolTipText("The frequency in MHz in the format NN.NNN (use a dot, not comma)");
         bandTextField.setToolTipText("Use a small character for the unit (eng. 20m)");
         modeTextField.setToolTipText("Use large characters for the mode (eng. FT8)");

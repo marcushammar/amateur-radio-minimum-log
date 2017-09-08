@@ -234,11 +234,11 @@ public class QSO {
     }
 
     public static boolean validateTimeStart(String value){
-        return value.matches("\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}");
+        return value.matches("[0-9]{4}[-][0-9]{2}[-][0-9]{2}[ ][0-9]{2}[:][0-9]{2}([:][0-9]{2})?");
     }
 
     public static boolean validateTimeEnd(String value){
-        return value.matches("\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}");
+        return value.matches("[0-9]{4}[-][0-9]{2}[-][0-9]{2}[ ][0-9]{2}[:][0-9]{2}([:][0-9]{2})?");
     }
 
     public static boolean validateFrequency(String value){
