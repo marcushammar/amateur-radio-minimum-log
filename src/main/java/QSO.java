@@ -133,22 +133,65 @@ public class QSO {
     }
 
     public String getAdifRow(){
-        return  getAdifField("CALL", callSign) +
-                getAdifField("QSO_DATE", timeStart.substring(0, 10).replace("-","")) +
-                getAdifField("QSO_DATE_OFF", timeEnd.substring(0, 10).replace("-","")) +
-                getAdifField("TIME_ON", timeStart.substring(11).replace(":","")) +
-                getAdifField("TIME_OFF", timeEnd.substring(11).replace(":","")) +
-                getAdifField("FREQ", frequency) +
-                getAdifField("BAND", band) +
-                getAdifField("MODE", mode) +
-                getAdifField("TX_PWR", power) +
-                getAdifField("RST_SENT", rstSent) +
-                getAdifField("RST_RCVD", rstReceived) +
-                getAdifField("GRIDSQUARE", location) +
-                getAdifField("MY_GRIDSQUARE", myLocation) +
-                getAdifField("OPERATOR", myCallSign) +
-                getAdifField("COMMENT", comments) +
-                "<EOR>";
+        String adifRow = "";
+
+        if (!callSign.equals("")){
+            adifRow += getAdifField("CALL", callSign);
+        }
+
+        if (!timeStart.equals("")){
+            adifRow += getAdifField("QSO_DATE", timeStart.substring(0, 10).replace("-",""));
+            adifRow += getAdifField("TIME_ON", timeStart.substring(11).replace(":",""));
+        }
+
+        if (!timeEnd.equals("")){
+            adifRow += getAdifField("QSO_DATE_OFF", timeEnd.substring(0, 10).replace("-",""));
+            adifRow += getAdifField("TIME_OFF", timeEnd.substring(11).replace(":",""));
+        }
+
+        if (!frequency.equals("")){
+            adifRow += getAdifField("FREQ", frequency);
+        }
+
+        if (!band.equals("")){
+            adifRow += getAdifField("BAND", band);
+        }
+
+        if (!mode.equals("")){
+            adifRow += getAdifField("MODE", mode);
+        }
+
+        if (!power.equals("")){
+            adifRow += getAdifField("TX_PWR", power);
+        }
+
+        if (!rstSent.equals("")){
+            adifRow += getAdifField("RST_SENT", rstSent);
+        }
+
+        if (!rstReceived.equals("")){
+            adifRow += getAdifField("RST_RCVD", rstReceived);
+        }
+
+        if (!location.equals("")){
+            adifRow += getAdifField("GRIDSQUARE", location);
+        }
+
+        if (!myLocation.equals("")){
+            adifRow += getAdifField("MY_GRIDSQUARE", myLocation);
+        }
+
+        if (!myCallSign.equals("")){
+            adifRow += getAdifField("OPERATOR", myCallSign);
+        }
+
+        if (!comments.equals("")){
+            adifRow += getAdifField("COMMENT", comments);
+        }
+
+        adifRow += "<EOR>";
+
+        return adifRow;
     }
 
     private String getAdifField(String field, String data){
