@@ -183,13 +183,17 @@ public class QSOForm extends JPanel{
         boolean validTimeStart = timeStartTextField.getText().matches("\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}");
         boolean validTimeEnd = timeEndTextField.getText().matches("\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}");
 
-        if (validTimeStart){
+        if (timeStartTextField.getText().equals("")) {
+            timeStartTextField.setBackground(Color.WHITE);
+        }else if(validTimeStart){
             timeStartTextField.setBackground(GREEN_COLOR);
         }else{
             timeStartTextField.setBackground(RED_COLOR);
         }
 
-        if (validTimeEnd){
+        if (timeEndTextField.getText().equals("")) {
+            timeEndTextField.setBackground(Color.WHITE);
+        }else if(validTimeEnd){
             timeEndTextField.setBackground(GREEN_COLOR);
         }else{
             timeEndTextField.setBackground(RED_COLOR);
