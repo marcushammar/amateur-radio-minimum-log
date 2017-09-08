@@ -128,6 +128,12 @@ public class QSO {
     public boolean validateAdif(){
         boolean valid = true;
 
+        if (!callSign.equals("")){
+            if (!validateCallSign(callSign)){
+                valid = false;
+            }
+        }
+
         if (!timeStart.equals("")){
             if (!validateTimeStart(timeStart)){
                 valid = false;
@@ -160,6 +166,12 @@ public class QSO {
 
         if (!power.equals("")){
             if (!validatePower(power)){
+                valid = false;
+            }
+        }
+
+        if (!myCallSign.equals("")){
+            if (!validateMyCallSign(myCallSign)){
                 valid = false;
             }
         }
@@ -276,6 +288,10 @@ public class QSO {
         return valid;
     }
 
+    public static boolean validateCallSign(String value){
+        return isAdifString(value);
+    }
+
     public static boolean validateTimeStart(String value){
         return value.matches("[0-9]{4}[-][0-9]{2}[-][0-9]{2}[ ][0-9]{2}[:][0-9]{2}([:][0-9]{2})?");
     }
@@ -298,6 +314,10 @@ public class QSO {
 
     public static boolean validatePower(String value){
         return value.matches("[0-9]{1,4}");
+    }
+
+    public static boolean validateMyCallSign(String value){
+        return isAdifString(value);
     }
 
     public static boolean validateLocation(String value){

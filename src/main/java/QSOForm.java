@@ -49,6 +49,7 @@ public class QSOForm extends JPanel{
         add(new JLabel("Comments"));
         add(commentsTextField);
 
+        callSignTextField.getDocument().addDocumentListener(new TextFieldDocumentListener());
         timeStartTextField.getDocument().addDocumentListener(new TextFieldDocumentListener());
         timeEndTextField.getDocument().addDocumentListener(new TextFieldDocumentListener());
         frequencyTextField.getDocument().addDocumentListener(new TextFieldDocumentListener());
@@ -56,6 +57,7 @@ public class QSOForm extends JPanel{
         modeTextField.getDocument().addDocumentListener(new TextFieldDocumentListener());
         powerTextField.getDocument().addDocumentListener(new TextFieldDocumentListener());
         locationTextField.getDocument().addDocumentListener(new TextFieldDocumentListener());
+        myCallSignTextField.getDocument().addDocumentListener(new TextFieldDocumentListener());
         myLocationTextField.getDocument().addDocumentListener(new TextFieldDocumentListener());
 
         ToolTipManager.sharedInstance().setDismissDelay(20000);
@@ -179,6 +181,16 @@ public class QSOForm extends JPanel{
         commentsTextField.setText(comments);
     }
 
+    private void validateCallSign() {
+        if (callSignTextField.getText().equals("")) {
+            callSignTextField.setBackground(Color.WHITE);
+        }else if(QSO.validateCallSign(callSignTextField.getText())) {
+            callSignTextField.setBackground(GREEN_COLOR);
+        }else{
+            callSignTextField.setBackground(RED_COLOR);
+        }
+    }
+
     private void validateTimeStart() {
         if (timeStartTextField.getText().equals("")) {
             timeStartTextField.setBackground(Color.WHITE);
@@ -249,6 +261,16 @@ public class QSOForm extends JPanel{
         }
     }
 
+    private void validateMyCallSign() {
+        if (myCallSignTextField.getText().equals("")) {
+            myCallSignTextField.setBackground(Color.WHITE);
+        }else if(QSO.validateMyCallSign(myCallSignTextField.getText())) {
+            myCallSignTextField.setBackground(GREEN_COLOR);
+        }else{
+            myCallSignTextField.setBackground(RED_COLOR);
+        }
+    }
+
     private void validateMyLocation(){
         if (myLocationTextField.getText().equals("")) {
             myLocationTextField.setBackground(Color.WHITE);
@@ -260,6 +282,7 @@ public class QSOForm extends JPanel{
     }
 
     public void validate(){
+        validateCallSign();
         validateTimeStart();
         validateTimeEnd();
         validateFrequency();
@@ -267,6 +290,7 @@ public class QSOForm extends JPanel{
         validateMode();
         validatePower();
         validateLocation();
+        validateMyCallSign();
         validateMyLocation();
     }
 
