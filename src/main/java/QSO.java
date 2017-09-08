@@ -126,10 +126,45 @@ public class QSO {
     }
 
     public boolean validateAdif(){
-        boolean validTimeStart = timeStart.matches("\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}");
-        boolean validTimeEnd = timeEnd.matches("\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}");
+        boolean valid = true;
 
-        return validTimeStart && validTimeEnd;
+        if (!timeStart.equals("")){
+            if (!validateTimeStart(timeStart)){
+                valid = false;
+            }
+        }
+
+        if (!timeEnd.equals("")){
+            if (!validateTimeEnd(timeEnd)){
+                valid = false;
+            }
+        }
+
+        if (!frequency.equals("")){
+            if (!validateFrequency(frequency)){
+                valid = false;
+            }
+        }
+
+        if (!band.equals("")){
+            if (!validateBand(band)){
+                valid = false;
+            }
+        }
+
+        if (!mode.equals("")){
+            if (!validateMode(mode)){
+                valid = false;
+            }
+        }
+
+        if (!power.equals("")){
+            if (!validatePower(power)){
+                valid = false;
+            }
+        }
+
+        return valid;
     }
 
     public String getAdifRow(){
