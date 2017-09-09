@@ -1,3 +1,6 @@
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.HashSet;
 
@@ -170,8 +173,39 @@ public class QSO {
             }
         }
 
+        if (!location.equals("")){
+            if (!validateLocation(location)){
+                valid = false;
+            }
+        }
+
+        if (!rstSent.equals("")){
+            if (!validateRstSent(rstSent)){
+                valid = false;
+            }
+        }
+
+        if (!rstReceived.equals("")){
+            if (!validateRstReceived(rstReceived)){
+                valid = false;
+            }
+        }
+
         if (!myCallSign.equals("")){
             if (!validateMyCallSign(myCallSign)){
+                valid = false;
+            }
+        }
+
+        if (!myLocation.equals("")){
+            if (!validateMyLocation(myLocation)){
+                valid = false;
+            }
+        }
+
+
+        if (!comments.equals("")){
+            if (!validateComments(comments)){
                 valid = false;
             }
         }
@@ -245,7 +279,11 @@ public class QSO {
         }
 
         if (!comments.equals("")){
-            adifRow += getAdifField("COMMENT", comments);
+            if (isAdifString(comments)){
+                adifRow += getAdifField("COMMENT", comments);
+            }else if(isAdifIntlString(comments)){
+                adifRow += getAdifField("COMMENT_INTL", comments);
+            }
         }
 
         adifRow += "<EOR>";
@@ -293,15 +331,33 @@ public class QSO {
     }
 
     public static boolean validateTimeStart(String value){
-        return value.matches("[0-9]{4}[-][0-9]{2}[-][0-9]{2}[ ][0-9]{2}[:][0-9]{2}([:][0-9]{2})?");
+        boolean firstCheck = value.matches("[0-9]{4}[-][0-9]{2}[-][0-9]{2}[ ](([0-1][0-9])|([2][0-3]))[:][0-5][0-9]([:][0-5][0-9])?");
+        boolean secondCheck = false;
+
+        if (firstCheck){
+            if (isDateValid(value.substring(0,10))){
+                secondCheck = true;
+            }
+        }
+
+        return firstCheck && secondCheck;
     }
 
     public static boolean validateTimeEnd(String value){
-        return value.matches("[0-9]{4}[-][0-9]{2}[-][0-9]{2}[ ][0-9]{2}[:][0-9]{2}([:][0-9]{2})?");
+        boolean firstCheck = value.matches("[0-9]{4}[-][0-9]{2}[-][0-9]{2}[ ](([0-1][0-9])|([2][0-3]))[:][0-5][0-9]([:][0-5][0-9])?");
+        boolean secondCheck = false;
+
+        if (firstCheck){
+            if (isDateValid(value.substring(0,10))){
+                secondCheck = true;
+            }
+        }
+
+        return firstCheck && secondCheck;
     }
 
     public static boolean validateFrequency(String value){
-        return value.matches("[0-9]{1,6}|[0-9]{1,6}[.][0-9]{1,6}");
+        return value.matches("[0-9]+([.][0-9]+)?");
     }
 
     public static boolean validateBand(String value){
@@ -313,18 +369,42 @@ public class QSO {
     }
 
     public static boolean validatePower(String value){
-        return value.matches("[0-9]{1,4}");
-    }
-
-    public static boolean validateMyCallSign(String value){
-        return isAdifString(value);
+        return value.matches("[0-9]+([.][0-9]+)?");
     }
 
     public static boolean validateLocation(String value){
         return isGridSquare(value) || isAdifString(value) || isAdifIntlString(value);
     }
 
+    public static boolean validateRstSent(String value){
+        return isAdifString(value);
+    }
+
+    public static boolean validateRstReceived(String value){
+        return isAdifString(value);
+    }
+
+    public static boolean validateMyCallSign(String value){
+        return isAdifString(value);
+    }
+
     public static boolean validateMyLocation(String value){
         return isGridSquare(value) || isAdifString(value) || isAdifIntlString(value);
+    }
+
+    public static boolean validateComments(String value){
+        return isAdifString(value) || isAdifIntlString(value);
+    }
+
+    public static boolean isDateValid(String date)
+    {
+        try {
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            df.setLenient(false);
+            df.parse(date);
+            return true;
+        } catch (ParseException e) {
+            return false;
+        }
     }
 }

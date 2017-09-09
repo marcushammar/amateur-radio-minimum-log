@@ -57,8 +57,11 @@ public class QSOForm extends JPanel{
         modeTextField.getDocument().addDocumentListener(new TextFieldDocumentListener());
         powerTextField.getDocument().addDocumentListener(new TextFieldDocumentListener());
         locationTextField.getDocument().addDocumentListener(new TextFieldDocumentListener());
+        rstSentTextField.getDocument().addDocumentListener(new TextFieldDocumentListener());
+        rstReceivedTextField.getDocument().addDocumentListener(new TextFieldDocumentListener());
         myCallSignTextField.getDocument().addDocumentListener(new TextFieldDocumentListener());
         myLocationTextField.getDocument().addDocumentListener(new TextFieldDocumentListener());
+        commentsTextField.getDocument().addDocumentListener(new TextFieldDocumentListener());
 
         ToolTipManager.sharedInstance().setDismissDelay(20000);
 
@@ -261,6 +264,26 @@ public class QSOForm extends JPanel{
         }
     }
 
+    private void validateRstSent(){
+        if (rstSentTextField.getText().equals("")) {
+            rstSentTextField.setBackground(Color.WHITE);
+        }else if(QSO.validateRstSent(rstSentTextField.getText())){
+            rstSentTextField.setBackground(GREEN_COLOR);
+        }else{
+            rstSentTextField.setBackground(RED_COLOR);
+        }
+    }
+
+    private void validateRstReceived(){
+        if (rstReceivedTextField.getText().equals("")) {
+            rstReceivedTextField.setBackground(Color.WHITE);
+        }else if(QSO.validateRstReceived(rstReceivedTextField.getText())){
+            rstReceivedTextField.setBackground(GREEN_COLOR);
+        }else{
+            rstReceivedTextField.setBackground(RED_COLOR);
+        }
+    }
+
     private void validateMyCallSign() {
         if (myCallSignTextField.getText().equals("")) {
             myCallSignTextField.setBackground(Color.WHITE);
@@ -281,6 +304,16 @@ public class QSOForm extends JPanel{
         }
     }
 
+    private void validateComments(){
+        if (commentsTextField.getText().equals("")) {
+            commentsTextField.setBackground(Color.WHITE);
+        }else if(QSO.validateComments(commentsTextField.getText())){
+            commentsTextField.setBackground(GREEN_COLOR);
+        }else{
+            commentsTextField.setBackground(RED_COLOR);
+        }
+    }
+
     public void validate(){
         validateCallSign();
         validateTimeStart();
@@ -290,8 +323,11 @@ public class QSOForm extends JPanel{
         validateMode();
         validatePower();
         validateLocation();
+        validateRstSent();
+        validateRstReceived();
         validateMyCallSign();
         validateMyLocation();
+        validateComments();
     }
 
     private class TextFieldDocumentListener implements DocumentListener {

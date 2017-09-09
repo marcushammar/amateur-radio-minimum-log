@@ -323,7 +323,7 @@ public class HamRadioMinimumLog extends JFrame {
         public void actionPerformed(ActionEvent actionEvent){
             for (int i : table.getSelectedRows()) {
                 if (!log.get(i).validateAdif()){
-                    JOptionPane.showMessageDialog(HamRadioMinimumLog.this, "There is a problem with row " + (i + 1) + " (callsign " + log.get(i).getCallSign() + "). Please fix the problem and try again.", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(HamRadioMinimumLog.this, "Can't export due to issues in row " + (i + 1) + " (callsign " + log.get(i).getCallSign() + "). Please correct the row and try again.", "Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
             }
