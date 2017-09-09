@@ -114,7 +114,8 @@ public class HamRadioMinimumLog extends JFrame {
         exportFileChooser.setFileFilter(new FileNameExtensionFilter("ADIF format","adi"));
         loadAndSaveFileChooser.setFileFilter(new FileNameExtensionFilter("Ham Radio Minimum Log format","json"));
 
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new ApplicationTerminationListener());
+        setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         setSize(800, 400);
         setLocationRelativeTo(null);
         setVisible(true);
@@ -495,13 +496,7 @@ public class HamRadioMinimumLog extends JFrame {
     private class Exit implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent actionEvent){
-            if (unsavedChanges){
-                int responseFromDialog = JOptionPane.showConfirmDialog(HamRadioMinimumLog.this, "There are unsaved changes. Do you want to proceed with closing the application?", "Exit", JOptionPane.YES_NO_OPTION);
-                if (responseFromDialog != JOptionPane.YES_OPTION){
-                    return;
-                }
-            }
-            System.exit(0);
+            applicationIsAboutToClose();
         }
     }
 
@@ -541,6 +536,26 @@ public class HamRadioMinimumLog extends JFrame {
                     exportButton.setEnabled(true);
                     break;
             }
+        }
+    }
+
+    private void applicationIsAboutToClose(){
+        if (unsavedChanges){
+            int responseFromDialog = JOptionPane.showConfirmDialog(HamRadioMinimumLog.this, "There are unsaved changes. Do you want to proceed with closing the application?", "Exit", JOptionPane.YES_NO_OPTION);
+            if (responseFromDialog != JOptionPane.YES_OPTION){
+                return;
+            }
+        }
+        System.exit(0);
+    }
+
+    private class ApplicationTerminationListener extends WindowAdapter implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent ae){}
+
+        @Override
+        public void windowClosing(WindowEvent we){
+            applicationIsAboutToClose();
         }
     }
 
