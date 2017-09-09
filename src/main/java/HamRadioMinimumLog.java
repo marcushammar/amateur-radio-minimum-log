@@ -110,7 +110,6 @@ public class HamRadioMinimumLog extends JFrame {
 
         updateTable();
 
-        exportFileChooser.setSelectedFile(new File("export.adi"));
         exportFileChooser.setFileFilter(new FileNameExtensionFilter("ADIF format","adi"));
         loadAndSaveFileChooser.setFileFilter(new FileNameExtensionFilter("Ham Radio Minimum Log format","json"));
 
@@ -330,6 +329,12 @@ public class HamRadioMinimumLog extends JFrame {
             }
 
             try{
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd HHmmss");
+                sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+                String timeNow = sdf.format(new Date());
+
+                exportFileChooser.setSelectedFile(new File("ADIF export " + timeNow + ".adi"));
+
                 int resultFromDialog = exportFileChooser.showSaveDialog(HamRadioMinimumLog.this);
                 if (resultFromDialog != JFileChooser.APPROVE_OPTION){
                     return;
@@ -350,9 +355,7 @@ public class HamRadioMinimumLog extends JFrame {
                 pw.println("This ADIF file was extracted from Ham Radio Minimum Log");
                 pw.println();
                 pw.println("<ADIF_VER:5>3.0.6");
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd HHmmss");
-                sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
-                pw.println("<CREATED_TIMESTAMP:15>" + sdf.format(new Date()));
+                pw.println("<CREATED_TIMESTAMP:15>" + timeNow);
                 pw.println("<PROGRAMID:21>Ham Radio Minimum Log");
                 pw.println("<PROGRAMVERSION:" + APPLICATION_VERSION.length() + ">" + APPLICATION_VERSION);
                 pw.println("<EOH>");
