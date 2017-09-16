@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.marcushammar.ham-radio-minimum-log</groupId>
-    <artifactId>HamRadioMinimumLog</artifactId>
+    <groupId>com.marcushammar.amateur-radio-minimum-log</groupId>
+    <artifactId>AmateurRadioMinimumLog</artifactId>
     <version>1.0.0</version>
 
     <dependencies>
@@ -37,7 +37,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>HamRadioMinimumLog</mainClass>
+                            <mainClass>AmateurRadioMinimumLog</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -58,5 +58,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
