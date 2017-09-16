@@ -33,7 +33,7 @@ import java.util.Date;
 import java.util.TimeZone;
 
 public class AmateurRadioMinimumLog extends JFrame {
-    private final String APPLICATION_VERSION = "1.0.0";
+    private final String APPLICATION_VERSION = "1.1.0";
 
     private ArrayList<QSO> log = new ArrayList<>();
     private boolean unsavedChanges = false;
