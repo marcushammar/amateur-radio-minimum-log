@@ -39,7 +39,7 @@ public class AmateurRadioMinimumLog extends JFrame {
     private boolean unsavedChanges = false;
     private File currentFile;
     private JTable table;
-    private String[] columns = { "Call sign", "Time start", "Time end", "Frequency", "Band", "Mode", "Power", "Location", "RST sent", "RST received", "My call sign", "My location", "Comments"};
+    private String[] columns = {"Call sign", "Time start", "Time end", "Frequency", "Band", "Mode", "Power", "Location", "RST sent", "RST received", "My call sign", "My location", "Comments"};
     private JButton addButton;
     private JButton copyButton;
     private JButton modifyButton;
@@ -49,7 +49,7 @@ public class AmateurRadioMinimumLog extends JFrame {
     private JFileChooser loadAndSaveFileChooser = new JFileChooser();
     private JLabel countLabel;
 
-    private AmateurRadioMinimumLog(){
+    private AmateurRadioMinimumLog() {
         super("Amateur Radio Minimum Log");
 
         JMenuBar menuBar = new JMenuBar();
@@ -128,8 +128,8 @@ public class AmateurRadioMinimumLog extends JFrame {
 
         updateTable();
 
-        exportFileChooser.setFileFilter(new FileNameExtensionFilter("ADIF format","adi"));
-        loadAndSaveFileChooser.setFileFilter(new FileNameExtensionFilter("Amateur Radio Minimum Log format","json"));
+        exportFileChooser.setFileFilter(new FileNameExtensionFilter("ADIF format", "adi"));
+        loadAndSaveFileChooser.setFileFilter(new FileNameExtensionFilter("Amateur Radio Minimum Log format", "json"));
 
         addWindowListener(new ApplicationTerminationListener());
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -138,7 +138,11 @@ public class AmateurRadioMinimumLog extends JFrame {
         setVisible(true);
     }
 
-    private void updateTable(){
+    public static void main(String[] args) {
+        new AmateurRadioMinimumLog();
+    }
+
+    private void updateTable() {
         DefaultTableModel tableModel = new DefaultTableModel(getDataForTable(), columns) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -164,10 +168,10 @@ public class AmateurRadioMinimumLog extends JFrame {
         countLabel.setText("Count: " + log.size());
     }
 
-    private Object[][] getDataForTable(){
+    private Object[][] getDataForTable() {
         Object[][] dataObject = new Object[log.size()][13];
         int i = 0;
-        for(QSO qso : log){
+        for (QSO qso : log) {
             dataObject[i][0] = qso.getCallSign();
             dataObject[i][1] = qso.getTimeStart();
             dataObject[i][2] = qso.getTimeEnd();
@@ -186,14 +190,24 @@ public class AmateurRadioMinimumLog extends JFrame {
         return dataObject;
     }
 
+    private void applicationIsAboutToClose() {
+        if (unsavedChanges) {
+            int responseFromDialog = JOptionPane.showConfirmDialog(AmateurRadioMinimumLog.this, "There are unsaved changes. Do you want to proceed with closing the application?", "Exit", JOptionPane.YES_NO_OPTION);
+            if (responseFromDialog != JOptionPane.YES_OPTION) {
+                return;
+            }
+        }
+        System.exit(0);
+    }
+
     private class AddButtonActionListener implements ActionListener {
         @Override
-        public void actionPerformed(ActionEvent actionEvent){
+        public void actionPerformed(ActionEvent actionEvent) {
             QSOForm form = new QSOForm();
             form.validate();
             int responseFromDialog = JOptionPane.showConfirmDialog(AmateurRadioMinimumLog.this, form, "Add", JOptionPane.OK_CANCEL_OPTION);
 
-            if (responseFromDialog == JOptionPane.YES_OPTION){
+            if (responseFromDialog == JOptionPane.YES_OPTION) {
                 QSO qso = new QSO();
                 qso.setCallSign(form.getCallSign());
                 qso.setTimeStart(form.getTimeStart());
@@ -217,10 +231,10 @@ public class AmateurRadioMinimumLog extends JFrame {
 
     private class CopyButtonActionListener implements ActionListener {
         @Override
-        public void actionPerformed(ActionEvent actionEvent){
+        public void actionPerformed(ActionEvent actionEvent) {
             int[] selectedRows = table.getSelectedRows();
 
-            if (selectedRows.length != 1){
+            if (selectedRows.length != 1) {
                 return;
             }
 
@@ -245,7 +259,7 @@ public class AmateurRadioMinimumLog extends JFrame {
 
             int responseFromDialog = JOptionPane.showConfirmDialog(AmateurRadioMinimumLog.this, qsoForm, "Copy", JOptionPane.OK_CANCEL_OPTION);
 
-            if (responseFromDialog == JOptionPane.YES_OPTION){
+            if (responseFromDialog == JOptionPane.YES_OPTION) {
                 QSO qsoNew = new QSO();
                 qsoNew.setCallSign(qsoForm.getCallSign());
                 qsoNew.setTimeStart(qsoForm.getTimeStart());
@@ -269,10 +283,10 @@ public class AmateurRadioMinimumLog extends JFrame {
 
     private class ModifyButtonActionListener implements ActionListener {
         @Override
-        public void actionPerformed(ActionEvent actionEvent){
+        public void actionPerformed(ActionEvent actionEvent) {
             int[] selectedRows = table.getSelectedRows();
 
-            if (selectedRows.length != 1){
+            if (selectedRows.length != 1) {
                 return;
             }
 
@@ -297,7 +311,7 @@ public class AmateurRadioMinimumLog extends JFrame {
 
             int responseFromDialog = JOptionPane.showConfirmDialog(AmateurRadioMinimumLog.this, qsoForm, "Modify", JOptionPane.OK_CANCEL_OPTION);
 
-            if (responseFromDialog == JOptionPane.YES_OPTION){
+            if (responseFromDialog == JOptionPane.YES_OPTION) {
                 qso.setCallSign(qsoForm.getCallSign());
                 qso.setTimeStart(qsoForm.getTimeStart());
                 qso.setTimeEnd(qsoForm.getTimeEnd());
@@ -317,18 +331,17 @@ public class AmateurRadioMinimumLog extends JFrame {
         }
     }
 
-
     private class DeleteButtonActionListener implements ActionListener {
         @Override
-        public void actionPerformed(ActionEvent actionEvent){
+        public void actionPerformed(ActionEvent actionEvent) {
             int responseFromDialog = JOptionPane.showConfirmDialog(AmateurRadioMinimumLog.this, "Are you sure you want to delete the row?", "Delete row", JOptionPane.YES_NO_OPTION);
-            if (responseFromDialog != JOptionPane.YES_OPTION){
+            if (responseFromDialog != JOptionPane.YES_OPTION) {
                 return;
             }
 
             int[] selectedRows = table.getSelectedRows();
 
-            if (selectedRows.length == 1){
+            if (selectedRows.length == 1) {
                 log.remove(selectedRows[0]);
                 updateTable();
                 unsavedChanges = true;
@@ -338,15 +351,15 @@ public class AmateurRadioMinimumLog extends JFrame {
 
     private class ExportButtonActionListener implements ActionListener {
         @Override
-        public void actionPerformed(ActionEvent actionEvent){
+        public void actionPerformed(ActionEvent actionEvent) {
             for (int i : table.getSelectedRows()) {
-                if (!log.get(i).validateAdif()){
+                if (!log.get(i).validateAdif()) {
                     JOptionPane.showMessageDialog(AmateurRadioMinimumLog.this, "Can't export due to issues in row " + (i + 1) + " (callsign " + log.get(i).getCallSign() + "). Please correct the row and try again.", "Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
             }
 
-            try{
+            try {
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd HHmmss");
                 sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
                 String timeNow = sdf.format(new Date());
@@ -354,7 +367,7 @@ public class AmateurRadioMinimumLog extends JFrame {
                 exportFileChooser.setSelectedFile(new File("ADIF export " + timeNow + ".adi"));
 
                 int resultFromDialog = exportFileChooser.showSaveDialog(AmateurRadioMinimumLog.this);
-                if (resultFromDialog != JFileChooser.APPROVE_OPTION){
+                if (resultFromDialog != JFileChooser.APPROVE_OPTION) {
                     return;
                 }
 
@@ -379,12 +392,12 @@ public class AmateurRadioMinimumLog extends JFrame {
                 pw.println("<EOH>");
                 pw.println();
 
-                for (int i: table.getSelectedRows()){
+                for (int i : table.getSelectedRows()) {
                     pw.println(log.get(i).getAdifRow());
                 }
 
                 fw.close();
-            }catch(IOException e){
+            } catch (IOException e) {
                 JOptionPane.showMessageDialog(AmateurRadioMinimumLog.this, "Something went wrong. Error message: " + e.getMessage());
             }
         }
@@ -392,10 +405,10 @@ public class AmateurRadioMinimumLog extends JFrame {
 
     private class NewLog implements ActionListener {
         @Override
-        public void actionPerformed(ActionEvent actionEvent){
-            if (unsavedChanges){
+        public void actionPerformed(ActionEvent actionEvent) {
+            if (unsavedChanges) {
                 int responseFromDialog = JOptionPane.showConfirmDialog(AmateurRadioMinimumLog.this, "There are unsaved changes. Do you want create a new log and ignore any changes made before?", "New log", JOptionPane.YES_NO_OPTION);
-                if (responseFromDialog != JOptionPane.YES_OPTION){
+                if (responseFromDialog != JOptionPane.YES_OPTION) {
                     return;
                 }
             }
@@ -408,16 +421,16 @@ public class AmateurRadioMinimumLog extends JFrame {
 
     private class Load implements ActionListener {
         @Override
-        public void actionPerformed(ActionEvent actionEvent){
-            if (unsavedChanges){
+        public void actionPerformed(ActionEvent actionEvent) {
+            if (unsavedChanges) {
                 int responseFromDialog = JOptionPane.showConfirmDialog(AmateurRadioMinimumLog.this, "There are unsaved changes. Do you want load a new log and ignore any changes made before?", "Load log", JOptionPane.YES_NO_OPTION);
-                if (responseFromDialog != JOptionPane.YES_OPTION){
+                if (responseFromDialog != JOptionPane.YES_OPTION) {
                     return;
                 }
             }
-            try{
+            try {
                 int resultFromDialog = loadAndSaveFileChooser.showOpenDialog(AmateurRadioMinimumLog.this);
-                if (resultFromDialog != JFileChooser.APPROVE_OPTION){
+                if (resultFromDialog != JFileChooser.APPROVE_OPTION) {
                     return;
                 }
 
@@ -426,13 +439,14 @@ public class AmateurRadioMinimumLog extends JFrame {
                 BufferedReader br = new BufferedReader(new FileReader(currentFile));
                 Gson gson = new Gson();
                 log.clear();
-                log = gson.fromJson(br, new TypeToken<ArrayList<QSO>>(){}.getType());
+                log = gson.fromJson(br, new TypeToken<ArrayList<QSO>>() {
+                }.getType());
                 br.close();
 
                 updateTable();
                 unsavedChanges = false;
 
-            }catch(IOException e){
+            } catch (IOException e) {
                 JOptionPane.showMessageDialog(AmateurRadioMinimumLog.this, "Something went wrong. Error message: " + e.getMessage());
             }
         }
@@ -440,8 +454,8 @@ public class AmateurRadioMinimumLog extends JFrame {
 
     private class Save implements ActionListener {
         @Override
-        public void actionPerformed(ActionEvent actionEvent){
-            try{
+        public void actionPerformed(ActionEvent actionEvent) {
+            try {
                 if (currentFile == null) {
                     int resultFromDialog = loadAndSaveFileChooser.showSaveDialog(AmateurRadioMinimumLog.this);
                     if (resultFromDialog != JFileChooser.APPROVE_OPTION) {
@@ -458,7 +472,7 @@ public class AmateurRadioMinimumLog extends JFrame {
                     }
 
                     String fileName = newFile.toString();
-                    if (!fileName.endsWith(".json")){
+                    if (!fileName.endsWith(".json")) {
                         fileName += ".json";
                     }
 
@@ -471,7 +485,7 @@ public class AmateurRadioMinimumLog extends JFrame {
                 fw.close();
 
                 unsavedChanges = false;
-            }catch(IOException ioe){
+            } catch (IOException ioe) {
                 JOptionPane.showMessageDialog(AmateurRadioMinimumLog.this, "Something went wrong. Error message: " + ioe.getMessage());
             }
         }
@@ -479,24 +493,24 @@ public class AmateurRadioMinimumLog extends JFrame {
 
     private class SaveAs implements ActionListener {
         @Override
-        public void actionPerformed(ActionEvent actionEvent){
-            try{
+        public void actionPerformed(ActionEvent actionEvent) {
+            try {
                 int resultFromDialog = loadAndSaveFileChooser.showSaveDialog(AmateurRadioMinimumLog.this);
-                if (resultFromDialog != JFileChooser.APPROVE_OPTION){
+                if (resultFromDialog != JFileChooser.APPROVE_OPTION) {
                     return;
                 }
 
                 File newFile = loadAndSaveFileChooser.getSelectedFile();
 
-                if ((newFile.exists() && currentFile == null) || (newFile.exists() && currentFile != null && !newFile.equals(currentFile))){
+                if ((newFile.exists() && currentFile == null) || (newFile.exists() && currentFile != null && !newFile.equals(currentFile))) {
                     int responseFromDialog = JOptionPane.showConfirmDialog(AmateurRadioMinimumLog.this, "There is already a file with that name. Do you want to overwrite the file?", "Save log", JOptionPane.YES_NO_OPTION);
-                    if (responseFromDialog != JOptionPane.YES_OPTION){
+                    if (responseFromDialog != JOptionPane.YES_OPTION) {
                         return;
                     }
                 }
 
                 String fileName = newFile.toString();
-                if (!fileName.endsWith(".json")){
+                if (!fileName.endsWith(".json")) {
                     fileName += ".json";
                 }
 
@@ -508,7 +522,7 @@ public class AmateurRadioMinimumLog extends JFrame {
                 fw.close();
 
                 unsavedChanges = false;
-            }catch(IOException ioe){
+            } catch (IOException ioe) {
                 JOptionPane.showMessageDialog(AmateurRadioMinimumLog.this, "Something went wrong. Error message: " + ioe.getMessage());
             }
         }
@@ -516,22 +530,21 @@ public class AmateurRadioMinimumLog extends JFrame {
 
     private class Exit implements ActionListener {
         @Override
-        public void actionPerformed(ActionEvent actionEvent){
+        public void actionPerformed(ActionEvent actionEvent) {
             applicationIsAboutToClose();
         }
     }
 
     private class About implements ActionListener {
         @Override
-        public void actionPerformed(ActionEvent actionEvent){
+        public void actionPerformed(ActionEvent actionEvent) {
             JOptionPane.showMessageDialog(AmateurRadioMinimumLog.this, "Amateur Radio Minimum Log (v " + APPLICATION_VERSION + ")\nCopyright (C) 2017 Marcus Hammar\n\nThis program is free software: you can redistribute it and/or modify\nit under the terms of the GNU General Public License as published by\nthe Free Software Foundation, either version 3 of the License, or\n(at your option) any later version.\n\nThis program is distributed in the hope that it will be useful,\nbut WITHOUT ANY WARRANTY; without even the implied warranty of\nMERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\nGNU General Public License for more details.\n\nYou should have received a copy of the GNU General Public License\nalong with this program. If not, see http://www.gnu.org/licenses/.\n\n----------------------------------------\n\nThis application uses GSON from Google. GSON is licensed under\nthe Apache License 2.0. Apache License 2.0 can be found at\nhttp://www.apache.org/licenses/LICENSE-2.0", "About", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
-
     private class TableSelectionListener implements ListSelectionListener {
         @Override
-        public void valueChanged(ListSelectionEvent listSelectionEvent){
+        public void valueChanged(ListSelectionEvent listSelectionEvent) {
             int[] selectedRows = table.getSelectedRows();
 
             switch (selectedRows.length) {
@@ -560,27 +573,14 @@ public class AmateurRadioMinimumLog extends JFrame {
         }
     }
 
-    private void applicationIsAboutToClose(){
-        if (unsavedChanges){
-            int responseFromDialog = JOptionPane.showConfirmDialog(AmateurRadioMinimumLog.this, "There are unsaved changes. Do you want to proceed with closing the application?", "Exit", JOptionPane.YES_NO_OPTION);
-            if (responseFromDialog != JOptionPane.YES_OPTION){
-                return;
-            }
+    private class ApplicationTerminationListener extends WindowAdapter implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent ae) {
         }
-        System.exit(0);
-    }
-
-    private class ApplicationTerminationListener extends WindowAdapter implements ActionListener{
-        @Override
-        public void actionPerformed(ActionEvent ae){}
 
         @Override
-        public void windowClosing(WindowEvent we){
+        public void windowClosing(WindowEvent we) {
             applicationIsAboutToClose();
         }
-    }
-
-    public static void main(String[] args) {
-        new AmateurRadioMinimumLog();
     }
 }

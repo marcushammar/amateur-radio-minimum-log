@@ -21,7 +21,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
 
-public class QSOForm extends JPanel{
+public class QSOForm extends JPanel {
     private final static Color GREEN_COLOR = Color.decode("#ebfce8");
     private final static Color RED_COLOR = Color.decode("#ffeaea");
     private JTextField callSignTextField = new JTextField(15);
@@ -38,8 +38,8 @@ public class QSOForm extends JPanel{
     private JTextField myLocationTextField = new JTextField(15);
     private JTextField commentsTextField = new JTextField(15);
 
-    public QSOForm(){
-        setLayout(new GridLayout(13,2));
+    public QSOForm() {
+        setLayout(new GridLayout(13, 2));
         add(new JLabel("Call sign"));
         add(callSignTextField);
         add(new JLabel("Time start"));
@@ -98,116 +98,116 @@ public class QSOForm extends JPanel{
         commentsTextField.setToolTipText("Your comments");
     }
 
-    public String getCallSign(){
+    public String getCallSign() {
         return callSignTextField.getText();
     }
 
-    public void setCallSign(String callSign){
+    public void setCallSign(String callSign) {
         callSignTextField.setText(callSign);
     }
 
-    public String getTimeStart(){
+    public String getTimeStart() {
         return timeStartTextField.getText();
     }
 
-    public void setTimeStart(String timeStart){
+    public void setTimeStart(String timeStart) {
         timeStartTextField.setText(timeStart);
     }
 
-    public String getTimeEnd(){
+    public String getTimeEnd() {
         return timeEndTextField.getText();
     }
 
-    public void setTimeEnd(String timeEnd){
+    public void setTimeEnd(String timeEnd) {
         timeEndTextField.setText(timeEnd);
     }
 
-    public String getFrequency(){
+    public String getFrequency() {
         return frequencyTextField.getText();
     }
 
-    public void setFrequency(String frequency){
+    public void setFrequency(String frequency) {
         frequencyTextField.setText(frequency);
     }
 
-    public String getBand(){
+    public String getBand() {
         return bandTextField.getText();
     }
 
-    public void setBand(String band){
+    public void setBand(String band) {
         bandTextField.setText(band);
     }
 
-    public String getMode(){
+    public String getMode() {
         return modeTextField.getText();
     }
 
-    public void setMode(String mode){
+    public void setMode(String mode) {
         modeTextField.setText(mode);
     }
 
-    public String getPower(){
+    public String getPower() {
         return powerTextField.getText();
     }
 
-    public void setPower(String power){
+    public void setPower(String power) {
         powerTextField.setText(power);
     }
 
-    public String getLocationText(){
+    public String getLocationText() {
         return locationTextField.getText();
     }
 
-    public void setLocationText(String locationText){
+    public void setLocationText(String locationText) {
         locationTextField.setText(locationText);
     }
 
-    public String getRstSent(){
+    public String getRstSent() {
         return rstSentTextField.getText();
     }
 
-    public void setRstSent(String rstSent){
+    public void setRstSent(String rstSent) {
         rstSentTextField.setText(rstSent);
     }
 
-    public String getRstReceived(){
+    public String getRstReceived() {
         return rstReceivedTextField.getText();
     }
 
-    public void setRstReceived(String rstReceived){
+    public void setRstReceived(String rstReceived) {
         rstReceivedTextField.setText(rstReceived);
     }
 
-    public String getMyCallSign(){
+    public String getMyCallSign() {
         return myCallSignTextField.getText();
     }
 
-    public void setMyCallSign(String myCallSign){
+    public void setMyCallSign(String myCallSign) {
         myCallSignTextField.setText(myCallSign);
     }
 
-    public String getMyLocation(){
+    public String getMyLocation() {
         return myLocationTextField.getText();
     }
 
-    public void setMyLocation(String myLocation){
+    public void setMyLocation(String myLocation) {
         myLocationTextField.setText(myLocation);
     }
 
-    public String getComments(){
+    public String getComments() {
         return commentsTextField.getText();
     }
 
-    public void setComments(String comments){
+    public void setComments(String comments) {
         commentsTextField.setText(comments);
     }
 
     private void validateCallSign() {
         if (callSignTextField.getText().equals("")) {
             callSignTextField.setBackground(Color.WHITE);
-        }else if(QSO.validateCallSign(callSignTextField.getText())) {
+        } else if (QSO.validateCallSign(callSignTextField.getText())) {
             callSignTextField.setBackground(GREEN_COLOR);
-        }else{
+        } else {
             callSignTextField.setBackground(RED_COLOR);
         }
     }
@@ -215,9 +215,9 @@ public class QSOForm extends JPanel{
     private void validateTimeStart() {
         if (timeStartTextField.getText().equals("")) {
             timeStartTextField.setBackground(Color.WHITE);
-        }else if(QSO.validateTimeStart(timeStartTextField.getText())) {
+        } else if (QSO.validateTimeStart(timeStartTextField.getText())) {
             timeStartTextField.setBackground(GREEN_COLOR);
-        }else{
+        } else {
             timeStartTextField.setBackground(RED_COLOR);
         }
     }
@@ -225,79 +225,79 @@ public class QSOForm extends JPanel{
     private void validateTimeEnd() {
         if (timeEndTextField.getText().equals("")) {
             timeEndTextField.setBackground(Color.WHITE);
-        }else if(QSO.validateTimeEnd(timeEndTextField.getText())){
+        } else if (QSO.validateTimeEnd(timeEndTextField.getText())) {
             timeEndTextField.setBackground(GREEN_COLOR);
-        }else{
+        } else {
             timeEndTextField.setBackground(RED_COLOR);
         }
     }
 
-    private void validateFrequency(){
+    private void validateFrequency() {
         if (frequencyTextField.getText().equals("")) {
             frequencyTextField.setBackground(Color.WHITE);
-        }else if(QSO.validateFrequency(frequencyTextField.getText())){
+        } else if (QSO.validateFrequency(frequencyTextField.getText())) {
             frequencyTextField.setBackground(GREEN_COLOR);
-        }else{
+        } else {
             frequencyTextField.setBackground(RED_COLOR);
         }
     }
 
-    private void validateBand(){
-        if (bandTextField.getText().equals("")){
+    private void validateBand() {
+        if (bandTextField.getText().equals("")) {
             bandTextField.setBackground(Color.WHITE);
-        }else if(QSO.validateBand(bandTextField.getText())){
+        } else if (QSO.validateBand(bandTextField.getText())) {
             bandTextField.setBackground(GREEN_COLOR);
-        }else{
+        } else {
             bandTextField.setBackground(RED_COLOR);
         }
     }
 
-    private void validateMode(){
-        if (modeTextField.getText().equals("")){
+    private void validateMode() {
+        if (modeTextField.getText().equals("")) {
             modeTextField.setBackground(Color.WHITE);
-        }else if(QSO.validateMode(modeTextField.getText())){
+        } else if (QSO.validateMode(modeTextField.getText())) {
             modeTextField.setBackground(GREEN_COLOR);
-        }else{
+        } else {
             modeTextField.setBackground(RED_COLOR);
         }
     }
 
-    private void validatePower(){
+    private void validatePower() {
         if (powerTextField.getText().equals("")) {
             powerTextField.setBackground(Color.WHITE);
-        }else if(QSO.validatePower(powerTextField.getText())){
+        } else if (QSO.validatePower(powerTextField.getText())) {
             powerTextField.setBackground(GREEN_COLOR);
-        }else{
+        } else {
             powerTextField.setBackground(RED_COLOR);
         }
     }
 
-    private void validateLocation(){
+    private void validateLocation() {
         if (locationTextField.getText().equals("")) {
             locationTextField.setBackground(Color.WHITE);
-        }else if(QSO.validateLocation(locationTextField.getText())){
+        } else if (QSO.validateLocation(locationTextField.getText())) {
             locationTextField.setBackground(GREEN_COLOR);
-        }else{
+        } else {
             locationTextField.setBackground(RED_COLOR);
         }
     }
 
-    private void validateRstSent(){
+    private void validateRstSent() {
         if (rstSentTextField.getText().equals("")) {
             rstSentTextField.setBackground(Color.WHITE);
-        }else if(QSO.validateRstSent(rstSentTextField.getText())){
+        } else if (QSO.validateRstSent(rstSentTextField.getText())) {
             rstSentTextField.setBackground(GREEN_COLOR);
-        }else{
+        } else {
             rstSentTextField.setBackground(RED_COLOR);
         }
     }
 
-    private void validateRstReceived(){
+    private void validateRstReceived() {
         if (rstReceivedTextField.getText().equals("")) {
             rstReceivedTextField.setBackground(Color.WHITE);
-        }else if(QSO.validateRstReceived(rstReceivedTextField.getText())){
+        } else if (QSO.validateRstReceived(rstReceivedTextField.getText())) {
             rstReceivedTextField.setBackground(GREEN_COLOR);
-        }else{
+        } else {
             rstReceivedTextField.setBackground(RED_COLOR);
         }
     }
@@ -305,34 +305,34 @@ public class QSOForm extends JPanel{
     private void validateMyCallSign() {
         if (myCallSignTextField.getText().equals("")) {
             myCallSignTextField.setBackground(Color.WHITE);
-        }else if(QSO.validateMyCallSign(myCallSignTextField.getText())) {
+        } else if (QSO.validateMyCallSign(myCallSignTextField.getText())) {
             myCallSignTextField.setBackground(GREEN_COLOR);
-        }else{
+        } else {
             myCallSignTextField.setBackground(RED_COLOR);
         }
     }
 
-    private void validateMyLocation(){
+    private void validateMyLocation() {
         if (myLocationTextField.getText().equals("")) {
             myLocationTextField.setBackground(Color.WHITE);
-        }else if(QSO.validateMyLocation(myLocationTextField.getText())){
+        } else if (QSO.validateMyLocation(myLocationTextField.getText())) {
             myLocationTextField.setBackground(GREEN_COLOR);
-        }else{
+        } else {
             myLocationTextField.setBackground(RED_COLOR);
         }
     }
 
-    private void validateComments(){
+    private void validateComments() {
         if (commentsTextField.getText().equals("")) {
             commentsTextField.setBackground(Color.WHITE);
-        }else if(QSO.validateComments(commentsTextField.getText())){
+        } else if (QSO.validateComments(commentsTextField.getText())) {
             commentsTextField.setBackground(GREEN_COLOR);
-        }else{
+        } else {
             commentsTextField.setBackground(RED_COLOR);
         }
     }
 
-    public void validate(){
+    public void validate() {
         validateCallSign();
         validateTimeStart();
         validateTimeEnd();
@@ -350,17 +350,17 @@ public class QSOForm extends JPanel{
 
     private class TextFieldDocumentListener implements DocumentListener {
         @Override
-        public void changedUpdate(DocumentEvent e){
+        public void changedUpdate(DocumentEvent e) {
             validate();
         }
 
         @Override
-        public void removeUpdate(DocumentEvent e){
+        public void removeUpdate(DocumentEvent e) {
             validate();
         }
 
         @Override
-        public void insertUpdate(DocumentEvent e){
+        public void insertUpdate(DocumentEvent e) {
             validate();
         }
     }
