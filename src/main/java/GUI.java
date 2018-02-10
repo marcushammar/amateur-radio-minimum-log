@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.TimeZone;
 
-public class AmateurRadioMinimumLog extends JFrame {
+public class GUI extends JFrame {
     private final String APPLICATION_VERSION = "1.1.0";
 
     private ArrayList<QSO> log = new ArrayList<>();
@@ -49,7 +49,7 @@ public class AmateurRadioMinimumLog extends JFrame {
     private JFileChooser loadAndSaveFileChooser = new JFileChooser();
     private JLabel countLabel;
 
-    public AmateurRadioMinimumLog() {
+    public GUI() {
         super("Amateur Radio Minimum Log");
 
         JMenuBar menuBar = new JMenuBar();
@@ -188,7 +188,7 @@ public class AmateurRadioMinimumLog extends JFrame {
 
     private void applicationIsAboutToClose() {
         if (unsavedChanges) {
-            int responseFromDialog = JOptionPane.showConfirmDialog(AmateurRadioMinimumLog.this, "There are unsaved changes. Do you want to proceed with closing the application?", "Exit", JOptionPane.YES_NO_OPTION);
+            int responseFromDialog = JOptionPane.showConfirmDialog(GUI.this, "There are unsaved changes. Do you want to proceed with closing the application?", "Exit", JOptionPane.YES_NO_OPTION);
             if (responseFromDialog != JOptionPane.YES_OPTION) {
                 return;
             }
@@ -201,7 +201,7 @@ public class AmateurRadioMinimumLog extends JFrame {
         public void actionPerformed(ActionEvent actionEvent) {
             QSOForm form = new QSOForm();
             form.validate();
-            int responseFromDialog = JOptionPane.showConfirmDialog(AmateurRadioMinimumLog.this, form, "Add", JOptionPane.OK_CANCEL_OPTION);
+            int responseFromDialog = JOptionPane.showConfirmDialog(GUI.this, form, "Add", JOptionPane.OK_CANCEL_OPTION);
 
             if (responseFromDialog == JOptionPane.YES_OPTION) {
                 QSO qso = new QSO();
@@ -253,7 +253,7 @@ public class AmateurRadioMinimumLog extends JFrame {
 
             qsoForm.validate();
 
-            int responseFromDialog = JOptionPane.showConfirmDialog(AmateurRadioMinimumLog.this, qsoForm, "Copy", JOptionPane.OK_CANCEL_OPTION);
+            int responseFromDialog = JOptionPane.showConfirmDialog(GUI.this, qsoForm, "Copy", JOptionPane.OK_CANCEL_OPTION);
 
             if (responseFromDialog == JOptionPane.YES_OPTION) {
                 QSO qsoNew = new QSO();
@@ -305,7 +305,7 @@ public class AmateurRadioMinimumLog extends JFrame {
 
             qsoForm.validate();
 
-            int responseFromDialog = JOptionPane.showConfirmDialog(AmateurRadioMinimumLog.this, qsoForm, "Modify", JOptionPane.OK_CANCEL_OPTION);
+            int responseFromDialog = JOptionPane.showConfirmDialog(GUI.this, qsoForm, "Modify", JOptionPane.OK_CANCEL_OPTION);
 
             if (responseFromDialog == JOptionPane.YES_OPTION) {
                 qso.setCallSign(qsoForm.getCallSign());
@@ -330,7 +330,7 @@ public class AmateurRadioMinimumLog extends JFrame {
     private class DeleteButtonActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
-            int responseFromDialog = JOptionPane.showConfirmDialog(AmateurRadioMinimumLog.this, "Are you sure you want to delete the row?", "Delete row", JOptionPane.YES_NO_OPTION);
+            int responseFromDialog = JOptionPane.showConfirmDialog(GUI.this, "Are you sure you want to delete the row?", "Delete row", JOptionPane.YES_NO_OPTION);
             if (responseFromDialog != JOptionPane.YES_OPTION) {
                 return;
             }
@@ -350,7 +350,7 @@ public class AmateurRadioMinimumLog extends JFrame {
         public void actionPerformed(ActionEvent actionEvent) {
             for (int i : table.getSelectedRows()) {
                 if (!log.get(i).validateAdif()) {
-                    JOptionPane.showMessageDialog(AmateurRadioMinimumLog.this, "Can't export due to issues in row " + (i + 1) + " (callsign " + log.get(i).getCallSign() + "). Please correct the row and try again.", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(GUI.this, "Can't export due to issues in row " + (i + 1) + " (callsign " + log.get(i).getCallSign() + "). Please correct the row and try again.", "Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
             }
@@ -362,7 +362,7 @@ public class AmateurRadioMinimumLog extends JFrame {
 
                 exportFileChooser.setSelectedFile(new File("ADIF export " + timeNow + ".adi"));
 
-                int resultFromDialog = exportFileChooser.showSaveDialog(AmateurRadioMinimumLog.this);
+                int resultFromDialog = exportFileChooser.showSaveDialog(GUI.this);
                 if (resultFromDialog != JFileChooser.APPROVE_OPTION) {
                     return;
                 }
@@ -370,7 +370,7 @@ public class AmateurRadioMinimumLog extends JFrame {
                 File exportFile = exportFileChooser.getSelectedFile();
 
                 if (exportFile.exists()) {
-                    int responseFromDialog = JOptionPane.showConfirmDialog(AmateurRadioMinimumLog.this, "There is already a file with that name. Do you want to overwrite the file?", "Export", JOptionPane.YES_NO_OPTION);
+                    int responseFromDialog = JOptionPane.showConfirmDialog(GUI.this, "There is already a file with that name. Do you want to overwrite the file?", "Export", JOptionPane.YES_NO_OPTION);
                     if (responseFromDialog != JOptionPane.YES_OPTION) {
                         return;
                     }
@@ -394,7 +394,7 @@ public class AmateurRadioMinimumLog extends JFrame {
 
                 fw.close();
             } catch (IOException e) {
-                JOptionPane.showMessageDialog(AmateurRadioMinimumLog.this, "Something went wrong. Error message: " + e.getMessage());
+                JOptionPane.showMessageDialog(GUI.this, "Something went wrong. Error message: " + e.getMessage());
             }
         }
     }
@@ -403,7 +403,7 @@ public class AmateurRadioMinimumLog extends JFrame {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
             if (unsavedChanges) {
-                int responseFromDialog = JOptionPane.showConfirmDialog(AmateurRadioMinimumLog.this, "There are unsaved changes. Do you want create a new log and ignore any changes made before?", "New log", JOptionPane.YES_NO_OPTION);
+                int responseFromDialog = JOptionPane.showConfirmDialog(GUI.this, "There are unsaved changes. Do you want create a new log and ignore any changes made before?", "New log", JOptionPane.YES_NO_OPTION);
                 if (responseFromDialog != JOptionPane.YES_OPTION) {
                     return;
                 }
@@ -419,13 +419,13 @@ public class AmateurRadioMinimumLog extends JFrame {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
             if (unsavedChanges) {
-                int responseFromDialog = JOptionPane.showConfirmDialog(AmateurRadioMinimumLog.this, "There are unsaved changes. Do you want load a new log and ignore any changes made before?", "Load log", JOptionPane.YES_NO_OPTION);
+                int responseFromDialog = JOptionPane.showConfirmDialog(GUI.this, "There are unsaved changes. Do you want load a new log and ignore any changes made before?", "Load log", JOptionPane.YES_NO_OPTION);
                 if (responseFromDialog != JOptionPane.YES_OPTION) {
                     return;
                 }
             }
             try {
-                int resultFromDialog = loadAndSaveFileChooser.showOpenDialog(AmateurRadioMinimumLog.this);
+                int resultFromDialog = loadAndSaveFileChooser.showOpenDialog(GUI.this);
                 if (resultFromDialog != JFileChooser.APPROVE_OPTION) {
                     return;
                 }
@@ -443,7 +443,7 @@ public class AmateurRadioMinimumLog extends JFrame {
                 unsavedChanges = false;
 
             } catch (IOException e) {
-                JOptionPane.showMessageDialog(AmateurRadioMinimumLog.this, "Something went wrong. Error message: " + e.getMessage());
+                JOptionPane.showMessageDialog(GUI.this, "Something went wrong. Error message: " + e.getMessage());
             }
         }
     }
@@ -453,7 +453,7 @@ public class AmateurRadioMinimumLog extends JFrame {
         public void actionPerformed(ActionEvent actionEvent) {
             try {
                 if (currentFile == null) {
-                    int resultFromDialog = loadAndSaveFileChooser.showSaveDialog(AmateurRadioMinimumLog.this);
+                    int resultFromDialog = loadAndSaveFileChooser.showSaveDialog(GUI.this);
                     if (resultFromDialog != JFileChooser.APPROVE_OPTION) {
                         return;
                     }
@@ -461,7 +461,7 @@ public class AmateurRadioMinimumLog extends JFrame {
                     File newFile = loadAndSaveFileChooser.getSelectedFile();
 
                     if ((newFile.exists() && currentFile == null) || (newFile.exists() && currentFile != null && !newFile.equals(currentFile))) {
-                        int responseFromDialog = JOptionPane.showConfirmDialog(AmateurRadioMinimumLog.this, "There is already a file with that name. Do you want to overwrite the file?", "Save log", JOptionPane.YES_NO_OPTION);
+                        int responseFromDialog = JOptionPane.showConfirmDialog(GUI.this, "There is already a file with that name. Do you want to overwrite the file?", "Save log", JOptionPane.YES_NO_OPTION);
                         if (responseFromDialog != JOptionPane.YES_OPTION) {
                             return;
                         }
@@ -482,7 +482,7 @@ public class AmateurRadioMinimumLog extends JFrame {
 
                 unsavedChanges = false;
             } catch (IOException ioe) {
-                JOptionPane.showMessageDialog(AmateurRadioMinimumLog.this, "Something went wrong. Error message: " + ioe.getMessage());
+                JOptionPane.showMessageDialog(GUI.this, "Something went wrong. Error message: " + ioe.getMessage());
             }
         }
     }
@@ -491,7 +491,7 @@ public class AmateurRadioMinimumLog extends JFrame {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
             try {
-                int resultFromDialog = loadAndSaveFileChooser.showSaveDialog(AmateurRadioMinimumLog.this);
+                int resultFromDialog = loadAndSaveFileChooser.showSaveDialog(GUI.this);
                 if (resultFromDialog != JFileChooser.APPROVE_OPTION) {
                     return;
                 }
@@ -499,7 +499,7 @@ public class AmateurRadioMinimumLog extends JFrame {
                 File newFile = loadAndSaveFileChooser.getSelectedFile();
 
                 if ((newFile.exists() && currentFile == null) || (newFile.exists() && currentFile != null && !newFile.equals(currentFile))) {
-                    int responseFromDialog = JOptionPane.showConfirmDialog(AmateurRadioMinimumLog.this, "There is already a file with that name. Do you want to overwrite the file?", "Save log", JOptionPane.YES_NO_OPTION);
+                    int responseFromDialog = JOptionPane.showConfirmDialog(GUI.this, "There is already a file with that name. Do you want to overwrite the file?", "Save log", JOptionPane.YES_NO_OPTION);
                     if (responseFromDialog != JOptionPane.YES_OPTION) {
                         return;
                     }
@@ -519,7 +519,7 @@ public class AmateurRadioMinimumLog extends JFrame {
 
                 unsavedChanges = false;
             } catch (IOException ioe) {
-                JOptionPane.showMessageDialog(AmateurRadioMinimumLog.this, "Something went wrong. Error message: " + ioe.getMessage());
+                JOptionPane.showMessageDialog(GUI.this, "Something went wrong. Error message: " + ioe.getMessage());
             }
         }
     }
@@ -534,7 +534,7 @@ public class AmateurRadioMinimumLog extends JFrame {
     private class About implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
-            JOptionPane.showMessageDialog(AmateurRadioMinimumLog.this, "Amateur Radio Minimum Log (v " + APPLICATION_VERSION + ")\nCopyright (C) 2017 Marcus Hammar\n\nThis program is free software: you can redistribute it and/or modify\nit under the terms of the GNU General Public License as published by\nthe Free Software Foundation, either version 3 of the License, or\n(at your option) any later version.\n\nThis program is distributed in the hope that it will be useful,\nbut WITHOUT ANY WARRANTY; without even the implied warranty of\nMERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\nGNU General Public License for more details.\n\nYou should have received a copy of the GNU General Public License\nalong with this program. If not, see http://www.gnu.org/licenses/.\n\n----------------------------------------\n\nThis application uses GSON from Google. GSON is licensed under\nthe Apache License 2.0. Apache License 2.0 can be found at\nhttp://www.apache.org/licenses/LICENSE-2.0", "About", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(GUI.this, "Amateur Radio Minimum Log (v " + APPLICATION_VERSION + ")\nCopyright (C) 2017 Marcus Hammar\n\nThis program is free software: you can redistribute it and/or modify\nit under the terms of the GNU General Public License as published by\nthe Free Software Foundation, either version 3 of the License, or\n(at your option) any later version.\n\nThis program is distributed in the hope that it will be useful,\nbut WITHOUT ANY WARRANTY; without even the implied warranty of\nMERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\nGNU General Public License for more details.\n\nYou should have received a copy of the GNU General Public License\nalong with this program. If not, see http://www.gnu.org/licenses/.\n\n----------------------------------------\n\nThis application uses GSON from Google. GSON is licensed under\nthe Apache License 2.0. Apache License 2.0 can be found at\nhttp://www.apache.org/licenses/LICENSE-2.0", "About", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
