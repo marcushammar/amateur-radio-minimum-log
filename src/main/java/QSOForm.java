@@ -1,6 +1,6 @@
 /*
  * Amateur Radio Minimum Log
- * Copyright (C) 2017  Marcus Hammar
+ * Copyright (C) 2017-2018  Marcus Hammar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
