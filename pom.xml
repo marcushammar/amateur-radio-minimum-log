@@ -61,7 +61,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>AmateurRadioMinimumLog</mainClass>
+                            <mainClass>Application</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

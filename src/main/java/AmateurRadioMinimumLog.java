@@ -49,7 +49,7 @@ public class AmateurRadioMinimumLog extends JFrame {
     private JFileChooser loadAndSaveFileChooser = new JFileChooser();
     private JLabel countLabel;
 
-    private AmateurRadioMinimumLog() {
+    public AmateurRadioMinimumLog() {
         super("Amateur Radio Minimum Log");
 
         JMenuBar menuBar = new JMenuBar();
@@ -136,10 +136,6 @@ public class AmateurRadioMinimumLog extends JFrame {
         setSize(800, 400);
         setLocationRelativeTo(null);
         setVisible(true);
-    }
-
-    public static void main(String[] args) {
-        new AmateurRadioMinimumLog();
     }
 
     private void updateTable() {
