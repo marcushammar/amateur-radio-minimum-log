@@ -41,13 +41,13 @@ public class QSO {
     }
 
     public String getAdifRow() {
-        String output = "";
+        StringBuilder output = new StringBuilder();
         for (Map.Entry<String, String> pair : this.fields.entrySet()) {
-            output = output + "<" + pair.getKey() + ":" + pair.getValue().length() + ">" + pair.getValue();
+            output.append("<").append(pair.getKey()).append(":").append(pair.getValue().length()).append(">").append(pair.getValue());
         }
-        output = output + "<EOR>";
+        output.append("<EOR>");
 
-        return output;
+        return output.toString();
     }
 
     public boolean validateAdif() { //TODO: This method needs to be implemented
