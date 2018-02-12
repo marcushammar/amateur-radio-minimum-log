@@ -21,7 +21,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
 
-public class QSOForm extends JPanel {
+public class InputDialog extends JPanel {
     private final static Color GREEN_COLOR = Color.decode("#ebfce8");
     private final static Color RED_COLOR = Color.decode("#ffeaea");
     private JTextField callSignTextField = new JTextField(15);
@@ -38,7 +38,7 @@ public class QSOForm extends JPanel {
     private JTextField myLocationTextField = new JTextField(15);
     private JTextField commentsTextField = new JTextField(15);
 
-    public QSOForm() {
+    public InputDialog() {
         setLayout(new GridLayout(13, 2));
         add(new JLabel("Call sign"));
         add(callSignTextField);
