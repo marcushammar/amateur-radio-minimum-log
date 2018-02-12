@@ -168,19 +168,19 @@ public class GUI extends JFrame {
         Object[][] dataObject = new Object[log.size()][13];
         int i = 0;
         for (QSO qso : log) {
-            dataObject[i][0] = qso.getCallSign();
-            dataObject[i][1] = qso.getTimeStart();
-            dataObject[i][2] = qso.getTimeEnd();
-            dataObject[i][3] = qso.getFrequency();
-            dataObject[i][4] = qso.getBand();
-            dataObject[i][5] = qso.getMode();
-            dataObject[i][6] = qso.getPower();
-            dataObject[i][7] = qso.getLocation();
-            dataObject[i][8] = qso.getRstSent();
-            dataObject[i][9] = qso.getRstRecevied();
-            dataObject[i][10] = qso.getMyCallSign();
-            dataObject[i][11] = qso.getMyLocation();
-            dataObject[i][12] = qso.getComments();
+            dataObject[i][0] = qso.getField("CALL");
+            dataObject[i][1] = qso.getField("QSO_DATE");
+            dataObject[i][2] = qso.getField("QSO_DATE_OFF");
+            dataObject[i][3] = qso.getField("FREQ");
+            dataObject[i][4] = qso.getField("BAND");
+            dataObject[i][5] = qso.getField("MODE");
+            dataObject[i][6] = qso.getField("TX_PWR");
+            dataObject[i][7] = qso.getField("GRIDSQUARE");
+            dataObject[i][8] = qso.getField("RST_SENT");
+            dataObject[i][9] = qso.getField("RST_RCVD");
+            dataObject[i][10] = qso.getField("OPERATOR");
+            dataObject[i][11] = qso.getField("MY_GRIDSQUARE");
+            dataObject[i][12] = qso.getField("COMMENT");
             i++;
         }
         return dataObject;
@@ -205,19 +205,19 @@ public class GUI extends JFrame {
 
             if (responseFromDialog == JOptionPane.YES_OPTION) {
                 QSO qso = new QSO();
-                qso.setCallSign(form.getCallSign());
-                qso.setTimeStart(form.getTimeStart());
-                qso.setTimeEnd(form.getTimeEnd());
-                qso.setFrequency(form.getFrequency());
-                qso.setBand(form.getBand());
-                qso.setMode(form.getMode());
-                qso.setPower(form.getPower());
-                qso.setLocation(form.getLocationText());
-                qso.setRstRecevied(form.getRstReceived());
-                qso.setRstSent(form.getRstSent());
-                qso.setMyCallSign(form.getMyCallSign());
-                qso.setMyLocation(form.getMyLocation());
-                qso.setComments(form.getComments());
+                qso.setField("CALL", form.getCallSign());
+                qso.setField("QSO_DATE", form.getTimeStart());
+                qso.setField("QSO_DATE_OFF", form.getTimeEnd());
+                qso.setField("FREQ", form.getFrequency());
+                qso.setField("BAND", form.getBand());
+                qso.setField("MODE", form.getMode());
+                qso.setField("TX_PWR", form.getPower());
+                qso.setField("GRIDSQUARE", form.getLocationText());
+                qso.setField("RST_RCVD", form.getRstReceived());
+                qso.setField("RST_SENT", form.getRstSent());
+                qso.setField("OPERATOR", form.getMyCallSign());
+                qso.setField("MY_GRIDSQUARE", form.getMyLocation());
+                qso.setField("COMMENT", form.getComments());
                 log.add(qso);
                 updateTable();
                 unsavedChanges = true;
@@ -237,19 +237,19 @@ public class GUI extends JFrame {
             QSO qsoExisting = log.get(selectedRows[0]);
 
             QSOForm qsoForm = new QSOForm();
-            qsoForm.setCallSign(qsoExisting.getCallSign());
-            qsoForm.setTimeStart(qsoExisting.getTimeStart());
-            qsoForm.setTimeEnd(qsoExisting.getTimeEnd());
-            qsoForm.setFrequency(qsoExisting.getFrequency());
-            qsoForm.setBand(qsoExisting.getBand());
-            qsoForm.setMode(qsoExisting.getMode());
-            qsoForm.setPower(qsoExisting.getPower());
-            qsoForm.setLocationText(qsoExisting.getLocation());
-            qsoForm.setRstReceived(qsoExisting.getRstRecevied());
-            qsoForm.setRstSent(qsoExisting.getRstSent());
-            qsoForm.setMyCallSign(qsoExisting.getMyCallSign());
-            qsoForm.setMyLocation(qsoExisting.getMyLocation());
-            qsoForm.setComments(qsoExisting.getComments());
+            qsoForm.setCallSign(qsoExisting.getField("CALL"));
+            qsoForm.setTimeStart(qsoExisting.getField("QSO_DATE"));
+            qsoForm.setTimeEnd(qsoExisting.getField("QSO_DATE_OFF"));
+            qsoForm.setFrequency(qsoExisting.getField("FREQ"));
+            qsoForm.setBand(qsoExisting.getField("BAND"));
+            qsoForm.setMode(qsoExisting.getField("MODE"));
+            qsoForm.setPower(qsoExisting.getField("TX_PWR"));
+            qsoForm.setLocationText(qsoExisting.getField("GRIDSQUARE"));
+            qsoForm.setRstReceived(qsoExisting.getField("RST_RCVD"));
+            qsoForm.setRstSent(qsoExisting.getField("RST_SENT"));
+            qsoForm.setMyCallSign(qsoExisting.getField("OPERATOR"));
+            qsoForm.setMyLocation(qsoExisting.getField("MY_GRIDSQUARE"));
+            qsoForm.setComments(qsoExisting.getField("COMMENT"));
 
             qsoForm.validate();
 
@@ -257,19 +257,19 @@ public class GUI extends JFrame {
 
             if (responseFromDialog == JOptionPane.YES_OPTION) {
                 QSO qsoNew = new QSO();
-                qsoNew.setCallSign(qsoForm.getCallSign());
-                qsoNew.setTimeStart(qsoForm.getTimeStart());
-                qsoNew.setTimeEnd(qsoForm.getTimeEnd());
-                qsoNew.setFrequency(qsoForm.getFrequency());
-                qsoNew.setBand(qsoForm.getBand());
-                qsoNew.setMode(qsoForm.getMode());
-                qsoNew.setPower(qsoForm.getPower());
-                qsoNew.setLocation(qsoForm.getLocationText());
-                qsoNew.setRstRecevied(qsoForm.getRstReceived());
-                qsoNew.setRstSent(qsoForm.getRstSent());
-                qsoNew.setMyCallSign(qsoForm.getMyCallSign());
-                qsoNew.setMyLocation(qsoForm.getMyLocation());
-                qsoNew.setComments(qsoForm.getComments());
+                qsoNew.setField("CALL", qsoForm.getCallSign());
+                qsoNew.setField("QSO_DATE", qsoForm.getTimeStart());
+                qsoNew.setField("QSO_DATE_OFF", qsoForm.getTimeEnd());
+                qsoNew.setField("FREQ", qsoForm.getFrequency());
+                qsoNew.setField("BAND", qsoForm.getBand());
+                qsoNew.setField("MODE", qsoForm.getMode());
+                qsoNew.setField("TX_PWR", qsoForm.getPower());
+                qsoNew.setField("GRIDSQUARE", qsoForm.getLocationText());
+                qsoNew.setField("RST_RCVD", qsoForm.getRstReceived());
+                qsoNew.setField("RST_SENT", qsoForm.getRstSent());
+                qsoNew.setField("OPERATOR", qsoForm.getMyCallSign());
+                qsoNew.setField("MY_GRIDSQUARE", qsoForm.getMyLocation());
+                qsoNew.setField("COMMENT", qsoForm.getComments());
                 log.add(qsoNew);
                 updateTable();
                 unsavedChanges = true;
@@ -289,38 +289,38 @@ public class GUI extends JFrame {
             QSO qso = log.get(selectedRows[0]);
 
             QSOForm qsoForm = new QSOForm();
-            qsoForm.setCallSign(qso.getCallSign());
-            qsoForm.setTimeStart(qso.getTimeStart());
-            qsoForm.setTimeEnd(qso.getTimeEnd());
-            qsoForm.setFrequency(qso.getFrequency());
-            qsoForm.setBand(qso.getBand());
-            qsoForm.setMode(qso.getMode());
-            qsoForm.setPower(qso.getPower());
-            qsoForm.setLocationText(qso.getLocation());
-            qsoForm.setRstReceived(qso.getRstRecevied());
-            qsoForm.setRstSent(qso.getRstSent());
-            qsoForm.setMyCallSign(qso.getMyCallSign());
-            qsoForm.setMyLocation(qso.getMyLocation());
-            qsoForm.setComments(qso.getComments());
+            qsoForm.setCallSign(qso.getField("CALL"));
+            qsoForm.setTimeStart(qso.getField("QSO_DATE"));
+            qsoForm.setTimeEnd(qso.getField("QSO_DATE_OFF"));
+            qsoForm.setFrequency(qso.getField("FREQ"));
+            qsoForm.setBand(qso.getField("BAND"));
+            qsoForm.setMode(qso.getField("MODE"));
+            qsoForm.setPower(qso.getField("TX_PWR"));
+            qsoForm.setLocationText(qso.getField("GRIDSQUARE"));
+            qsoForm.setRstReceived(qso.getField("RST_RCVD"));
+            qsoForm.setRstSent(qso.getField("RST_SENT"));
+            qsoForm.setMyCallSign(qso.getField("OPERATOR"));
+            qsoForm.setMyLocation(qso.getField("MY_GRIDSQUARE"));
+            qsoForm.setComments(qso.getField("COMMENT"));
 
             qsoForm.validate();
 
             int responseFromDialog = JOptionPane.showConfirmDialog(GUI.this, qsoForm, "Modify", JOptionPane.OK_CANCEL_OPTION);
 
             if (responseFromDialog == JOptionPane.YES_OPTION) {
-                qso.setCallSign(qsoForm.getCallSign());
-                qso.setTimeStart(qsoForm.getTimeStart());
-                qso.setTimeEnd(qsoForm.getTimeEnd());
-                qso.setFrequency(qsoForm.getFrequency());
-                qso.setBand(qsoForm.getBand());
-                qso.setMode(qsoForm.getMode());
-                qso.setPower(qsoForm.getPower());
-                qso.setLocation(qsoForm.getLocationText());
-                qso.setRstRecevied(qsoForm.getRstReceived());
-                qso.setRstSent(qsoForm.getRstSent());
-                qso.setMyCallSign(qsoForm.getMyCallSign());
-                qso.setMyLocation(qsoForm.getMyLocation());
-                qso.setComments(qsoForm.getComments());
+                qso.setField("CALL", qsoForm.getCallSign());
+                qso.setField("QSO_DATE", qsoForm.getTimeStart());
+                qso.setField("QSO_DATE_OFF", qsoForm.getTimeEnd());
+                qso.setField("FREQ", qsoForm.getFrequency());
+                qso.setField("BAND", qsoForm.getBand());
+                qso.setField("MODE", qsoForm.getMode());
+                qso.setField("TX_PWR", qsoForm.getPower());
+                qso.setField("GRIDSQUARE", qsoForm.getLocationText());
+                qso.setField("RST_RCVD", qsoForm.getRstReceived());
+                qso.setField("RST_SENT", qsoForm.getRstSent());
+                qso.setField("OPERATOR", qsoForm.getMyCallSign());
+                qso.setField("MY_GRIDSQUARE", qsoForm.getMyLocation());
+                qso.setField("COMMENT", qsoForm.getComments());
                 updateTable();
                 unsavedChanges = true;
             }
@@ -350,7 +350,7 @@ public class GUI extends JFrame {
         public void actionPerformed(ActionEvent actionEvent) {
             for (int i : table.getSelectedRows()) {
                 if (!log.get(i).validateAdif()) {
-                    JOptionPane.showMessageDialog(GUI.this, "Can't export due to issues in row " + (i + 1) + " (callsign " + log.get(i).getCallSign() + "). Please correct the row and try again.", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(GUI.this, "Can't export due to issues in row " + (i + 1) + " (callsign " + log.get(i).getField("CALL") + "). Please correct the row and try again.", "Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
             }
