@@ -56,14 +56,12 @@ class LogbookTest {
         String tmpFilename = tmpDir + "com.marcushammar.amateur-radio-minimum-log_test.adi";
         File tmpFile = new File(tmpFilename);
 
-        String contents = "";
+        String contentOfFile = "";
 
         try {
             logbook.save(tmpFile);
-
-            byte[] encoded = Files.readAllBytes(Paths.get(tmpFilename));
-            contents = new String(encoded, Charset.defaultCharset());
-
+            contentOfFile = new String(Files.readAllBytes(Paths.get(tmpFilename)), Charset.defaultCharset());
+            tmpFile.delete();
         } catch (IOException ioe) {
             System.out.println(ioe.getMessage());
         }
@@ -89,6 +87,6 @@ class LogbookTest {
             sb.append(logbook.get(i).getAdifRow()).append(System.lineSeparator());
         }
 
-        assertEquals(sb.toString(), contents);
+        assertEquals(sb.toString(), contentOfFile);
     }
 }
