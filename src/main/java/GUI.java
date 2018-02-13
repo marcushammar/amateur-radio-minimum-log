@@ -16,9 +16,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -410,9 +407,8 @@ public class GUI extends JFrame {
                 currentFile = loadAndSaveFileChooser.getSelectedFile();
 
                 BufferedReader br = new BufferedReader(new FileReader(currentFile));
-                Gson gson = new Gson();
                 logbook.clear();
-                //log = gson.fromJson(br, new TypeToken<ArrayList<QSO>>() {}.getType());
+                // TODO: The load function needs to be created
                 br.close();
 
                 updateTable();
@@ -451,9 +447,8 @@ public class GUI extends JFrame {
                     currentFile = new File(fileName);
                 }
 
-                Gson gson = new Gson();
                 FileWriter fw = new FileWriter(currentFile);
-                //fw.write(gson.toJson(log));
+                fw.write(""); //TODO: The save function needs to be created
                 fw.close();
 
                 unsavedChanges = false;
@@ -488,9 +483,8 @@ public class GUI extends JFrame {
 
                 currentFile = new File(fileName);
 
-                Gson gson = new Gson();
                 FileWriter fw = new FileWriter(currentFile);
-                //fw.write(gson.toJson(log));
+                fw.write(""); // TODO: The save as function needs to be created
                 fw.close();
 
                 unsavedChanges = false;
