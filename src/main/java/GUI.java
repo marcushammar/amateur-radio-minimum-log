@@ -28,14 +28,13 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.TimeZone;
 
 public class GUI extends JFrame {
     private final String APPLICATION_VERSION = "1.1.0";
 
-    private ArrayList<QSO> log = new ArrayList<>();
+    private Logbook logbook = new Logbook();
     private boolean unsavedChanges = false;
     private File currentFile;
     private JTable table;
@@ -84,7 +83,7 @@ public class GUI extends JFrame {
         menuBar.add(helpMenu);
         setJMenuBar(menuBar);
 
-        table = new JTable(getDataForTable(), columns);
+        table = new JTable(logbook.getDataForTable(), columns);
         JScrollPane scrollPane = new JScrollPane(table);
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         table.getSelectionModel().addListSelectionListener(new TableSelectionListener());
@@ -139,7 +138,7 @@ public class GUI extends JFrame {
     }
 
     private void updateTable() {
-        DefaultTableModel tableModel = new DefaultTableModel(getDataForTable(), columns) {
+        DefaultTableModel tableModel = new DefaultTableModel(logbook.getDataForTable(), columns) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
@@ -161,29 +160,7 @@ public class GUI extends JFrame {
         table.getColumnModel().getColumn(11).setPreferredWidth(80);
         table.getColumnModel().getColumn(12).setPreferredWidth(200);
 
-        countLabel.setText("Count: " + log.size());
-    }
-
-    private Object[][] getDataForTable() {
-        Object[][] dataObject = new Object[log.size()][13];
-        int i = 0;
-        for (QSO qso : log) {
-            dataObject[i][0] = qso.getField("CALL");
-            dataObject[i][1] = qso.getField("QSO_DATE");
-            dataObject[i][2] = qso.getField("QSO_DATE_OFF");
-            dataObject[i][3] = qso.getField("FREQ");
-            dataObject[i][4] = qso.getField("BAND");
-            dataObject[i][5] = qso.getField("MODE");
-            dataObject[i][6] = qso.getField("TX_PWR");
-            dataObject[i][7] = qso.getField("GRIDSQUARE");
-            dataObject[i][8] = qso.getField("RST_SENT");
-            dataObject[i][9] = qso.getField("RST_RCVD");
-            dataObject[i][10] = qso.getField("OPERATOR");
-            dataObject[i][11] = qso.getField("MY_GRIDSQUARE");
-            dataObject[i][12] = qso.getField("COMMENT");
-            i++;
-        }
-        return dataObject;
+        countLabel.setText("Count: " + logbook.count());
     }
 
     private void applicationIsAboutToClose() {
@@ -218,7 +195,7 @@ public class GUI extends JFrame {
                 qso.setField("OPERATOR", inputDialog.getMyCallSign());
                 qso.setField("MY_GRIDSQUARE", inputDialog.getMyLocation());
                 qso.setField("COMMENT", inputDialog.getComments());
-                log.add(qso);
+                logbook.add(qso);
                 updateTable();
                 unsavedChanges = true;
             }
@@ -234,7 +211,7 @@ public class GUI extends JFrame {
                 return;
             }
 
-            QSO qsoExisting = log.get(selectedRows[0]);
+            QSO qsoExisting = logbook.get(selectedRows[0]);
 
             InputDialog inputDialog = new InputDialog();
             inputDialog.setCallSign(qsoExisting.getField("CALL"));
@@ -270,7 +247,7 @@ public class GUI extends JFrame {
                 qsoNew.setField("OPERATOR", inputDialog.getMyCallSign());
                 qsoNew.setField("MY_GRIDSQUARE", inputDialog.getMyLocation());
                 qsoNew.setField("COMMENT", inputDialog.getComments());
-                log.add(qsoNew);
+                logbook.add(qsoNew);
                 updateTable();
                 unsavedChanges = true;
             }
@@ -286,7 +263,7 @@ public class GUI extends JFrame {
                 return;
             }
 
-            QSO qso = log.get(selectedRows[0]);
+            QSO qso = logbook.get(selectedRows[0]);
 
             InputDialog inputDialog = new InputDialog();
             inputDialog.setCallSign(qso.getField("CALL"));
@@ -338,7 +315,7 @@ public class GUI extends JFrame {
             int[] selectedRows = table.getSelectedRows();
 
             if (selectedRows.length == 1) {
-                log.remove(selectedRows[0]);
+                logbook.remove(selectedRows[0]);
                 updateTable();
                 unsavedChanges = true;
             }
@@ -349,8 +326,8 @@ public class GUI extends JFrame {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
             for (int i : table.getSelectedRows()) {
-                if (!log.get(i).validateAdif()) {
-                    JOptionPane.showMessageDialog(GUI.this, "Can't export due to issues in row " + (i + 1) + " (callsign " + log.get(i).getField("CALL") + "). Please correct the row and try again.", "Error", JOptionPane.ERROR_MESSAGE);
+                if (!logbook.get(i).validateAdif()) {
+                    JOptionPane.showMessageDialog(GUI.this, "Can't export due to issues in row " + (i + 1) + " (callsign " + logbook.get(i).getField("CALL") + "). Please correct the row and try again.", "Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
             }
@@ -389,7 +366,7 @@ public class GUI extends JFrame {
                 pw.println();
 
                 for (int i : table.getSelectedRows()) {
-                    pw.println(log.get(i).getAdifRow());
+                    pw.println(logbook.get(i).getAdifRow());
                 }
 
                 fw.close();
@@ -408,7 +385,7 @@ public class GUI extends JFrame {
                     return;
                 }
             }
-            log.clear();
+            logbook.clear();
             updateTable();
             unsavedChanges = false;
             currentFile = null;
@@ -434,9 +411,8 @@ public class GUI extends JFrame {
 
                 BufferedReader br = new BufferedReader(new FileReader(currentFile));
                 Gson gson = new Gson();
-                log.clear();
-                log = gson.fromJson(br, new TypeToken<ArrayList<QSO>>() {
-                }.getType());
+                logbook.clear();
+                //log = gson.fromJson(br, new TypeToken<ArrayList<QSO>>() {}.getType());
                 br.close();
 
                 updateTable();
@@ -477,7 +453,7 @@ public class GUI extends JFrame {
 
                 Gson gson = new Gson();
                 FileWriter fw = new FileWriter(currentFile);
-                fw.write(gson.toJson(log));
+                //fw.write(gson.toJson(log));
                 fw.close();
 
                 unsavedChanges = false;
@@ -514,7 +490,7 @@ public class GUI extends JFrame {
 
                 Gson gson = new Gson();
                 FileWriter fw = new FileWriter(currentFile);
-                fw.write(gson.toJson(log));
+                //fw.write(gson.toJson(log));
                 fw.close();
 
                 unsavedChanges = false;
