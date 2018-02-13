@@ -54,4 +54,20 @@ class QSOTest {
         Throwable exception = assertThrows(IllegalArgumentException.class, qso::validate);
         assertEquals("The BAND is invalid.", exception.getMessage());
     }
+
+    @Test
+    void createQsoWithFieldValueEqualToNull() {
+        QSO qso = new QSO();
+
+        Throwable exception = assertThrows(IllegalArgumentException.class, () -> qso.setField("CALL", null));
+        assertEquals("The field CALL cannot have a null value.", exception.getMessage());
+    }
+
+    @Test
+    void createQsoWithFieldNameEqualToNull() {
+        QSO qso = new QSO();
+
+        Throwable exception = assertThrows(IllegalArgumentException.class, () -> qso.setField(null, "AB1CDE"));
+        assertEquals("The QSO cannot have a null field.", exception.getMessage());
+    }
 }
