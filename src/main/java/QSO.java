@@ -50,6 +50,20 @@ public class QSO {
         return output.toString();
     }
 
+    public void validate() {
+        for (Map.Entry<String, String> pair : this.fields.entrySet()) {
+            switch (pair.getKey()) {
+                case "BAND":
+                    if (!VALID_BANDS.contains(pair.getValue())) {
+                        throw new IllegalArgumentException("The BAND is invalid.");
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
     public boolean validateAdif() { //TODO: This method needs to be implemented
         return true;
     }
