@@ -53,7 +53,7 @@ class LogbookTest {
         logbook.add(qso2);
 
         String tmpDir = System.getProperty("java.io.tmpdir");
-        String tmpFilename = tmpDir + "com.marcushammar.amateur-radio-minimum-log" + "/test.adi";
+        String tmpFilename = tmpDir + "com.marcushammar.amateur-radio-minimum-log_test.adi";
         File tmpFile = new File(tmpFilename);
         logbook.save(tmpFile);
 
@@ -64,7 +64,7 @@ class LogbookTest {
             contents = new String(encoded, Charset.defaultCharset());
 
         } catch (IOException ioe) {
-
+            System.out.println(ioe.getMessage());
         }
 
         StringBuilder sb = new StringBuilder();
@@ -80,6 +80,7 @@ class LogbookTest {
         sb.append("<PROGRAMID:25>Amateur Radio Minimum Log").append(System.lineSeparator());
         sb.append("<PROGRAMVERSION:").append(APPLICATION_VERSION.length()).append(">").append(APPLICATION_VERSION).append(System.lineSeparator());
         sb.append("<EOH>").append(System.lineSeparator());
+        sb.append(System.lineSeparator());
 
         int numberOfQso = logbook.count();
 
