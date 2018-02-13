@@ -54,31 +54,27 @@ public class Logbook {
         log.clear();
     }
 
-    public void save(File file) {
+    public void save(File file) throws IOException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd HHmmss");
         sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
         String timeNow = sdf.format(new Date());
 
-        try {
-            FileWriter fw = new FileWriter(file);
-            PrintWriter pw = new PrintWriter(fw);
+        FileWriter fw = new FileWriter(file);
+        PrintWriter pw = new PrintWriter(fw);
 
-            pw.println("This ADIF file was extracted from Amateur Radio Minimum Log");
-            pw.println();
-            pw.println("<ADIF_VER:5>3.0.6");
-            pw.println("<CREATED_TIMESTAMP:15>" + timeNow);
-            pw.println("<PROGRAMID:25>Amateur Radio Minimum Log");
-            pw.println("<PROGRAMVERSION:" + APPLICATION_VERSION.length() + ">" + APPLICATION_VERSION);
-            pw.println("<EOH>");
-            pw.println();
+        pw.println("This ADIF file was extracted from Amateur Radio Minimum Log");
+        pw.println();
+        pw.println("<ADIF_VER:5>3.0.6");
+        pw.println("<CREATED_TIMESTAMP:15>" + timeNow);
+        pw.println("<PROGRAMID:25>Amateur Radio Minimum Log");
+        pw.println("<PROGRAMVERSION:" + APPLICATION_VERSION.length() + ">" + APPLICATION_VERSION);
+        pw.println("<EOH>");
+        pw.println();
 
-            for (QSO qso : log) {
-                pw.println(qso.getAdifRow());
-            }
-
-            fw.close();
-        } catch (IOException ioe) {
-            System.out.println(ioe.getMessage());
+        for (QSO qso : log) {
+            pw.println(qso.getAdifRow());
         }
+
+        fw.close();
     }
 }

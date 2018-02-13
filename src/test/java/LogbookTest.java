@@ -55,11 +55,12 @@ class LogbookTest {
         String tmpDir = System.getProperty("java.io.tmpdir");
         String tmpFilename = tmpDir + "com.marcushammar.amateur-radio-minimum-log_test.adi";
         File tmpFile = new File(tmpFilename);
-        logbook.save(tmpFile);
 
         String contents = "";
 
         try {
+            logbook.save(tmpFile);
+
             byte[] encoded = Files.readAllBytes(Paths.get(tmpFilename));
             contents = new String(encoded, Charset.defaultCharset());
 

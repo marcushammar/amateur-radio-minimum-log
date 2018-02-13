@@ -125,7 +125,7 @@ public class GUI extends JFrame {
         updateTable();
 
         exportFileChooser.setFileFilter(new FileNameExtensionFilter("ADIF format", "adi"));
-        loadAndSaveFileChooser.setFileFilter(new FileNameExtensionFilter("Amateur Radio Minimum Log format", "json"));
+        loadAndSaveFileChooser.setFileFilter(new FileNameExtensionFilter("ADIF format", "adi"));
 
         addWindowListener(new ApplicationTerminationListener());
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -420,48 +420,9 @@ public class GUI extends JFrame {
         }
     }
 
-    private class Save implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent actionEvent) {
-            try {
-                if (currentFile == null) {
-                    int resultFromDialog = loadAndSaveFileChooser.showSaveDialog(GUI.this);
-                    if (resultFromDialog != JFileChooser.APPROVE_OPTION) {
-                        return;
-                    }
-
-                    File newFile = loadAndSaveFileChooser.getSelectedFile();
-
-                    if ((newFile.exists() && currentFile == null) || (newFile.exists() && currentFile != null && !newFile.equals(currentFile))) {
-                        int responseFromDialog = JOptionPane.showConfirmDialog(GUI.this, "There is already a file with that name. Do you want to overwrite the file?", "Save log", JOptionPane.YES_NO_OPTION);
-                        if (responseFromDialog != JOptionPane.YES_OPTION) {
-                            return;
-                        }
-                    }
-
-                    String fileName = newFile.toString();
-                    if (!fileName.endsWith(".json")) {
-                        fileName += ".json";
-                    }
-
-                    currentFile = new File(fileName);
-                }
-
-                FileWriter fw = new FileWriter(currentFile);
-                fw.write(""); //TODO: The save function needs to be created
-                fw.close();
-
-                unsavedChanges = false;
-            } catch (IOException ioe) {
-                JOptionPane.showMessageDialog(GUI.this, "Something went wrong. Error message: " + ioe.getMessage());
-            }
-        }
-    }
-
-    private class SaveAs implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent actionEvent) {
-            try {
+    private void save(boolean saveAs) {
+        try {
+            if (currentFile == null || saveAs) {
                 int resultFromDialog = loadAndSaveFileChooser.showSaveDialog(GUI.this);
                 if (resultFromDialog != JFileChooser.APPROVE_OPTION) {
                     return;
@@ -477,20 +438,32 @@ public class GUI extends JFrame {
                 }
 
                 String fileName = newFile.toString();
-                if (!fileName.endsWith(".json")) {
-                    fileName += ".json";
+                if (!fileName.endsWith(".adi")) {
+                    fileName += ".adi";
                 }
 
                 currentFile = new File(fileName);
-
-                FileWriter fw = new FileWriter(currentFile);
-                fw.write(""); // TODO: The save as function needs to be created
-                fw.close();
-
-                unsavedChanges = false;
-            } catch (IOException ioe) {
-                JOptionPane.showMessageDialog(GUI.this, "Something went wrong. Error message: " + ioe.getMessage());
             }
+
+            logbook.save(currentFile);
+
+            unsavedChanges = false;
+        } catch (IOException ioe) {
+            JOptionPane.showMessageDialog(GUI.this, "Something went wrong. Error message: " + ioe.getMessage());
+        }
+    }
+
+    private class Save implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent actionEvent) {
+            save(false);
+        }
+    }
+
+    private class SaveAs implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent actionEvent) {
+            save(true);
         }
     }
 
