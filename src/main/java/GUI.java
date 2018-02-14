@@ -350,23 +350,8 @@ public class GUI extends JFrame {
                     }
                 }
 
-                FileWriter fw = new FileWriter(exportFile);
-                PrintWriter pw = new PrintWriter(fw);
+                logbook.save(exportFile, table.getSelectedRows());
 
-                pw.println("This ADIF file was extracted from Amateur Radio Minimum Log");
-                pw.println();
-                pw.println("<ADIF_VER:5>3.0.6");
-                pw.println("<CREATED_TIMESTAMP:15>" + timeNow);
-                pw.println("<PROGRAMID:25>Amateur Radio Minimum Log");
-                pw.println("<PROGRAMVERSION:" + APPLICATION_VERSION.length() + ">" + APPLICATION_VERSION);
-                pw.println("<EOH>");
-                pw.println();
-
-                for (int i : table.getSelectedRows()) {
-                    pw.println(logbook.get(i).getAdifRow());
-                }
-
-                fw.close();
             } catch (IOException e) {
                 JOptionPane.showMessageDialog(GUI.this, "Something went wrong. Error message: " + e.getMessage());
             }
