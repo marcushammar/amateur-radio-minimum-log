@@ -10,12 +10,9 @@ import java.util.Date;
 import java.util.TimeZone;
 
 public class Logbook {
-    private static final String APPLICATION_VERSION = "1.1.0";
-
+    private enum LoadState { NONE, FIELD_NAME, FIELD_SIZE, FIELD_CONTENT }
+    private enum LoadPart { HEAD, ROWS }
     private ArrayList<QSO> log = new ArrayList<>();
-
-    public enum LoadState { NONE, FIELD_NAME, FIELD_SIZE, FIELD_CONTENT }
-    public enum LoadPart { HEAD, ROWS }
 
     public int count() {
         return log.size();
@@ -77,10 +74,10 @@ public class Logbook {
 
         pw.println("This ADIF file was extracted from Amateur Radio Minimum Log");
         pw.println();
-        pw.println("<ADIF_VER:5>3.0.6");
+        pw.println("<ADIF_VER:" + Application.ADIF_VERSION.length() + ">" + Application.ADIF_VERSION);
         pw.println("<CREATED_TIMESTAMP:15>" + timeNow);
         pw.println("<PROGRAMID:25>Amateur Radio Minimum Log");
-        pw.println("<PROGRAMVERSION:" + APPLICATION_VERSION.length() + ">" + APPLICATION_VERSION);
+        pw.println("<PROGRAMVERSION:" + Application.VERSION.length() + ">" + Application.VERSION);
         pw.println("<EOH>");
         pw.println();
 

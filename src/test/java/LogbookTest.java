@@ -14,8 +14,6 @@ import java.util.TimeZone;
 import static org.junit.jupiter.api.Assertions.*;
 
 class LogbookTest {
-    private static final String APPLICATION_VERSION = "1.1.0";
-
     @Test
     void simpleSave() {
         Logbook logbook = new Logbook();
@@ -74,7 +72,7 @@ class LogbookTest {
         StringBuilder sb = new StringBuilder();
 
         sb.append("This ADIF file was extracted from Amateur Radio Minimum Log").append(System.lineSeparator()).append(System.lineSeparator());
-        sb.append("<ADIF_VER:5>3.0.6").append(System.lineSeparator());
+        sb.append("<ADIF_VER:").append(Application.ADIF_VERSION.length()).append(">").append(Application.ADIF_VERSION).append(System.lineSeparator());
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd HHmmss");
         sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
@@ -82,7 +80,7 @@ class LogbookTest {
 
         sb.append("<CREATED_TIMESTAMP:15>").append(timeNow).append(System.lineSeparator());
         sb.append("<PROGRAMID:25>Amateur Radio Minimum Log").append(System.lineSeparator());
-        sb.append("<PROGRAMVERSION:").append(APPLICATION_VERSION.length()).append(">").append(APPLICATION_VERSION).append(System.lineSeparator());
+        sb.append("<PROGRAMVERSION:").append(Application.VERSION.length()).append(">").append(Application.VERSION).append(System.lineSeparator());
         sb.append("<EOH>").append(System.lineSeparator());
         sb.append(System.lineSeparator());
 
@@ -174,7 +172,7 @@ class LogbookTest {
         StringBuilder sb = new StringBuilder();
 
         sb.append("This ADIF file was extracted from Amateur Radio Minimum Log").append(System.lineSeparator()).append(System.lineSeparator());
-        sb.append("<ADIF_VER:5>3.0.6").append(System.lineSeparator());
+        sb.append("<ADIF_VER:").append(Application.ADIF_VERSION.length()).append(">").append(Application.ADIF_VERSION).append(System.lineSeparator());
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd HHmmss");
         sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
@@ -182,7 +180,7 @@ class LogbookTest {
 
         sb.append("<CREATED_TIMESTAMP:15>").append(timeNow).append(System.lineSeparator());
         sb.append("<PROGRAMID:25>Amateur Radio Minimum Log").append(System.lineSeparator());
-        sb.append("<PROGRAMVERSION:").append(APPLICATION_VERSION.length()).append(">").append(APPLICATION_VERSION).append(System.lineSeparator());
+        sb.append("<PROGRAMVERSION:").append(Application.VERSION.length()).append(">").append(Application.VERSION).append(System.lineSeparator());
         sb.append("<EOH>").append(System.lineSeparator());
         sb.append(System.lineSeparator());
 
@@ -238,7 +236,7 @@ class LogbookTest {
         StringBuilder sb = new StringBuilder();
 
         sb.append("This ADIF file was extracted from Amateur Radio Minimum Log").append(System.lineSeparator()).append(System.lineSeparator());
-        sb.append("<ADIF_VER:5>3.0.6").append(System.lineSeparator());
+        sb.append("<ADIF_VER:").append(Application.ADIF_VERSION.length()).append(">").append(Application.ADIF_VERSION).append(System.lineSeparator());
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd HHmmss");
         sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
@@ -246,7 +244,7 @@ class LogbookTest {
 
         sb.append("<CREATED_TIMESTAMP:15>").append(timeNow).append(System.lineSeparator());
         sb.append("<PROGRAMID:25>Amateur Radio Minimum Log").append(System.lineSeparator());
-        sb.append("<PROGRAMVERSION:").append(APPLICATION_VERSION.length()).append(">").append(APPLICATION_VERSION).append(System.lineSeparator());
+        sb.append("<PROGRAMVERSION:").append(Application.VERSION.length()).append(">").append(Application.VERSION).append(System.lineSeparator());
         sb.append("<EOH>").append(System.lineSeparator());
         sb.append(System.lineSeparator());
 

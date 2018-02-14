@@ -29,8 +29,6 @@ import java.util.Date;
 import java.util.TimeZone;
 
 public class GUI extends JFrame {
-    private final String APPLICATION_VERSION = "1.1.0";
-
     private Logbook logbook = new Logbook();
     private boolean unsavedChanges = false;
     private File currentFile;
@@ -459,7 +457,7 @@ public class GUI extends JFrame {
     private class About implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
-            JOptionPane.showMessageDialog(GUI.this, "Amateur Radio Minimum Log (v " + APPLICATION_VERSION + ")\nCopyright (C) 2017-2018 Marcus Hammar\n\nThis program is free software: you can redistribute it and/or modify\nit under the terms of the GNU General Public License as published by\nthe Free Software Foundation, either version 3 of the License, or\n(at your option) any later version.\n\nThis program is distributed in the hope that it will be useful,\nbut WITHOUT ANY WARRANTY; without even the implied warranty of\nMERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\nGNU General Public License for more details.\n\nYou should have received a copy of the GNU General Public License\nalong with this program. If not, see http://www.gnu.org/licenses/.", "About", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(GUI.this, "Amateur Radio Minimum Log (v " + Application.VERSION + ")\nCopyright (C) 2017-2018 Marcus Hammar\n\nThis program is free software: you can redistribute it and/or modify\nit under the terms of the GNU General Public License as published by\nthe Free Software Foundation, either version 3 of the License, or\n(at your option) any later version.\n\nThis program is distributed in the hope that it will be useful,\nbut WITHOUT ANY WARRANTY; without even the implied warranty of\nMERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\nGNU General Public License for more details.\n\nYou should have received a copy of the GNU General Public License\nalong with this program. If not, see http://www.gnu.org/licenses/.", "About", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
