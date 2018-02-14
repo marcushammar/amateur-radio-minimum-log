@@ -55,6 +55,14 @@ public class Logbook {
     }
 
     public void save(File file) throws IOException {
+        int[] what = new int[log.size()];
+        for (int i = 0; i < log.size(); i++) {
+            what[i] = i;
+        }
+        save(file, what);
+    }
+
+    public void save(File file, int[] what) throws IOException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd HHmmss");
         sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
         String timeNow = sdf.format(new Date());
@@ -71,8 +79,8 @@ public class Logbook {
         pw.println("<EOH>");
         pw.println();
 
-        for (QSO qso : log) {
-            pw.println(qso.getAdifRow());
+        for (int i : what) {
+            pw.println(log.get(i).getAdifRow());
         }
 
         fw.close();
