@@ -61,7 +61,10 @@ class LogbookTest {
         try {
             logbook.save(tmpFile);
             contentOfFile = new String(Files.readAllBytes(Paths.get(tmpFilename)), Charset.defaultCharset());
-            tmpFile.delete();
+            boolean deleteResult = tmpFile.delete();
+            if (!deleteResult) {
+                throw new IOException("Cannot delete test file.");
+            }
         } catch (IOException ioe) {
             System.out.println(ioe.getMessage());
         }
@@ -158,7 +161,10 @@ class LogbookTest {
         try {
             logbook.save(tmpFile, what);
             contentOfFile = new String(Files.readAllBytes(Paths.get(tmpFilename)), Charset.defaultCharset());
-            tmpFile.delete();
+            boolean deleteResult = tmpFile.delete();
+            if (!deleteResult) {
+                throw new IOException("Cannot delete test file.");
+            }
         } catch (IOException ioe) {
             System.out.println(ioe.getMessage());
         }
