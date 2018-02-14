@@ -391,10 +391,7 @@ public class GUI extends JFrame {
 
                 currentFile = loadAndSaveFileChooser.getSelectedFile();
 
-                BufferedReader br = new BufferedReader(new FileReader(currentFile));
-                logbook.clear();
-                // TODO: The load function needs to be created
-                br.close();
+                logbook.load(currentFile);
 
                 updateTable();
                 unsavedChanges = false;
