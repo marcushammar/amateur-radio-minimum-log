@@ -1,10 +1,9 @@
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -95,7 +94,7 @@ public class Logbook {
     public void load(File file) throws IOException {
         log.clear();
 
-        String contentOfFile = new String(Files.readAllBytes(Paths.get(file.getAbsolutePath())), Charset.defaultCharset());
+        BufferedReader br = new BufferedReader(new FileReader(file));
 
         LoadState loadState = LoadState.NONE;
         LoadPart loadPart = LoadPart.HEAD;
@@ -105,8 +104,13 @@ public class Logbook {
         int currentContentRemaining = 0;
         QSO currentQso = null;
 
-        for (int i = 0; i < contentOfFile.length(); i++) {
-            char currentChar = contentOfFile.charAt(i);
+        while (true) {
+            int read = br.read();
+            if (read == -1) {
+                break;
+            }
+
+            char currentChar = (char)read;
 
             if (loadState == LoadState.NONE && currentChar == '<') {
                 loadState = LoadState.FIELD_NAME;
@@ -146,5 +150,6 @@ public class Logbook {
                 }
             }
         }
+        br.close();
     }
 }
