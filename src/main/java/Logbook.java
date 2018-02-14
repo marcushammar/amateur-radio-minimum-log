@@ -94,7 +94,7 @@ public class Logbook {
     public void load(File file) throws IOException {
         log.clear();
 
-        BufferedReader br = new BufferedReader(new FileReader(file));
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
 
         LoadState loadState = LoadState.NONE;
         LoadPart loadPart = LoadPart.HEAD;
@@ -104,12 +104,8 @@ public class Logbook {
         int currentContentRemaining = 0;
         QSO currentQso = null;
 
-        while (true) {
-            int read = br.read();
-            if (read == -1) {
-                break;
-            }
-
+        int read;
+        while ((read = bufferedReader.read()) != -1) {
             char currentChar = (char)read;
 
             if (loadState == LoadState.NONE && currentChar == '<') {
@@ -150,6 +146,6 @@ public class Logbook {
                 }
             }
         }
-        br.close();
+        bufferedReader.close();
     }
 }
