@@ -2,6 +2,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,6 +14,9 @@ public class Logbook {
     private static final String APPLICATION_VERSION = "1.1.0";
 
     private ArrayList<QSO> log = new ArrayList<>();
+
+    public enum LoadState { NONE, FIELD_NAME, FIELD_SIZE, FIELD_CONTENT }
+    public enum LoadPart { HEAD, ROWS }
 
     public int count() {
         return log.size();
@@ -84,5 +90,61 @@ public class Logbook {
         }
 
         fw.close();
+    }
+
+    public void load(File file) throws IOException {
+        log.clear();
+
+        String contentOfFile = new String(Files.readAllBytes(Paths.get(file.getAbsolutePath())), Charset.defaultCharset());
+
+        LoadState loadState = LoadState.NONE;
+        LoadPart loadPart = LoadPart.HEAD;
+        StringBuilder currentFieldName = new StringBuilder();
+        StringBuilder currentFieldSize = new StringBuilder();
+        StringBuilder currentFieldContent = new StringBuilder();
+        int currentContentRemaining = 0;
+        QSO currentQso = null;
+
+        for (int i = 0; i < contentOfFile.length(); i++) {
+            char currentChar = contentOfFile.charAt(i);
+
+            if (loadState == LoadState.NONE && currentChar == '<') {
+                loadState = LoadState.FIELD_NAME;
+            } else if (loadState == LoadState.FIELD_NAME && currentChar == '>') {
+                if (currentFieldName.toString().equals("EOH")) {
+                    loadPart = LoadPart.ROWS;
+                }
+                if (currentFieldName.toString().equals("EOR")) {
+                    log.add(currentQso);
+                    currentQso = null;
+                }
+                currentFieldName.setLength(0);
+                loadState = LoadState.NONE;
+            } else if (loadState == LoadState.FIELD_NAME && currentChar == ':') {
+                loadState = LoadState.FIELD_SIZE;
+            } else if (loadState == LoadState.FIELD_NAME) {
+                currentFieldName.append(Character.toString(currentChar).toUpperCase());
+            } else if (loadState == LoadState.FIELD_SIZE && currentChar == '>') {
+                loadState = LoadState.FIELD_CONTENT;
+                currentContentRemaining = Integer.parseInt(currentFieldSize.toString());
+            } else if (loadState == LoadState.FIELD_SIZE) {
+                currentFieldSize.append(currentChar);
+            } else if (loadState == LoadState.FIELD_CONTENT && currentContentRemaining != 0) {
+                currentFieldContent.append(currentChar);
+                currentContentRemaining--;
+                if (currentContentRemaining == 0) {
+                    if (loadPart == LoadPart.ROWS) {
+                        if (currentQso == null) {
+                            currentQso = new QSO();
+                        }
+                        currentQso.setField(currentFieldName.toString(), currentFieldContent.toString());
+                    }
+                    currentFieldName.setLength(0);
+                    currentFieldSize.setLength(0);
+                    currentFieldContent.setLength(0);
+                    loadState = LoadState.NONE;
+                }
+            }
+        }
     }
 }
