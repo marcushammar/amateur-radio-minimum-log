@@ -123,4 +123,32 @@ public class SettingsTest {
 
         assertEquals(settingsFromDefinition, settingsFromClass.toString());
     }
+
+    @Test
+    void settingsMoveFieldUpAndSave() {
+        Settings settings = new Settings("TestSettingsMoveFieldUpAndSave");
+        settings.removeNode();
+        settings = new Settings("TestSettingsMoveFieldUpAndSave");
+        settings.loadNode();
+
+        settings.moveUp(2);
+        settings.moveUp(3);
+
+        settings.saveNode();
+
+        settings = new Settings("TestSettingsMoveFieldUpAndSave");
+
+        settings.loadNode();
+
+        StringBuilder settingsFromClass = new StringBuilder();
+        for (Settings.SettingsField settingsField : settings.getFields()) {
+            settingsFromClass.append(settingsField.getName()).append('|').append(settingsField.getDescription()).append('|').append(settingsField.getSize()).append(System.lineSeparator());
+        }
+
+        String settingsFromDefinition = "CALL|Call sign|70" + System.lineSeparator() + "TIME_ON|Time start|160" + System.lineSeparator() + "TIME_OFF|Time end|160" + System.lineSeparator() + "QSO_DATE|Date|160" + System.lineSeparator() + "FREQ|Frequency|80" + System.lineSeparator() + "BAND|Band|60" + System.lineSeparator() + "MODE|Mode|60" + System.lineSeparator() + "TX_PWR|Power|60" + System.lineSeparator() + "GRIDSQUARE|Gridsquare|70" + System.lineSeparator() + "RST_SENT|RST sent|70" + System.lineSeparator() + "RST_RCVD|RST received|90" + System.lineSeparator() + "OPERATOR|My call sign|80" + System.lineSeparator() + "MY_GRIDSQUARE|My gridsquare|80" + System.lineSeparator() + "COMMENT|Comments|200" + System.lineSeparator();
+
+        settings.removeNode();
+
+        assertEquals(settingsFromDefinition, settingsFromClass.toString());
+    }
 }
