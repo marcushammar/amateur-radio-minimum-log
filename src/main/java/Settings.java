@@ -88,6 +88,16 @@ public class Settings {
         fields.set(index, temp);
     }
 
+    public void moveDown(int index) {
+        if (index == fields.size() - 1) {
+            return;
+        }
+
+        SettingsField temp = fields.get(index + 1);
+        fields.set(index + 1, fields.get(index));
+        fields.set(index, temp);
+    }
+
     public ArrayList<SettingsField> getFields() {
         return fields;
     }
