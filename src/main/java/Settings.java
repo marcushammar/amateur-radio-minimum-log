@@ -75,6 +75,10 @@ public class Settings {
         return fields;
     }
 
+    public void deleteField(int index) {
+
+    }
+
     public class SettingsField {
         private String name;
         private String description;
