@@ -76,7 +76,7 @@ public class Settings {
     }
 
     public void deleteField(int index) {
-
+        fields.remove(index);
     }
 
     public class SettingsField {
