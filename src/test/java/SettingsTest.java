@@ -69,6 +69,8 @@ public class SettingsTest {
 
         settings = new Settings("TestSettingsAddFieldAndSave");
 
+        settings.loadNode();
+
         StringBuilder settingsFromClass = new StringBuilder();
         for (Settings.SettingsField settingsField : settings.getFields()) {
             settingsFromClass.append(settingsField.getName()).append('|').append(settingsField.getDescription()).append('|').append(settingsField.getSize()).append(System.lineSeparator());
