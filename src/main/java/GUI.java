@@ -57,12 +57,12 @@ public class GUI extends JFrame {
         JMenuItem exitMenuItem = new JMenuItem("Exit");
         JMenuItem aboutMenuItem = new JMenuItem("About");
 
-        newLogMenuItem.addActionListener(new NewLog());
-        loadMenuItem.addActionListener(new Load());
-        saveMenuItem.addActionListener(new Save());
-        saveAsMenuItem.addActionListener(new SaveAs());
-        exitMenuItem.addActionListener(new Exit());
-        aboutMenuItem.addActionListener(new About());
+        newLogMenuItem.addActionListener(new NewLogMenuItemActionListener());
+        loadMenuItem.addActionListener(new LoadMenuItemActionListener());
+        saveMenuItem.addActionListener(new SaveMenuItemActionListener());
+        saveAsMenuItem.addActionListener(new SaveAsMenuItemActionListener());
+        exitMenuItem.addActionListener(new ExitMenuItemActionListener());
+        aboutMenuItem.addActionListener(new AboutMenuItemActionListener());
 
         fileMenu.add(newLogMenuItem);
         fileMenu.add(loadMenuItem);
@@ -356,7 +356,7 @@ public class GUI extends JFrame {
         }
     }
 
-    private class NewLog implements ActionListener {
+    private class NewLogMenuItemActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
             if (unsavedChanges) {
@@ -372,7 +372,7 @@ public class GUI extends JFrame {
         }
     }
 
-    private class Load implements ActionListener {
+    private class LoadMenuItemActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
             if (unsavedChanges) {
@@ -433,28 +433,28 @@ public class GUI extends JFrame {
         }
     }
 
-    private class Save implements ActionListener {
+    private class SaveMenuItemActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
             save(false);
         }
     }
 
-    private class SaveAs implements ActionListener {
+    private class SaveAsMenuItemActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
             save(true);
         }
     }
 
-    private class Exit implements ActionListener {
+    private class ExitMenuItemActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
             applicationIsAboutToClose();
         }
     }
 
-    private class About implements ActionListener {
+    private class AboutMenuItemActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
             JOptionPane.showMessageDialog(GUI.this, "Amateur Radio Minimum Log (v " + Application.VERSION + ")\nCopyright (C) 2017-2018 Marcus Hammar\n\nThis program is free software: you can redistribute it and/or modify\nit under the terms of the GNU General Public License as published by\nthe Free Software Foundation, either version 3 of the License, or\n(at your option) any later version.\n\nThis program is distributed in the hope that it will be useful,\nbut WITHOUT ANY WARRANTY; without even the implied warranty of\nMERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\nGNU General Public License for more details.\n\nYou should have received a copy of the GNU General Public License\nalong with this program. If not, see http://www.gnu.org/licenses/.", "About", JOptionPane.INFORMATION_MESSAGE);
