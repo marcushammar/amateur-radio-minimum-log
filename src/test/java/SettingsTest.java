@@ -99,4 +99,47 @@ public class SettingsTest {
 
         assertEquals(settingsFromDefinition.toString(), settingsFromClass.toString());
     }
+
+    @Test
+    void settingsDeleteFieldAndSave() {
+        Settings settings = new Settings("TestSettingsDeleteFieldAndSave");
+        settings.removeNode();
+        settings = new Settings("TestSettingsDeleteFieldAndSave");
+        settings.loadNode();
+
+        settings.deleteField(2);
+        settings.deleteField(7);
+
+        settings.saveNode();
+
+        settings = new Settings("TestSettingsDeleteFieldAndSave");
+
+        settings.loadNode();
+
+        StringBuilder settingsFromClass = new StringBuilder();
+        for (Settings.SettingsField settingsField : settings.getFields()) {
+            settingsFromClass.append(settingsField.getName()).append('|').append(settingsField.getDescription()).append('|').append(settingsField.getSize()).append(System.lineSeparator());
+        }
+
+        StringBuilder settingsFromDefinition = new StringBuilder();
+
+        settingsFromDefinition.append("CALL|Call sign|70").append(System.lineSeparator());
+        settingsFromDefinition.append("QSO_DATE|Date|160").append(System.lineSeparator());
+        settingsFromDefinition.append("TIME_OFF|Time end|160").append(System.lineSeparator());
+        settingsFromDefinition.append("FREQ|Frequency|80").append(System.lineSeparator());
+        settingsFromDefinition.append("BAND|Band|60").append(System.lineSeparator());
+        settingsFromDefinition.append("MODE|Mode|60").append(System.lineSeparator());
+        settingsFromDefinition.append("TX_PWR|Power|60").append(System.lineSeparator());
+        settingsFromDefinition.append("RST_SENT|RST sent|70").append(System.lineSeparator());
+        settingsFromDefinition.append("RST_RCVD|RST received|90").append(System.lineSeparator());
+        settingsFromDefinition.append("OPERATOR|My call sign|80").append(System.lineSeparator());
+        settingsFromDefinition.append("MY_GRIDSQUARE|My gridsquare|80").append(System.lineSeparator());
+        settingsFromDefinition.append("COMMENT|Comments|200").append(System.lineSeparator());
+        settingsFromDefinition.append("MY_NAME|My name|100").append(System.lineSeparator());
+        settingsFromDefinition.append("MY_COUNTRY|My country|80").append(System.lineSeparator());
+
+        settings.removeNode();
+
+        assertEquals(settingsFromDefinition.toString(), settingsFromClass.toString());
+    }
 }
