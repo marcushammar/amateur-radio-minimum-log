@@ -78,6 +78,16 @@ public class Settings {
         settingsField.setSize(size);
     }
 
+    public void moveUp(int index) {
+        if (index == 0) {
+            return;
+        }
+
+        SettingsField temp = fields.get(index - 1);
+        fields.set(index - 1, fields.get(index));
+        fields.set(index, temp);
+    }
+
     public ArrayList<SettingsField> getFields() {
         return fields;
     }
