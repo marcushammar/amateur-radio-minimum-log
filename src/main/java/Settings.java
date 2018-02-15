@@ -67,8 +67,8 @@ public class Settings {
         preferences.put("SIZES", sizes.toString().substring(0, sizes.length() - 1));
     }
 
-    public void addField(String name, String description, int width) {
-        fields.add(new SettingsField(name, description, width));
+    public void addField(String name, String description, int size) {
+        fields.add(new SettingsField(name, description, size));
     }
 
     public void modifyField(int index, String name, String description, int size) {
