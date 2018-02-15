@@ -71,6 +71,13 @@ public class Settings {
         fields.add(new SettingsField(name, description, width));
     }
 
+    public void modifyField(int index, String name, String description, int size) {
+        SettingsField settingsField = fields.get(index);
+        settingsField.setName(name);
+        settingsField.setDescription(description);
+        settingsField.setSize(size);
+    }
+
     public ArrayList<SettingsField> getFields() {
         return fields;
     }
