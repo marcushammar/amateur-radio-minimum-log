@@ -89,7 +89,7 @@ public class SettingsTest {
             settingsFromClass.append(settingsField.getName()).append('|').append(settingsField.getDescription()).append('|').append(settingsField.getSize()).append(System.lineSeparator());
         }
 
-        String settingsFromDefinition = "CALL|Call sign|70" + System.lineSeparator() + "QSO_DATE|Date|160" + System.lineSeparator() + "TIME_OFF|Time end|160" + System.lineSeparator() + "FREQ|Frequency|80" + System.lineSeparator() + "BAND|Band|60" + System.lineSeparator() + "MODE|Mode|60" + System.lineSeparator() + "TX_PWR|Power|60" + System.lineSeparator() + "RST_SENT|RST sent|70" + System.lineSeparator() + "RST_RCVD|RST received|90" + System.lineSeparator() + "OPERATOR|My call sign|80" + System.lineSeparator() + "MY_GRIDSQUARE|My gridsquare|80" + System.lineSeparator() + "COMMENT|Comments|200" + System.lineSeparator() + "MY_NAME|My name|100" + System.lineSeparator() + "MY_COUNTRY|My country|80" + System.lineSeparator();
+        String settingsFromDefinition = "CALL|Call sign|70" + System.lineSeparator() + "QSO_DATE|Date|160" + System.lineSeparator() + "TIME_OFF|Time end|160" + System.lineSeparator() + "FREQ|Frequency|80" + System.lineSeparator() + "BAND|Band|60" + System.lineSeparator() + "MODE|Mode|60" + System.lineSeparator() + "TX_PWR|Power|60" + System.lineSeparator() + "RST_SENT|RST sent|70" + System.lineSeparator() + "RST_RCVD|RST received|90" + System.lineSeparator() + "OPERATOR|My call sign|80" + System.lineSeparator() + "MY_GRIDSQUARE|My gridsquare|80" + System.lineSeparator() + "COMMENT|Comments|200" + System.lineSeparator();
 
         settings.removeNode();
 
