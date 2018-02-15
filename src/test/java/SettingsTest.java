@@ -26,10 +26,11 @@ public class SettingsTest {
         Settings settings = new Settings("TestDefaultSettings");
         settings.removeNode();
         settings = new Settings("TestDefaultSettings");
+        settings.loadNode();
 
         StringBuilder defaultSettingsFromClass = new StringBuilder();
-        for (SettingsField settingsField : settings.getFields()) {
-            defaultSettingsFromClass.append(settingsField.getFieldName()).append('|').append(settingsField.getFieldDescription()).append('|').append(settingsField.getFieldSize()).append(System.lineSeparator());
+        for (Settings.SettingsField settingsField : settings.getFields()) {
+            defaultSettingsFromClass.append(settingsField.getName()).append('|').append(settingsField.getDescription()).append('|').append(settingsField.getSize()).append(System.lineSeparator());
         }
 
         StringBuilder defaultSettingsFromDefinition = new StringBuilder();
@@ -49,6 +50,8 @@ public class SettingsTest {
         defaultSettingsFromDefinition.append("MY_GRIDSQUARE|My gridsquare|80").append(System.lineSeparator());
         defaultSettingsFromDefinition.append("COMMENT|Comments|200").append(System.lineSeparator());
 
-        assertEquals(defaultSettingsFromDefinition, defaultSettingsFromClass);
+        settings.removeNode();
+
+        assertEquals(defaultSettingsFromDefinition.toString(), defaultSettingsFromClass.toString());
     }
 }
