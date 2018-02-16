@@ -106,6 +106,18 @@ public class Settings {
         fields.remove(index);
     }
 
+    public Object[][] getDataForTable() {
+        Object[][] dataObject = new Object[fields.size()][3];
+        int i = 0;
+        for (SettingsField settingsField : fields) {
+            dataObject[i][0] = settingsField.getName();
+            dataObject[i][1] = settingsField.getDescription();
+            dataObject[i][2] = settingsField.getSize();
+            i++;
+        }
+        return dataObject;
+    }
+
     public class SettingsField {
         private String name;
         private String description;
