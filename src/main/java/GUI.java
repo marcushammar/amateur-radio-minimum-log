@@ -173,7 +173,7 @@ public class GUI extends JFrame {
         public void actionPerformed(ActionEvent actionEvent) {
             InputDialog inputDialog = new InputDialog();
             inputDialog.validate();
-            int responseFromDialog = JOptionPane.showConfirmDialog(GUI.this, inputDialog, "Add", JOptionPane.OK_CANCEL_OPTION);
+            int responseFromDialog = JOptionPane.showConfirmDialog(GUI.this, inputDialog, "Add", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 
             if (responseFromDialog == JOptionPane.YES_OPTION) {
                 QSO qso = new QSO();
@@ -225,7 +225,7 @@ public class GUI extends JFrame {
 
             inputDialog.validate();
 
-            int responseFromDialog = JOptionPane.showConfirmDialog(GUI.this, inputDialog, "Copy", JOptionPane.OK_CANCEL_OPTION);
+            int responseFromDialog = JOptionPane.showConfirmDialog(GUI.this, inputDialog, "Copy", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 
             if (responseFromDialog == JOptionPane.YES_OPTION) {
                 QSO qsoNew = new QSO();
@@ -277,7 +277,7 @@ public class GUI extends JFrame {
 
             inputDialog.validate();
 
-            int responseFromDialog = JOptionPane.showConfirmDialog(GUI.this, inputDialog, "Modify", JOptionPane.OK_CANCEL_OPTION);
+            int responseFromDialog = JOptionPane.showConfirmDialog(GUI.this, inputDialog, "Modify", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 
             if (responseFromDialog == JOptionPane.YES_OPTION) {
                 qso.setField("CALL", inputDialog.getCallSign());
