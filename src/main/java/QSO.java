@@ -19,10 +19,7 @@
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 public class QSO {
     private static final HashSet<String> VALID_BANDS = new HashSet<>(Arrays.asList("2190m", "630m", "560m", "160m", "80m", "60m", "40m", "30m", "20m", "17m", "15m", "12m", "10m", "6m", "4m", "2m", "1.25m", "70cm", "33cm", "23cm", "13cm", "9cm", "6cm", "3cm", "1.25cm", "6mm", "4mm", "2.5mm", "2mm", "1mm"));
@@ -46,6 +43,10 @@ public class QSO {
 
     public String getField(String field) {
         return fields.get(field);
+    }
+
+    public Set<String> getKeys() {
+        return fields.keySet();
     }
 
     public String getAdifRow() {
