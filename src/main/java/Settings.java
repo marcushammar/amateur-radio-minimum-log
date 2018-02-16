@@ -30,6 +30,7 @@ public class Settings {
     }
 
     public void loadNode() {
+        fields.clear();
         String fieldNames = preferences.get("NAMES", "CALL,QSO_DATE,TIME_ON,TIME_OFF,FREQ,BAND,MODE,TX_PWR,GRIDSQUARE,RST_SENT,RST_RCVD,OPERATOR,MY_GRIDSQUARE,COMMENT");
         String fieldDescriptions = preferences.get("DESCRIPTIONS", "Call sign,Date,Time start,Time end,Frequency,Band,Mode,Power,Gridsquare,RST sent,RST received,My call sign,My gridsquare,Comments");
         String fieldSizes = preferences.get("SIZES", "70,160,160,160,80,60,60,60,70,70,90,80,80,200");
