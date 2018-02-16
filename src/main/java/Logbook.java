@@ -37,23 +37,15 @@ public class Logbook {
     }
 
     public Object[][] getDataForTable() {
-        Object[][] dataObject = new Object[log.size()][13];
-        int i = 0;
-        for (QSO qso : log) {
-            dataObject[i][0] = qso.getField("CALL");
-            dataObject[i][1] = qso.getField("QSO_DATE");
-            dataObject[i][2] = qso.getField("QSO_DATE_OFF");
-            dataObject[i][3] = qso.getField("FREQ");
-            dataObject[i][4] = qso.getField("BAND");
-            dataObject[i][5] = qso.getField("MODE");
-            dataObject[i][6] = qso.getField("TX_PWR");
-            dataObject[i][7] = qso.getField("GRIDSQUARE");
-            dataObject[i][8] = qso.getField("RST_SENT");
-            dataObject[i][9] = qso.getField("RST_RCVD");
-            dataObject[i][10] = qso.getField("OPERATOR");
-            dataObject[i][11] = qso.getField("MY_GRIDSQUARE");
-            dataObject[i][12] = qso.getField("COMMENT");
-            i++;
+        Settings settings = new Settings("Settings");
+        settings.loadNode();
+
+        Object[][] dataObject = new Object[log.size()][settings.getFields().size()];
+
+        for (int i = 0; i < log.size(); i++) {
+            for (int j = 0; j < settings.getFields().size(); j++) {
+                dataObject[i][j] = log.get(i).getField(settings.getFields().get(j).getName());
+            }
         }
         return dataObject;
     }

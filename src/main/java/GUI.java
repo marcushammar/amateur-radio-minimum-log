@@ -33,7 +33,6 @@ public class GUI extends JFrame {
     private boolean unsavedChanges = false;
     private File currentFile;
     private JTable table;
-    private String[] columns = {"Call sign", "Time start", "Time end", "Frequency", "Band", "Mode", "Power", "Location", "RST sent", "RST received", "My call sign", "My location", "Comments"};
     private JButton addButton;
     private JButton copyButton;
     private JButton modifyButton;
@@ -84,7 +83,7 @@ public class GUI extends JFrame {
         menuBar.add(helpMenu);
         setJMenuBar(menuBar);
 
-        table = new JTable(logbook.getDataForTable(), columns);
+        table = new JTable(logbook.getDataForTable(), getColumns());
         JScrollPane scrollPane = new JScrollPane(table);
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         table.getSelectionModel().addListSelectionListener(new TableSelectionListener());
@@ -138,8 +137,24 @@ public class GUI extends JFrame {
         setVisible(true);
     }
 
+    private String[] getColumns() {
+        Settings settings = new Settings("Settings");
+        settings.loadNode();
+
+        String[] columns = new String[settings.getFields().size()];
+
+        for (int i = 0; i < settings.getFields().size(); i++) {
+            columns[i] = settings.getFields().get(i).getDescription();
+        }
+
+        return columns;
+    }
+
     private void updateTable() {
-        DefaultTableModel tableModel = new DefaultTableModel(logbook.getDataForTable(), columns) {
+        Settings settings = new Settings("Settings");
+        settings.loadNode();
+
+        DefaultTableModel tableModel = new DefaultTableModel(logbook.getDataForTable(), getColumns()) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
@@ -147,19 +162,9 @@ public class GUI extends JFrame {
         };
         table.setModel(tableModel);
 
-        table.getColumnModel().getColumn(0).setPreferredWidth(70);
-        table.getColumnModel().getColumn(1).setPreferredWidth(160);
-        table.getColumnModel().getColumn(2).setPreferredWidth(160);
-        table.getColumnModel().getColumn(3).setPreferredWidth(80);
-        table.getColumnModel().getColumn(4).setPreferredWidth(60);
-        table.getColumnModel().getColumn(5).setPreferredWidth(60);
-        table.getColumnModel().getColumn(6).setPreferredWidth(60);
-        table.getColumnModel().getColumn(7).setPreferredWidth(70);
-        table.getColumnModel().getColumn(8).setPreferredWidth(70);
-        table.getColumnModel().getColumn(9).setPreferredWidth(90);
-        table.getColumnModel().getColumn(10).setPreferredWidth(80);
-        table.getColumnModel().getColumn(11).setPreferredWidth(80);
-        table.getColumnModel().getColumn(12).setPreferredWidth(200);
+        for (int i = 0; i < settings.getFields().size(); i++) {
+            table.getColumnModel().getColumn(i).setPreferredWidth(settings.getFields().get(i).getSize());
+        }
 
         countLabel.setText("Count: " + logbook.count());
     }
