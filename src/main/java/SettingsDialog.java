@@ -185,6 +185,10 @@ public class SettingsDialog extends JPanel {
                     deleteButton.setEnabled(true);
                     moveUpButton.setEnabled(true);
                     moveDownButton.setEnabled(true);
+                    if (table.getSelectedRows()[0] == 0)
+                        moveUpButton.setEnabled(false);
+                    if (table.getSelectedRows()[0] == settings.getDataForTable().length - 1)
+                        moveDownButton.setEnabled(false);
                     break;
                 default:
                     addButton.setEnabled(true);
