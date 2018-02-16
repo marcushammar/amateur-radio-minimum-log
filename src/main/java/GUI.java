@@ -48,7 +48,7 @@ public class GUI extends JFrame {
 
         JMenuBar menuBar = new JMenuBar();
         JMenu fileMenu = new JMenu("File");
-        JMenu toolsMenu = new JMenu("Tools");
+        JMenu settingsMenu = new JMenu("Settings");
         JMenu helpMenu = new JMenu("Help");
 
         JMenuItem newLogMenuItem = new JMenuItem("New log");
@@ -56,7 +56,7 @@ public class GUI extends JFrame {
         JMenuItem saveMenuItem = new JMenuItem("Save");
         JMenuItem saveAsMenuItem = new JMenuItem("Save as...");
         JMenuItem exitMenuItem = new JMenuItem("Exit");
-        JMenuItem settingsMenuItem = new JMenuItem("Settings");
+        JMenuItem adifFieldsMenuItem = new JMenuItem("ADIF fields...");
         JMenuItem aboutMenuItem = new JMenuItem("About");
 
         newLogMenuItem.addActionListener(new NewLogMenuItemActionListener());
@@ -64,7 +64,7 @@ public class GUI extends JFrame {
         saveMenuItem.addActionListener(new SaveMenuItemActionListener());
         saveAsMenuItem.addActionListener(new SaveAsMenuItemActionListener());
         exitMenuItem.addActionListener(new ExitMenuItemActionListener());
-        settingsMenuItem.addActionListener(new SettingsMenuItemActionListener());
+        adifFieldsMenuItem.addActionListener(new AdifFieldsMenuItemActionListener());
         aboutMenuItem.addActionListener(new AboutMenuItemActionListener());
 
         fileMenu.add(newLogMenuItem);
@@ -75,12 +75,12 @@ public class GUI extends JFrame {
         fileMenu.addSeparator();
         fileMenu.add(exitMenuItem);
 
-        toolsMenu.add(settingsMenuItem);
+        settingsMenu.add(adifFieldsMenuItem);
 
         helpMenu.add(aboutMenuItem);
 
         menuBar.add(fileMenu);
-        menuBar.add(toolsMenu);
+        menuBar.add(settingsMenu);
         menuBar.add(helpMenu);
         setJMenuBar(menuBar);
 
@@ -411,12 +411,12 @@ public class GUI extends JFrame {
         }
     }
 
-    private class SettingsMenuItemActionListener implements ActionListener {
+    private class AdifFieldsMenuItemActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
             SettingsDialog settingsDialog = new SettingsDialog();
 
-            int responseFromDialog = JOptionPane.showConfirmDialog(GUI.this, settingsDialog, "Settings", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+            int responseFromDialog = JOptionPane.showConfirmDialog(GUI.this, settingsDialog, "ADIF fields", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 
             if (responseFromDialog == JOptionPane.YES_OPTION) {
                 settingsDialog.save();
