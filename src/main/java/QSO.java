@@ -66,6 +66,9 @@ public class QSO {
                 case "BAND":
                     validateBand(value);
                     break;
+                case "MODE":
+                    validateMode(value);
+                    break;
                 default:
                     break;
             }
@@ -75,6 +78,12 @@ public class QSO {
     private void validateBand(String value) {
         if (!VALID_BANDS.contains(value)) {
             throw new IllegalArgumentException("The BAND is invalid.");
+        }
+    }
+
+    private void validateMode(String value) {
+        if (!VALID_MODES.contains(value)) {
+            throw new IllegalArgumentException("The MODE is invalid.");
         }
     }
 }
