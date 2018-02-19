@@ -74,6 +74,15 @@ class QSOTest {
     }
 
     @Test
+    void qsoWithIncorrectMode() {
+        QSO qso = new QSO();
+        qso.setField("MODE", "JT60");
+
+        Throwable exception = assertThrows(IllegalArgumentException.class, qso::validate);
+        assertEquals("The MODE is invalid.", exception.getMessage());
+    }
+
+    @Test
     void createQsoWithFieldValueEqualToNull() {
         QSO qso = new QSO();
 
