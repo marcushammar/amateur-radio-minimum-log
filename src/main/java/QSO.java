@@ -61,15 +61,20 @@ public class QSO {
 
     public void validate() {
         for (Map.Entry<String, String> pair : this.fields.entrySet()) {
+            String value = pair.getValue();
             switch (pair.getKey()) {
                 case "BAND":
-                    if (!VALID_BANDS.contains(pair.getValue())) {
-                        throw new IllegalArgumentException("The BAND is invalid.");
-                    }
+                    validateBand(value);
                     break;
                 default:
                     break;
             }
+        }
+    }
+
+    private void validateBand(String value) {
+        if (!VALID_BANDS.contains(value)) {
+            throw new IllegalArgumentException("The BAND is invalid.");
         }
     }
 
@@ -140,10 +145,6 @@ public class QSO {
 
     public static boolean validateFrequency(String value) {
         return value.matches("[0-9]+([.][0-9]+)?");
-    }
-
-    public static boolean validateBand(String value) {
-        return VALID_BANDS.contains(value);
     }
 
     public static boolean validateMode(String value) {
