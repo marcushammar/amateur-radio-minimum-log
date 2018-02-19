@@ -70,7 +70,7 @@ class QSOTest {
         qso.setField("BAND", "20 m");
 
         Throwable exception = assertThrows(IllegalArgumentException.class, qso::validate);
-        assertEquals("The BAND is invalid.", exception.getMessage());
+        assertEquals("The BAND is invalid", exception.getMessage());
     }
 
     @Test
@@ -79,7 +79,7 @@ class QSOTest {
         qso.setField("MODE", "JT60");
 
         Throwable exception = assertThrows(IllegalArgumentException.class, qso::validate);
-        assertEquals("The MODE is invalid.", exception.getMessage());
+        assertEquals("The MODE is invalid", exception.getMessage());
     }
 
     @Test

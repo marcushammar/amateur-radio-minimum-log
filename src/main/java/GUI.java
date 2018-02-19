@@ -281,7 +281,7 @@ public class GUI extends JFrame {
                 try {
                     logbook.get(i).validate();
                 } catch (IllegalArgumentException iae) {
-                    JOptionPane.showMessageDialog(GUI.this, "Can't export due to issues in row " + (i + 1) + " (callsign " + logbook.get(i).getField("CALL") + "). Please correct the row and try again.", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(GUI.this, "Can't export due to issues in row " + (i + 1) + " (callsign " + logbook.get(i).getField("CALL") + "). " + iae.getMessage() + ". Please correct the row and try again.", "Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
             }
