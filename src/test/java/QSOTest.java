@@ -83,6 +83,114 @@ class QSOTest {
     }
 
     @Test
+    void qsoWithIncorrectCall() {
+        QSO qso = new QSO();
+        qso.setField("CALL", "ABØCDE");
+
+        Throwable exception = assertThrows(IllegalArgumentException.class, qso::validate);
+        assertEquals("The CALL is invalid", exception.getMessage());
+    }
+
+    @Test
+    void qsoWithIncorrectDate() {
+        QSO qso = new QSO();
+        qso.setField("QSO_DATE", "2018-02-20");
+
+        Throwable exception = assertThrows(IllegalArgumentException.class, qso::validate);
+        assertEquals("The QSO_DATE is invalid", exception.getMessage());
+    }
+
+    @Test
+    void qsoWithIncorrectTimeOn() {
+        QSO qso = new QSO();
+        qso.setField("TIME_ON", "12:45");
+
+        Throwable exception = assertThrows(IllegalArgumentException.class, qso::validate);
+        assertEquals("The TIME_ON is invalid", exception.getMessage());
+    }
+
+    @Test
+    void qsoWithIncorrectTimeOff() {
+        QSO qso = new QSO();
+        qso.setField("TIME_OFF", "12:45");
+
+        Throwable exception = assertThrows(IllegalArgumentException.class, qso::validate);
+        assertEquals("The TIME_OFF is invalid", exception.getMessage());
+    }
+
+    @Test
+    void qsoWithIncorrectFreq() {
+        QSO qso = new QSO();
+        qso.setField("FREQ", "7.074.000");
+
+        Throwable exception = assertThrows(IllegalArgumentException.class, qso::validate);
+        assertEquals("The FREQ is invalid", exception.getMessage());
+    }
+
+    @Test
+    void qsoWithIncorrectTxPwr() {
+        QSO qso = new QSO();
+        qso.setField("TX_PWR", "High");
+
+        Throwable exception = assertThrows(IllegalArgumentException.class, qso::validate);
+        assertEquals("The TX_PWR is invalid", exception.getMessage());
+    }
+
+    @Test
+    void qsoWithIncorrectGridsquare() {
+        QSO qso = new QSO();
+        qso.setField("GRIDSQUARE", "Stockholm");
+
+        Throwable exception = assertThrows(IllegalArgumentException.class, qso::validate);
+        assertEquals("The GRIDSQUARE is invalid", exception.getMessage());
+    }
+
+    @Test
+    void qsoWithIncorrectRstSent() {
+        QSO qso = new QSO();
+        qso.setField("RST_SENT", "Gøød");
+
+        Throwable exception = assertThrows(IllegalArgumentException.class, qso::validate);
+        assertEquals("The RST_SENT is invalid", exception.getMessage());
+    }
+
+    @Test
+    void qsoWithIncorrectRstRcvd() {
+        QSO qso = new QSO();
+        qso.setField("RST_RCVD", "Gøød");
+
+        Throwable exception = assertThrows(IllegalArgumentException.class, qso::validate);
+        assertEquals("The RST_RCVD is invalid", exception.getMessage());
+    }
+
+    @Test
+    void qsoWithIncorrectOperator() {
+        QSO qso = new QSO();
+        qso.setField("OPERATOR", "ZZØYYY");
+
+        Throwable exception = assertThrows(IllegalArgumentException.class, qso::validate);
+        assertEquals("The OPERATOR is invalid", exception.getMessage());
+    }
+
+    @Test
+    void qsoWithIncorrectMyGridsquare() {
+        QSO qso = new QSO();
+        qso.setField("MY_GRIDSQUARE", "Stockholm");
+
+        Throwable exception = assertThrows(IllegalArgumentException.class, qso::validate);
+        assertEquals("The MY_GRIDSQUARE is invalid", exception.getMessage());
+    }
+
+    @Test
+    void qsoWithIncorrectNotes() {
+        QSO qso = new QSO();
+        qso.setField("NOTES", "Gøød");
+
+        Throwable exception = assertThrows(IllegalArgumentException.class, qso::validate);
+        assertEquals("The NOTES is invalid", exception.getMessage());
+    }
+
+    @Test
     void createQsoWithFieldValueEqualToNull() {
         QSO qso = new QSO();
 
