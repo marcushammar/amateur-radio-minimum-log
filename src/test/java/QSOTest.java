@@ -113,9 +113,18 @@ class QSOTest {
     }
 
     @Test
-    void qsoWithIncorrectDateFormat() {
+    void qsoWithIncorrectDateFormatDash() {
         QSO qso = new QSO();
         qso.setField("QSO_DATE", "2018-02-20");
+
+        Throwable exception = assertThrows(IllegalArgumentException.class, qso::validate);
+        assertEquals("The QSO_DATE field is invalid", exception.getMessage());
+    }
+
+    @Test
+    void qsoWithIncorrectDateFormatWrongNumberOfDigits() {
+        QSO qso = new QSO();
+        qso.setField("QSO_DATE", "2018011");
 
         Throwable exception = assertThrows(IllegalArgumentException.class, qso::validate);
         assertEquals("The QSO_DATE field is invalid", exception.getMessage());
@@ -140,9 +149,18 @@ class QSOTest {
     }
 
     @Test
-    void qsoWithIncorrectTimeOnFormat() {
+    void qsoWithIncorrectTimeOnFormatColon() {
         QSO qso = new QSO();
         qso.setField("TIME_ON", "12:45");
+
+        Throwable exception = assertThrows(IllegalArgumentException.class, qso::validate);
+        assertEquals("The TIME_ON field is invalid", exception.getMessage());
+    }
+
+    @Test
+    void qsoWithIncorrectTimeOnFormatWrongNumberOfDigits() {
+        QSO qso = new QSO();
+        qso.setField("TIME_ON", "12450");
 
         Throwable exception = assertThrows(IllegalArgumentException.class, qso::validate);
         assertEquals("The TIME_ON field is invalid", exception.getMessage());
@@ -158,9 +176,18 @@ class QSOTest {
     }
 
     @Test
-    void qsoWithIncorrectTimeOffFormat() {
+    void qsoWithIncorrectTimeOffFormatColon() {
         QSO qso = new QSO();
         qso.setField("TIME_OFF", "12:55");
+
+        Throwable exception = assertThrows(IllegalArgumentException.class, qso::validate);
+        assertEquals("The TIME_OFF field is invalid", exception.getMessage());
+    }
+
+    @Test
+    void qsoWithIncorrectTimeOffFormatWrongNumberOfDigits() {
+        QSO qso = new QSO();
+        qso.setField("TIME_OFF", "12550");
 
         Throwable exception = assertThrows(IllegalArgumentException.class, qso::validate);
         assertEquals("The TIME_OFF field is invalid", exception.getMessage());
