@@ -88,6 +88,7 @@ public class GUI extends JFrame {
         JScrollPane scrollPane = new JScrollPane(table);
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         table.getSelectionModel().addListSelectionListener(new TableSelectionListener());
+        table.addMouseListener(new TableMouseListener());
         add(scrollPane);
 
         JPanel southPanel = new JPanel(new FlowLayout());
@@ -212,7 +213,7 @@ public class GUI extends JFrame {
             QSO qsoOld = logbook.get(selectedRows[0]);
 
             InputDialog inputDialog = new InputDialog(qsoOld);
-            int responseFromDialog = JOptionPane.showConfirmDialog(GUI.this, inputDialog, "Modify", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+            int responseFromDialog = JOptionPane.showConfirmDialog(GUI.this, inputDialog, "Copy", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 
             if (responseFromDialog == JOptionPane.YES_OPTION) {
 
@@ -234,25 +235,11 @@ public class GUI extends JFrame {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
             int[] selectedRows = table.getSelectedRows();
-
             if (selectedRows.length != 1) {
                 return;
             }
 
-            QSO qso = logbook.get(selectedRows[0]);
-
-            InputDialog inputDialog = new InputDialog(qso);
-            int responseFromDialog = JOptionPane.showConfirmDialog(GUI.this, inputDialog, "Modify", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-
-            if (responseFromDialog == JOptionPane.YES_OPTION) {
-
-                for (Map.Entry<String, String> field : inputDialog.getData().entrySet()) {
-                    qso.setField(field.getKey(), field.getValue());
-                }
-
-                updateTable();
-                unsavedChanges = true;
-            }
+            modify(selectedRows[0]);
         }
     }
 
@@ -392,6 +379,23 @@ public class GUI extends JFrame {
         }
     }
 
+    private void modify(int row) {
+        QSO qso = logbook.get(row);
+
+        InputDialog inputDialog = new InputDialog(qso);
+        int responseFromDialog = JOptionPane.showConfirmDialog(GUI.this, inputDialog, "Modify", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+
+        if (responseFromDialog == JOptionPane.YES_OPTION) {
+
+            for (Map.Entry<String, String> field : inputDialog.getData().entrySet()) {
+                qso.setField(field.getKey(), field.getValue());
+            }
+
+            updateTable();
+            unsavedChanges = true;
+        }
+    }
+
     private class SaveMenuItemActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
@@ -431,6 +435,17 @@ public class GUI extends JFrame {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
             JOptionPane.showMessageDialog(GUI.this, "Amateur Radio Minimum Log (v " + Application.VERSION + ")\nCopyright (C) 2017-2018 Marcus Hammar\n\nThis program is free software: you can redistribute it and/or modify\nit under the terms of the GNU General Public License as published by\nthe Free Software Foundation, either version 3 of the License, or\n(at your option) any later version.\n\nThis program is distributed in the hope that it will be useful,\nbut WITHOUT ANY WARRANTY; without even the implied warranty of\nMERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\nGNU General Public License for more details.\n\nYou should have received a copy of the GNU General Public License\nalong with this program. If not, see http://www.gnu.org/licenses/.", "About", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    private class TableMouseListener extends MouseAdapter {
+        @Override
+        public void mousePressed(MouseEvent mouseEvent) {
+            Point point = mouseEvent.getPoint();
+            int row = table.rowAtPoint(point);
+            if (row != -1 && mouseEvent.getClickCount() == 2) {
+                modify(row);
+            }
         }
     }
 
