@@ -76,6 +76,16 @@ class QSOTest {
     }
 
     @Test
+    void removeNonExistingFieldFromQso() {
+        QSO qso = new QSO();
+        qso.setField("BAND", "20m");
+        qso.setField("CALL", "FG2HIJ");
+        qso.setField("NOTES", "");
+
+        assertEquals("<BAND:3>20m<CALL:6>FG2HIJ<EOR>", qso.getAdifRow());
+    }
+
+    @Test
     void qsoWithIncorrectBand() {
         QSO qso = new QSO();
         qso.setField("BAND", "20 m");
