@@ -38,7 +38,11 @@ public class QSO {
             throw new IllegalArgumentException("The QSO cannot have a null field.");
         }
 
-        fields.put(field, value);
+        if (value.equals("")) {
+            fields.remove(field);
+        } else {
+            fields.put(field, value);
+        }
     }
 
     public String getField(String field) {
