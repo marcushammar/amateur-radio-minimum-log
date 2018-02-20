@@ -211,6 +211,12 @@ public class QSO {
     }
 
     public static boolean isDate(String date) {
+        boolean firstCheck = date.matches("[0-9]{4}[0-9]{2}[0-9]{2}");
+
+        if (!firstCheck) {
+            return false;
+        }
+
         try {
             DateFormat df = new SimpleDateFormat("yyyyMMdd");
             df.setLenient(false);
@@ -222,6 +228,12 @@ public class QSO {
     }
 
     public static boolean isTime(String time) {
+        boolean firstCheck = time.matches("(([0-1][0-9])|([2][0-3]))[0-5][0-9]([0-5][0-9])?");
+
+        if (!firstCheck) {
+            return false;
+        }
+
         boolean validShort;
         boolean validLong;
         try {
