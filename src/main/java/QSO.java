@@ -28,7 +28,7 @@ public class QSO {
 
     public void setField(String field, String value) {
         if (value == null) {
-            throw new IllegalArgumentException("The field " + field + " cannot have a null value.");
+            throw new IllegalArgumentException("The " + field + " field cannot have a null value.");
         }
 
         if (field == null) {
@@ -74,13 +74,13 @@ public class QSO {
 
     private void validateBand(String value) {
         if (!VALID_BANDS.contains(value)) {
-            throw new IllegalArgumentException("The BAND is invalid");
+            throw new IllegalArgumentException("The BAND field is invalid");
         }
     }
 
     private void validateMode(String value) {
         if (!VALID_MODES.contains(value)) {
-            throw new IllegalArgumentException("The MODE is invalid");
+            throw new IllegalArgumentException("The MODE field is invalid");
         }
     }
 }
