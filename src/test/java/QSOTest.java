@@ -92,9 +92,18 @@ class QSOTest {
     }
 
     @Test
-    void qsoWithIncorrectDate() {
+    void qsoWithIncorrectDateFormat() {
         QSO qso = new QSO();
         qso.setField("QSO_DATE", "2018-02-20");
+
+        Throwable exception = assertThrows(IllegalArgumentException.class, qso::validate);
+        assertEquals("The QSO_DATE field is invalid", exception.getMessage());
+    }
+
+    @Test
+    void qsoWithIncorrectDate() {
+        QSO qso = new QSO();
+        qso.setField("QSO_DATE", "20180231");
 
         Throwable exception = assertThrows(IllegalArgumentException.class, qso::validate);
         assertEquals("The QSO_DATE field is invalid", exception.getMessage());
