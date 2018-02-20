@@ -112,6 +112,15 @@ class QSOTest {
     @Test
     void qsoWithIncorrectTimeOn() {
         QSO qso = new QSO();
+        qso.setField("TIME_ON", "1265");
+
+        Throwable exception = assertThrows(IllegalArgumentException.class, qso::validate);
+        assertEquals("The TIME_ON field is invalid", exception.getMessage());
+    }
+
+    @Test
+    void qsoWithIncorrectTimeOnFormat() {
+        QSO qso = new QSO();
         qso.setField("TIME_ON", "12:45");
 
         Throwable exception = assertThrows(IllegalArgumentException.class, qso::validate);
@@ -121,7 +130,16 @@ class QSOTest {
     @Test
     void qsoWithIncorrectTimeOff() {
         QSO qso = new QSO();
-        qso.setField("TIME_OFF", "12:45");
+        qso.setField("TIME_OFF", "1275");
+
+        Throwable exception = assertThrows(IllegalArgumentException.class, qso::validate);
+        assertEquals("The TIME_OFF field is invalid", exception.getMessage());
+    }
+
+    @Test
+    void qsoWithIncorrectTimeOffFormat() {
+        QSO qso = new QSO();
+        qso.setField("TIME_OFF", "12:55");
 
         Throwable exception = assertThrows(IllegalArgumentException.class, qso::validate);
         assertEquals("The TIME_OFF field is invalid", exception.getMessage());
