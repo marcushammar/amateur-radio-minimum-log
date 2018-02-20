@@ -65,6 +65,17 @@ class QSOTest {
     }
 
     @Test
+    void removeFieldFromQso() {
+        QSO qso = new QSO();
+        qso.setField("BAND", "20m");
+        qso.setField("CALL", "FG2HIJ");
+        qso.setField("COMMENT", "73");
+        qso.setField("COMMENT", "");
+
+        assertEquals("<BAND:3>20m<CALL:6>FG2HIJ<EOR>", qso.getAdifRow());
+    }
+
+    @Test
     void qsoWithIncorrectBand() {
         QSO qso = new QSO();
         qso.setField("BAND", "20 m");
