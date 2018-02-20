@@ -41,7 +41,7 @@ public class GUI extends JFrame {
     private JButton exportButton;
     private JFileChooser exportFileChooser = new JFileChooser();
     private JFileChooser loadAndSaveFileChooser = new JFileChooser();
-    private JLabel countLabel;
+    private JLabel selectedLabel;
 
     public GUI() {
         super("Amateur Radio Minimum Log");
@@ -115,8 +115,8 @@ public class GUI extends JFrame {
         southPanel.add(deleteButton);
         southPanel.add(exportButton);
 
-        countLabel = new JLabel("Count: 0");
-        southPanel.add(countLabel);
+        selectedLabel = new JLabel("Selected: 0 of 0");
+        southPanel.add(selectedLabel);
 
         add(southPanel, BorderLayout.SOUTH);
 
@@ -133,7 +133,7 @@ public class GUI extends JFrame {
 
         addWindowListener(new ApplicationTerminationListener());
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-        setSize(800, 400);
+        setSize(850, 425);
         setLocationRelativeTo(null);
         setVisible(true);
     }
@@ -167,7 +167,7 @@ public class GUI extends JFrame {
             table.getColumnModel().getColumn(i).setPreferredWidth(settings.getFields().get(i).getSize());
         }
 
-        countLabel.setText("Count: " + logbook.count());
+        selectedLabel.setText("Selected: " + table.getSelectedRows().length + " of " + logbook.count());
     }
 
     private void applicationIsAboutToClose() {
@@ -438,6 +438,8 @@ public class GUI extends JFrame {
         @Override
         public void valueChanged(ListSelectionEvent listSelectionEvent) {
             int[] selectedRows = table.getSelectedRows();
+
+            selectedLabel.setText("Selected: " + selectedRows.length + " of " + logbook.count());
 
             switch (selectedRows.length) {
                 case 0:
