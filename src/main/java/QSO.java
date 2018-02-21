@@ -228,33 +228,7 @@ public class QSO {
     }
 
     public static boolean isTime(String time) {
-        boolean firstCheck = time.matches("(([0-1][0-9])|([2][0-3]))[0-5][0-9]([0-5][0-9])?");
-
-        if (!firstCheck) {
-            return false;
-        }
-
-        boolean validShort;
-        boolean validLong;
-        try {
-            DateFormat df = new SimpleDateFormat("HHmm");
-            df.setLenient(false);
-            df.parse(time);
-            validShort = true;
-        } catch (ParseException e) {
-            validShort = false;
-        }
-
-        try {
-            DateFormat df = new SimpleDateFormat("HHmmss");
-            df.setLenient(false);
-            df.parse(time);
-            validLong = true;
-        } catch (ParseException e) {
-            validLong = false;
-        }
-
-        return validShort || validLong;
+        return time.matches("(([0-1][0-9])|([2][0-3]))[0-5][0-9]([0-5][0-9])?");
     }
 
     public static boolean isNumber(String value) {
