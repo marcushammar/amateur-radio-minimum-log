@@ -18,7 +18,7 @@
 
 public class Application {
     public static final String VERSION = "1.1.0";
-    public static final String ADIF_VERSION = "3.0.6";
+    public static final String ADIF_VERSION = "3.0.8";
 
     public static void main(String[] args) {
         new GUI();
