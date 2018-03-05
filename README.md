@@ -1,6 +1,6 @@
 Amateur Radio Minimum Log
 =========================
-A minimum amateur radio logging application. It can export ADIF files that are compatible with for example LoTW, QRZ and eQSL.
+A minimum amateur radio logging application. It comes with a set of predefined recommended fields to log, but can be changed to other fields to suit your needs. Export of log entries in the ADIF format is possible and these exports are compatible with for example LoTW, QRZ and eQSL.
 
 Installation
 ------------
